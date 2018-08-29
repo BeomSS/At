@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/dlgtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="받는 사람"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:paddingBottom="5dp"/>
+        <EditText
+            android:id="@+id/dlgedit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=" 받을사람을 적어주세요"/>
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/dlgscript"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:hint="내용입력"
+        android:gravity="top"
+        android:textIsSelectable="false"
+        />
+
+</LinearLayout>

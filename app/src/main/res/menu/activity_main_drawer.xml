@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_board"
+            android:icon="@drawable/ic_library_books_black_24dp"
+            android:title="게시판" />
+        <item
+            android:id="@+id/nav_message"
+            android:icon="@drawable/ic_message_black_24dp"
+            android:title="쪽지" />
+        <item
+            android:id="@+id/nav_like"
+            android:icon="@drawable/ic_thumb_up_black_24dp"
+            android:title="관심 있는 작품" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_error_black_24dp"
+            android:title="사용설명" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="설정" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="로그아웃" />
+    </group>
+
+</menu>
