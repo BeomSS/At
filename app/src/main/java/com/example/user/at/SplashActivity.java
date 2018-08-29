@@ -23,5 +23,5 @@ public class SplashActivity extends Activity {
                 finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
-    }//test
+    }
 }
