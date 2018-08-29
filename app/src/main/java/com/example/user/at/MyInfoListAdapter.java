@@ -1,6 +1,7 @@
 package com.example.user.at;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -51,7 +52,7 @@ public class MyInfoListAdapter extends BaseAdapter {
         list_text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT));
         list_img.setImageResource(R.drawable.arrow);
         list_text.setText(myinfo[i]);
-        list_text.setTextSize(22);
+        list_text.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
         list_img.setPadding(3,3,3,3);
         list_text.setPadding(3,4,0,0);
 
