@@ -4,7 +4,16 @@
     <color name="colorPrimaryDark">#10685e</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorMint">#22af9f</color>
+    <color name="colorMintAlpha">#7c22af9f</color>
     <color name="colorBrightMint">#c7f5f1</color>
+    <color name="colorDarkMint">#10685e</color>
+    <color name="colorDark">#292929</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorBlackAlpha">#7c000000</color>
+    <color name="colorGrey">#7a7a7a</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorBlue">#6b6bd3</color>
+    <color name="colorBlueAlpha">#7c4a4aca</color>
+    <color name="colorDarkBlue">#000059</color>
+    <color name="colorBrightBlue">#9b9bff</color>
 </resources>
