@@ -23,6 +23,10 @@
         <activity android:name=".LikeActivity"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".MyInfoListActivity"/>
+        <activity android:name=".MyWritingListActivity"/>
+        <activity android:name=".MyWritingFeedbackActivity"/>
+        <activity android:name=".MyNoticeActivity"/>
+        <activity android:name=".MyPreferencesActivity"/>
         <activity android:name=".Skin"/>
     </application>
 
