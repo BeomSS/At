@@ -1,9 +1,6 @@
 package com.example.user.at;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,43 +9,27 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public final String preference = "com.example.user.at.preference";
-    public final String key = "skinStyle";
+//    Skin skin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int skinCode = getPreferenceInt(key);
-        int color = getResources().getColor(R.color.colorMint);
-        Log.d("test", skinCode + "");
-        switch(skinCode){
-            case 1:
-                setTheme(R.style.AppThemeVer1);
-                color = getResources().getColor(R.color.colorMint);
-                break;
-            case 2:
-                setTheme(R.style.AppThemeVer2);
-                color = getResources().getColor(R.color.colorBlue);
-                break;
-            case 3:
-                setTheme(R.style.AppThemeVer3);
-                color = getResources().getColor(R.color.colorBlack);
-                break;
-        }
-
+        /*skin = new Skin(this);
+        int color = skin.skinSetting();
+        int skinCode = skin.skinCode;*/
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme_NoActionBar);
         setContentView(R.layout.activity_main);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);               //커스텀 타이틀 사용
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);        //커스텀 타이틀을 사용하기 때문에 기존 타이틀 사용 안함
-        toolbar.setBackgroundColor(color);
+//        toolbar.setBackgroundColor(color);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -58,6 +39,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        LinearLayout headerLayout = headerView.findViewById(R.id.myInfoBtnLayout);
+        /*switch(skinCode){
+            case 1:
+                headerLayout.setBackground(getResources().getDrawable(R.drawable.side_nav_bar_mint));
+                break;
+            case 2:
+                headerLayout.setBackground(getResources().getDrawable(R.drawable.side_nav_bar_blue));
+                break;
+            case 3:
+                headerLayout.setBackground(getResources().getDrawable(R.drawable.side_nav_bar_black));
+                break;
+        }*/
     }
 
     public void my_info(View v){            //내정보(네비게이션 드로어 헤더 부분) 클릭 시
@@ -128,34 +122,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @SuppressLint("ApplySharedPref")
-    public void setPreference(String key, int value) {
-        SharedPreferences pref = getSharedPreferences(preference, MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putInt(key, value);
-        editor.commit();
-    }
-
-    public int getPreferenceInt(String key) {
-        SharedPreferences pref = getSharedPreferences(preference, MODE_PRIVATE);
-        return pref.getInt(key, 1);
-    }
-
-    public void changeSkin(View v){
+    /*public void changeSkin(View v){
         switch(v.getId()){
             case R.id.btn1:
-                setPreference(key, 1);
+                skin.setPreference(skin.key, 1);
                 break;
             case R.id.btn2:
-                setPreference(key, 2);
+                skin.setPreference(skin.key, 2);
                 break;
             case R.id.btn3:
-                setPreference(key, 3);
+                skin.setPreference(skin.key, 3);
                 break;
         }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
-    }
+    }*/
 
 }

@@ -25,13 +25,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
+
                 <TextView
                     android:id="@+id/toolbar_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
-                    android:textSize="@dimen/toolBar_title_text"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/toolBar_title_text" />
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
@@ -48,35 +49,37 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="메인"/>
-            <Button
+                android:text="메인" />
+
+            <!--<Button
                 android:id="@+id/btn1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="changeSkin"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btn2"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/btn2"/>
+                app:layout_constraintTop_toTopOf="parent" />
+
             <Button
                 android:id="@+id/btn2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="changeSkin"
-                app:layout_constraintTop_toBottomOf="@+id/btn1"
+                app:layout_constraintBottom_toTopOf="@id/btn3"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/btn3"/>
+                app:layout_constraintTop_toBottomOf="@+id/btn1" />
+
             <Button
                 android:id="@+id/btn3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="changeSkin"
-                app:layout_constraintTop_toBottomOf="@id/btn2"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
+                app:layout_constraintTop_toBottomOf="@id/btn2" />-->
 
         </android.support.constraint.ConstraintLayout>
 
@@ -87,10 +90,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/colorWhite"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer"
-        android:background="@color/colorBrightMint"
-        app:itemTextAppearance="?attr/textAppearanceLargePopupMenu"/>
+        app:itemTextAppearance="?attr/textAppearanceLargePopupMenu"
+        app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
