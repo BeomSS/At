@@ -13,7 +13,9 @@ import android.widget.FrameLayout;
  * Created by ravi on 21/12/17.
  */
 
-public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomNavigationView> {
+public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomNavigationView> {    //바텀네비게이션 스크롤 숨김 기능
+
+    private Boolean isScrolling = false;
 
     public BottomNavigationBehavior() {
         super();
@@ -25,22 +27,24 @@ public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomN
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, BottomNavigationView child, View dependency) {
-        boolean dependsOn = dependency instanceof FrameLayout;
-        return dependsOn;
+        return dependency instanceof FrameLayout;   //instanceof 연산자
+                                                    //dependency 가 FrameLayout 타입으로 형변환 가능하면 참, 아니면 거짓
     }
 
     @Override
     public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
+        isScrolling = true;
         return axes == ViewCompat.SCROLL_AXIS_VERTICAL;
     }
 
     @Override
     public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child, @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
-        if(dy < 0){
+        if(isScrolling && dy < 0){
             showBottomNavigationView(child);
-        } else if(dy > 0){
+        } else if(isScrolling && dy > 0){
             hideBottomNavigationView(child);
         }
+        isScrolling = false;
     }
 
     private void hideBottomNavigationView(BottomNavigationView view) {
