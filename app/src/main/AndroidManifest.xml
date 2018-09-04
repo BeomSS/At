@@ -20,7 +20,6 @@
         <activity android:name="com.example.user.at.MainActivity"/>
         <activity android:name=".HelpActivity"/>
         <activity android:name=".LetterMainActivity"/>
-        <activity android:name=".BoardActivity"/>
         <activity android:name=".LikeActivity"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".MyInfoListActivity"/>
