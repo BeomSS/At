@@ -1,46 +1,59 @@
 package com.example.user.at;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 
-import java.util.Objects;
+public class MainActivity extends AppCompatActivity {
+    //    Skin skin;
+    BottomNavigationView btNav;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-//    Skin skin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /*skin = new Skin(this);
         int color = skin.skinSetting();
         int skinCode = skin.skinCode;*/
         super.onCreate(savedInstanceState);
-        setTheme(R.style.AppTheme_NoActionBar);
+        setTheme(R.style.AppThemeVer1);
         setContentView(R.layout.activity_main);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);               //커스텀 타이틀 사용
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);        //커스텀 타이틀을 사용하기 때문에 기존 타이틀 사용 안함
-//        toolbar.setBackgroundColor(color);
+        btNav = findViewById(R.id.btNavMain);
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) btNav.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationBehavior());
+        MainFragment fragment = new MainFragment();
+        loadFragment(fragment);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        btNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment;
+                switch (item.getItemId()) {
+                    case R.id.show_Main:
+                        fragment = new MainFragment();
+                        loadFragment(fragment);
+                        return true;
+                    case R.id.show_board:
+                        fragment = new BoardFragment();
+                        loadFragment(fragment);
+                        return true;
+                    case R.id.write_board:
+                        fragment = new WriteFragment();
+                        loadFragment(fragment);
+                        return true;
+                    case R.id.show_menu:
+                        fragment = new MenuFragment();
+                        loadFragment(fragment);
+                        return true;
+                }
+                return false;
+            }
+        });
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-        LinearLayout headerLayout = headerView.findViewById(R.id.myInfoBtnLayout);
         /*switch(skinCode){
             case 1:
                 headerLayout.setBackground(getResources().getDrawable(R.drawable.side_nav_bar_mint));
@@ -53,23 +66,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }*/
     }
+    void loadFragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frgMain, fragment);
+        transaction.commit();
+    }
 
-    public void my_info(View v){            //내정보(네비게이션 드로어 헤더 부분) 클릭 시
+    /*public void my_info(View v){            //내정보(네비게이션 드로어 헤더 부분) 클릭 시
         Intent intent = new Intent(this, MyInfoListActivity.class);
         startActivity(intent);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-    }
-
-    @Override
-    public void onBackPressed() {                       //뒤로가기 클릭 시
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {     //드로우어가 열려있다면 닫음
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+    }*/
 
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {         //옵션메뉴 생성
@@ -94,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }*/
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    /*@SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {        //네비게이션 아이템 클릭 시
         // Handle navigation view item clicks here.
@@ -103,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_board) {          //글 클릭 시
             // Handle the camera action
-            intent = new Intent(this, BoardActivity.class);
+            intent = new Intent(this, BoardFragment.class);
         } else if (id == R.id.nav_message) {    //쪽지 클릭 시
             intent = new Intent(this, LetterMainActivity.class);
         } else if (id == R.id.nav_like) {       //관심 있는 작품 클릭 시
@@ -120,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);        //네비게이션 아이템 클릭 후에는 드로우어 닫음
         return true;
-    }
+    }*/
 
     /*public void changeSkin(View v){
         switch(v.getId()){
