@@ -24,6 +24,7 @@
         <activity android:name=".LikeActivity"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".MyInfoListActivity"/>
+        <activity android:name=".Skin"/>
     </application>
 
 </manifest>
