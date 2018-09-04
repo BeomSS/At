@@ -1,5 +1,6 @@
 package com.example.user.at;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ public class MyInfoListActivity extends AppCompatActivity {
     View view;
     ListView myInfoList;
     MyInfoListAdapter adapter;
+    Intent intent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,20 +35,20 @@ public class MyInfoListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch(i){
                     case 0:
-                        MyWritingListFragment myWritingListFragment = new MyWritingListFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myWritingListFragment).addToBackStack(null).commit();
+                        intent = new Intent(MyInfoListActivity.this,MyWritingListActivity.class);
+                        startActivity(intent);
                         break;
                     case 1:
-                        MyWritingFeedbackFragment myWritingFeedbackFragment = new MyWritingFeedbackFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myWritingFeedbackFragment).addToBackStack(null).commit();
+                        intent = new Intent(MyInfoListActivity.this,MyWritingFeedbackActivity.class);
+                        startActivity(intent);
                         break;
                     case 2:
-                        MyNoticeFragment my_Notice_fragment = new MyNoticeFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, my_Notice_fragment).addToBackStack(null).commit();
+                        intent = new Intent(MyInfoListActivity.this,MyNoticeActivity.class);
+                        startActivity(intent);
                         break;
                     case 3:
-                        MyPreferencesFragment myPreferencesFragment = new MyPreferencesFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, myPreferencesFragment).addToBackStack(null).commit();
+                        intent = new Intent(MyInfoListActivity.this,MyPreferencesActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }
