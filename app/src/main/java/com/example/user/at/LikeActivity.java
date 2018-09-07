@@ -10,4 +10,10 @@ public class LikeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_like);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
+    }
 }

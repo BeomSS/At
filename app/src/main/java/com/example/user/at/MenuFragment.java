@@ -9,27 +9,98 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.Objects;
 
 public class MenuFragment extends Fragment {
     View view;
-
-    //테스트용
-    Button testbtn;
+    Intent intent;
+    ImageView btnSetting;
+    Button btnNotice, btnLike, btnMyWrite, btnMyFeedback;
+    TextView btnMessage, btnHelp, btnLogout;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_menu, container, false);
-        //테스트시작
-        testbtn=view.findViewById(R.id.myInfoTest);
-        testbtn.setOnClickListener(new View.OnClickListener() {
+        btnSetting = view.findViewById(R.id.btnSetting);
+        btnNotice = view.findViewById(R.id.btnNotice);
+        btnLike = view.findViewById(R.id.btnLike);
+        btnMyWrite = view.findViewById(R.id.btnMyWrite);
+        btnMyFeedback = view.findViewById(R.id.btnMyFeedback);
+        btnMessage = view.findViewById(R.id.btnMessage);
+        btnHelp = view.findViewById(R.id.btnHelp);
+        btnLogout = view.findViewById(R.id.btnLogout);
+
+        btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),MyInfoListActivity.class);
+            public void onClick(View v) {
+                intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
             }
         });
-        //테스트끝
+        btnNotice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getActivity(), MyNoticeActivity.class);
+                startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+            }
+        });
+        btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getActivity(), LikeActivity.class);
+                startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+            }
+        });
+        btnMyWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getActivity(), MyWritingListActivity.class);
+                startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+            }
+        });
+        btnMyFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getActivity(), MyWritingFeedbackActivity.class);
+                startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+            }
+        });
+        btnMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getActivity(), LetterMainActivity.class);
+                startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+            }
+        });
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getActivity(), HelpActivity.class);
+                startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+            }
+        });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getActivity(), SplashActivity.class);
+                startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+                getActivity().finish();
+            }
+        });
+
+
         return view;
     }
 }

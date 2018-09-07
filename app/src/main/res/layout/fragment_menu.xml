@@ -1,14 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/menuHeaderLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/side_nav_bar_mint"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:layout_constraintBottom_toBottomOf="@id/gdlMenuHeader"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvMenuUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="userName"
+            android:textColor="@color/colorWhite"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/tvMenuTitle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/gdlMenuH1"/>
+
+        <TextView
+            android:id="@+id/tvMenuTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 님 환영합니다"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/nav_header_text"
+            app:layout_constraintBottom_toBottomOf="@id/tvMenuUserName"
+            app:layout_constraintLeft_toRightOf="@id/tvMenuUserName" />
+
+        <ImageView
+            android:id="@+id/btnSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/tvMenuUserName"
+            app:layout_constraintRight_toRightOf="parent"
+            app:srcCompat="@drawable/ic_settings_setting_40dp"
+            tools:ignore="VectorDrawableCompat" />
+
+        <ImageView
+            android:id="@+id/imgNotice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_notifications_none_white_50dp"
+            app:layout_constraintTop_toTopOf="@id/lineMenuH1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV1"
+            app:layout_constraintBottom_toTopOf="@id/tvNotice"/>
+
+        <TextView
+            android:id="@+id/tvNotice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알림"
+            android:textSize="15dp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toBottomOf="@id/imgNotice"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV1"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/imgMyLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_thumb_up_white_50dp"
+            app:layout_constraintTop_toTopOf="@id/gdlMenuH1"
+            app:layout_constraintLeft_toLeftOf="@id/gdlMenuV1"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV2"
+            app:layout_constraintBottom_toTopOf="@id/tvNotice"/>
+
+        <TextView
+            android:id="@+id/tvMyLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="관심작품"
+            android:textSize="15dp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toBottomOf="@id/imgMyLike"
+            app:layout_constraintLeft_toLeftOf="@+id/gdlMenuV1"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV2"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/imgMyWrite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_create_white_24dp"
+            app:layout_constraintTop_toTopOf="@id/gdlMenuH1"
+            app:layout_constraintLeft_toLeftOf="@id/gdlMenuV2"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV3"
+            app:layout_constraintBottom_toTopOf="@id/tvNotice"/>
+
+        <TextView
+            android:id="@+id/tvMyWrite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내가쓴글"
+            android:textSize="15dp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toBottomOf="@id/imgMyWrite"
+            app:layout_constraintLeft_toLeftOf="@id/gdlMenuV2"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV3"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/imgMyFeedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_feedback_white_50dp"
+            app:layout_constraintTop_toTopOf="@id/lineMenuH1"
+            app:layout_constraintLeft_toLeftOf="@id/gdlMenuV3"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvNotice"/>
+
+        <TextView
+            android:id="@+id/tvMyFeedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내피드백"
+            android:textSize="15dp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toBottomOf="@id/imgMyFeedback"
+            app:layout_constraintLeft_toLeftOf="@id/gdlMenuV3"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Button
+            android:id="@+id/btnNotice"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            app:layout_constraintTop_toTopOf="@id/gdlMenuH1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV1"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Button
+            android:id="@+id/btnLike"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            app:layout_constraintTop_toTopOf="@id/gdlMenuH1"
+            app:layout_constraintLeft_toLeftOf="@id/gdlMenuV1"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV2"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Button
+            android:id="@+id/btnMyWrite"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            app:layout_constraintTop_toTopOf="@id/gdlMenuH1"
+            app:layout_constraintLeft_toLeftOf="@id/gdlMenuV2"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV3"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Button
+            android:id="@+id/btnMyFeedback"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            app:layout_constraintTop_toTopOf="@id/gdlMenuH1"
+            app:layout_constraintLeft_toLeftOf="@id/gdlMenuV3"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <View
+            android:id="@+id/lineMenuH1"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="#57ffffff"
+            app:layout_constraintTop_toTopOf="@id/gdlMenuH1"
+            app:layout_constraintBottom_toBottomOf="@id/gdlMenuH1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <View
+            android:id="@+id/lineMenuV1"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:background="#57ffffff"
+            app:layout_constraintTop_toTopOf="@id/gdlMenuH1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/gdlMenuV1"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV1"/>
+
+        <View
+            android:id="@+id/lineMenuV2"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:background="#57ffffff"
+            app:layout_constraintTop_toTopOf="@id/gdlMenuH1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/gdlMenuV2"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV2"/>
+
+        <View
+            android:id="@+id/lineMenuV3"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:background="#57ffffff"
+            app:layout_constraintTop_toTopOf="@id/gdlMenuH1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/gdlMenuV3"
+            app:layout_constraintRight_toRightOf="@id/gdlMenuV3"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/gdlMenuH1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/gdlMenuV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/gdlMenuV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/gdlMenuV3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.75" />
+
+    </android.support.constraint.ConstraintLayout>
+
     <TextView
+        android:id="@+id/btnMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="쪽지"
+        android:textColor="@color/colorBlack"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/gdlMenuHeader" />
+
+    <TextView
+        android:id="@+id/btnHelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="이용안내"
+        android:textColor="@color/colorBlack"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMessage"/>
+
+    <TextView
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그아웃"
+        android:textColor="@color/colorBlack"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHelp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gdlMenuHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="메뉴"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="내정보테스트"
-        android:id="@+id/myInfoTest"/>
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.30" />
+
 </android.support.constraint.ConstraintLayout>

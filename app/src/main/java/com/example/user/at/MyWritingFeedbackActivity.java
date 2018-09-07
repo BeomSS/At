@@ -25,6 +25,11 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
         my_writing_feedback_list.setAdapter(adapter);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
+    }
     /*프래그먼트이던 시절
     @Nullable
     @Override
