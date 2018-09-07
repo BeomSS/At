@@ -52,16 +52,4 @@ public class MyWritingListActivity extends AppCompatActivity {
         super.onBackPressed();
         overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
     }
-
-    /* 프래그먼트이던 시절
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view =inflater.inflate(R.layout.my_writing_post,container,false);
-        my_writing_post_list=(ListView)view.findViewById(R.id.my_writing_post_list);
-        adapter = new MyWritingListAdapter(getActivity(),0);
-        my_writing_post_list.setAdapter(adapter);
-        return view;
-    }
-    */
 }
