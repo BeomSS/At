@@ -83,5 +83,11 @@ public class HelpActivity extends Activity{
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
+    }
 }
 

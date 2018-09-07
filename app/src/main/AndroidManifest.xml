@@ -27,7 +27,6 @@
         <activity android:name=".MyWritingFeedbackActivity"/>
         <activity android:name=".MyNoticeActivity"/>
         <activity android:name=".MyPreferencesActivity"/>
-        <activity android:name=".Skin"/>
     </application>
 
 </manifest>
