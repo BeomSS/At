@@ -1,16 +1,410 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvScrollingTest"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/Textlayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/line1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <TextView
+                android:id="@+id/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="글"
+                android:textSize="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/Textbtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="20dp"
+                android:text=">"
+                app:layout_constraintLeft_toRightOf="@id/Text"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/Text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="제목 : "
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/Text2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/Text1.1"
+                app:layout_constraintTop_toBottomOf="@id/Text" />
+
+            <TextView
+                android:id="@+id/Text1.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="aaa"
+                android:textSize="20dp"
+                app:layout_constraintLeft_toRightOf="@id/Text1"
+                app:layout_constraintTop_toBottomOf="@id/Text" />
+
+            <TextView
+                android:id="@+id/Text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:text="작성자 : "
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/text4"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/Text2.1"
+                app:layout_constraintTop_toBottomOf="@id/Text1" />
+
+            <TextView
+                android:id="@+id/Text2.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bbb"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/text4"
+                app:layout_constraintLeft_toRightOf="@id/Text2"
+                app:layout_constraintTop_toBottomOf="@id/Text1" />
+
+            <TextView
+                android:id="@+id/Text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="추천수 : "
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/text4"
+                app:layout_constraintRight_toLeftOf="@id/Text3.1"
+                app:layout_constraintTop_toBottomOf="@id/Text1.1" />
+
+            <TextView
+                android:id="@+id/Text3.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="ccc"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/text4"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/Text1" />
+
+
+            <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/text4"
+                android:layout_width="wrap_content"
+                android:layout_height="260dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Text2"
+                android:fillViewport="true">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="260dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Text2"
+                    android:id="@+id/Content"
+                    android:layout_margin="20dp"
+                    android:text="생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와..." />
+
+
+            </android.support.v4.widget.NestedScrollView>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
+            android:background="#948b8b"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Textlayout" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/picturelayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/line1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/line2">
+
+            <TextView
+                android:id="@+id/Picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="그림"
+                android:textSize="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/Picturebtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="20dp"
+                android:text=">"
+                app:layout_constraintLeft_toRightOf="@id/Picture"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/Picture1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="제목 : "
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/Picture2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/Picture1.1"
+                app:layout_constraintTop_toBottomOf="@id/Picture" />
+
+            <TextView
+                android:id="@+id/Picture1.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="aaa"
+                android:textSize="20dp"
+                app:layout_constraintLeft_toRightOf="@id/Picture1"
+                app:layout_constraintTop_toBottomOf="@id/Picture" />
+
+            <TextView
+                android:id="@+id/Picture2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="작성자 : "
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/Picture4"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/Picture2.1"
+                app:layout_constraintTop_toBottomOf="@id/Picture1" />
+            <TextView
+                android:id="@+id/Picture2.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bbb"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/Picture4"
+                app:layout_constraintLeft_toRightOf="@id/Picture2"
+                app:layout_constraintTop_toBottomOf="@id/Picture1.1" />
+
+
+            <TextView
+                android:id="@+id/Picture3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="추천수 : "
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/Picture4"
+                app:layout_constraintRight_toLeftOf="@id/Picture3.1"
+                app:layout_constraintTop_toBottomOf="@id/Picture1.1" />
+
+            <TextView
+                android:id="@+id/Picture3.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="ccc"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/Picture4"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/Picture1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Picture4"
+                android:background="@drawable/bonobono"
+                android:layout_margin="20dp"
+                app:layout_constraintTop_toBottomOf="@id/Picture2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
+            android:background="#948b8b"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/picturelayout" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/Musiclayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/line2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <TextView
+                android:id="@+id/Music"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="음악"
+                android:textSize="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/Musicbtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="20dp"
+                android:text=">"
+                app:layout_constraintLeft_toRightOf="@id/Music"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/Music1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="제목 : "
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/Music2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/Music1.1"
+                app:layout_constraintTop_toBottomOf="@id/Music" />
+
+            <TextView
+                android:id="@+id/Music1.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="aaa"
+                android:textSize="20dp"
+                app:layout_constraintLeft_toRightOf="@id/Music1"
+                app:layout_constraintTop_toBottomOf="@id/Music" />
+
+            <TextView
+                android:id="@+id/Music2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="작성자 : "
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/Pause"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/Music2.1"
+                app:layout_constraintTop_toBottomOf="@id/Music1" />
+
+            <TextView
+                android:id="@+id/Music2.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bbb"
+                android:textSize="20dp"
+
+                app:layout_constraintBottom_toTopOf="@id/Pause"
+                app:layout_constraintLeft_toRightOf="@id/Music2"
+                app:layout_constraintTop_toBottomOf="@id/Music1" />
+
+            <TextView
+                android:id="@+id/Music3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="추천수 : "
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/Pause"
+                app:layout_constraintRight_toLeftOf="@id/Music3.1"
+                app:layout_constraintTop_toBottomOf="@id/Music1.1" />
+
+            <TextView
+                android:id="@+id/Music3.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="ccc"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/Pause"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/Music1" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Pause"
+                android:text="일시정지"
+                android:layout_margin="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/Play"
+                app:layout_constraintTop_toBottomOf="@id/Music2"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Play"
+                android:text="재생"
+                android:layout_margin="20dp"
+                app:layout_constraintLeft_toRightOf="@id/Pause"
+                app:layout_constraintRight_toLeftOf="@id/Stop"
+                app:layout_constraintTop_toBottomOf="@id/Music2"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Stop"
+                android:text="정지"
+                android:layout_margin="20dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/Play"
+                app:layout_constraintTop_toBottomOf="@id/Music2"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
 </android.support.v4.widget.NestedScrollView>
