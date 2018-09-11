@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public class HelpActivity extends Activity{
 
+    Skin skin;
+    int color;
     private ArrayList<String> mGroupList = null;
     private ArrayList<ArrayList<String>> mChildList = null;
     private ArrayList<String> mChildListContent = null;
@@ -21,6 +23,8 @@ public class HelpActivity extends Activity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        skin = new Skin(this);
+        color = skin.skinSetting();
         setContentView(R.layout.activity_help);
 
         mListView = (ExpandableListView) findViewById(R.id.elv_list);

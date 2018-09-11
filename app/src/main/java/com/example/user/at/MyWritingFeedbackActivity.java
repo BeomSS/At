@@ -12,12 +12,16 @@ import java.util.Objects;
  */
 
 public class MyWritingFeedbackActivity extends AppCompatActivity {
+    Skin skin;
+    int color;
     ListView my_writing_feedback_list;
     MyWritingListAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        skin = new Skin(this);
+        color = skin.skinSetting();
         setContentView(R.layout.my_writing_feedback);
         Objects.requireNonNull(getSupportActionBar()).hide();
         my_writing_feedback_list=(ListView)findViewById(R.id.my_writing_feedback_list);

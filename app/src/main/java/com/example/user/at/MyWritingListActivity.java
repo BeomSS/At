@@ -15,6 +15,8 @@ import java.util.Objects;
  */
 
 public class MyWritingListActivity extends AppCompatActivity {
+    Skin skin;
+    int color;
     String[] testTimes={"2018.04.30 14:20","2018.04.28 14:20","2018.04.27 14:20","2018.04.01 14:20","2018.04.01 14:20"};
     String[] testTitles={"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","bbbb","cccc","abcd","555"};
     String[] testWriters={"Tea","Coffee","Bean","Tom","behind"};
@@ -29,6 +31,8 @@ public class MyWritingListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        skin = new Skin(this);
+        color = skin.skinSetting();
         setContentView(R.layout.my_writing_post);
         Objects.requireNonNull(getSupportActionBar()).hide();
 

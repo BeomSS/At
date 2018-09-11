@@ -16,6 +16,8 @@ import android.widget.TextView;
  */
 
 public class LetterMainActivity extends Activity {
+    Skin skin;
+    int color;
     Spinner letterSpinner;
     TextView letterText;
     int position;
@@ -25,6 +27,8 @@ public class LetterMainActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        skin = new Skin(this);
+        int color = skin.skinSetting();
         setContentView(R.layout.activity_letter);
 
         letterSpinner = (Spinner) findViewById(R.id.letter_spinner);
