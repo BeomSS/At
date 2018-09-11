@@ -1,9 +1,11 @@
 package com.example.user.at;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ public class MenuFragment extends Fragment {
     ImageView btnSetting;
     Button btnNotice, btnLike, btnMyWrite, btnMyFeedback;
     TextView btnMessage, btnHelp, btnLogout;
+    ConstraintLayout menuHeaderLayout;
 
     @Nullable
     @Override
@@ -33,11 +36,14 @@ public class MenuFragment extends Fragment {
         btnMessage = view.findViewById(R.id.btnMessage);
         btnHelp = view.findViewById(R.id.btnHelp);
         btnLogout = view.findViewById(R.id.btnLogout);
+        menuHeaderLayout = view.findViewById(R.id.menuHeaderLayout);
+
+        menuHeaderLayout.setBackgroundColor(((MainActivity)MainActivity.context).color);
 
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(getActivity(), SettingActivity.class);
+                intent = new Intent(getActivity(),MyPreferencesActivity.class);
                 startActivity(intent);
                 Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
             }
