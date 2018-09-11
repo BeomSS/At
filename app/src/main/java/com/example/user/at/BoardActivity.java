@@ -7,6 +7,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import java.util.ArrayList;
 
 public class BoardActivity extends AppCompatActivity {
@@ -16,6 +18,7 @@ public class BoardActivity extends AppCompatActivity {
     String[] testTitles={"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","bbbb","cccc","abcd","555","2","2","2","2"};
     String[] testWriters={"Tea","Coffee","Bean","Tom","behind","2","2","2","2"};
     String[] testfeedbacks={"2","3","2","1","4","2","2","2","2","2"};
+    String[] testrecommends={"2","3","2","1","4","2","2","2","2","2"};
 
     String categoryName;
     RecyclerView boardRecycler;
@@ -23,6 +26,7 @@ public class BoardActivity extends AppCompatActivity {
     ArrayList<MyInfoItem> items;
     MyInfoAdapter adapter;
     int num;
+    JsonObjectRequest jsonRequest;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +41,7 @@ public class BoardActivity extends AppCompatActivity {
 
         items=new ArrayList();
         for (num=0;num<=8;num++){
-            items.add(new MyInfoItem(testTimes[num],testTitles[num],testWriters[num],testfeedbacks[num]));
+            items.add(new MyInfoItem(testTimes[num],testTitles[num],testWriters[num],testfeedbacks[num],testrecommends[num]));
         };
 
         boardRecycler.setLayoutManager(layoutManager);

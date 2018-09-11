@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
-import java.util.Objects;
-
 /**
  * Created by johan on 2018-06-05.
  */
@@ -23,7 +21,6 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
         skin = new Skin(this);
         color = skin.skinSetting();
         setContentView(R.layout.my_writing_feedback);
-        Objects.requireNonNull(getSupportActionBar()).hide();
         my_writing_feedback_list=(ListView)findViewById(R.id.my_writing_feedback_list);
         adapter = new MyWritingListAdapter(this,1);
         my_writing_feedback_list.setAdapter(adapter);

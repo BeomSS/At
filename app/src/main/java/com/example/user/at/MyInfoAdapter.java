@@ -30,6 +30,7 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoViewHolder> {
         holder.vhTitle.setText(items.get(position).titles);
         holder.vhWriter.setText(items.get(position).writers);
         holder.vhFeedback.setText(items.get(position).feedbacks);
+        holder.vhRecommend.setText(items.get(position).recommends);
     }
 
     @Override
