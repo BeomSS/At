@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class BoardActivity extends AppCompatActivity {
+    Skin skin;
+    int color;
     String[] testTimes={"2018.04.30 14:20","2018.04.28 14:20","2018.04.27 14:20","2018.04.01 14:20","2018.04.01 14:20","2018.04.01 14:20","2018.04.01 14:20","2018.04.01 14:20","2018.04.01 14:20"};
     String[] testTitles={"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","bbbb","cccc","abcd","555","2","2","2","2"};
     String[] testWriters={"Tea","Coffee","Bean","Tom","behind","2","2","2","2"};
@@ -25,8 +27,8 @@ public class BoardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        android.support.v7.app.ActionBar actionbar=getSupportActionBar();
-        actionbar.setTitle("게시판 테스트"); //인탠트로 어떤 곳에서 불러온건지 알아야한다.
+        skin = new Skin(this);
+        color = skin.skinSetting();
         setContentView(R.layout.board);
 
         boardRecycler=findViewById(R.id.board_recycler);
@@ -42,5 +44,11 @@ public class BoardActivity extends AppCompatActivity {
         boardRecycler.setItemAnimator(new DefaultItemAnimator());
         adapter=new MyInfoAdapter(items);
         boardRecycler.setAdapter(adapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
     }
 }

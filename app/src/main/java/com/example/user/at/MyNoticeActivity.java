@@ -13,6 +13,8 @@ import java.util.Objects;
  */
 
 public class MyNoticeActivity extends AppCompatActivity {
+    Skin skin;
+    int color;
     View view;
     ListView my_notice_list;
     MyWritingListAdapter adapter;
@@ -20,6 +22,8 @@ public class MyNoticeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        skin = new Skin(this);
+        color = skin.skinSetting();
         setContentView(R.layout.my_notice);
         Objects.requireNonNull(getSupportActionBar()).hide();
         my_notice_list=(ListView)findViewById(R.id.my_notice_list);
