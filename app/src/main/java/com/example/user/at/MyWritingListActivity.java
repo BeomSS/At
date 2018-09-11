@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by johan on 2018-06-05.
@@ -34,7 +33,6 @@ public class MyWritingListActivity extends AppCompatActivity {
         skin = new Skin(this);
         color = skin.skinSetting();
         setContentView(R.layout.my_writing_post);
-        Objects.requireNonNull(getSupportActionBar()).hide();
 
         myInfoRecycler=(RecyclerView) findViewById(R.id.my_info_recycler);
         layoutManager=new LinearLayoutManager(this);
