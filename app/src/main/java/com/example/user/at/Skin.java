@@ -16,21 +16,43 @@ public class Skin {
 
     public int skinSetting(){
         skinCode = getPreferenceInt(key);
-        int color = context.getResources().getColor(R.color.colorMint);
+        int color = 0;
         switch(skinCode){
             case 1:
                 context.setTheme(R.style.AppThemeVer1);
-                color = context.getResources().getColor(R.color.colorMint);
+                color = getColor(color, R.color.colorMint);
                 break;
             case 2:
                 context.setTheme(R.style.AppThemeVer2);
-                color = context.getResources().getColor(R.color.colorBlue);
+                color = getColor(color, R.color.colorBlue);
                 break;
             case 3:
                 context.setTheme(R.style.AppThemeVer3);
-                color = context.getResources().getColor(R.color.colorBlack);
+                color = getColor(color, R.color.colorDark);
                 break;
         }
+        return color;
+    }
+
+    public int colorSetting(){
+        skinCode = getPreferenceInt(key);
+        int color = 0;
+        switch(skinCode){
+            case 1:
+                color = getColor(color, R.color.colorMint);
+                break;
+            case 2:
+                color = getColor(color, R.color.colorBlue);
+                break;
+            case 3:
+                color = getColor(color, R.color.colorDark);
+                break;
+        }
+        return color;
+    }
+
+    public int getColor(int color, int colorID){
+        color = context.getResources().getColor(colorID);
         return color;
     }
 
@@ -45,6 +67,10 @@ public class Skin {
     public int getPreferenceInt(String key) {
         SharedPreferences pref = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
         return pref.getInt(key, 1);
+    }
+
+    public int getSkinCode(){
+        return skinCode;
     }
 
 }

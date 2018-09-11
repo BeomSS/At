@@ -1,5 +1,6 @@
 package com.example.user.at;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,16 +11,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-    //    Skin skin;
+    Skin skin;
     BottomNavigationView btNav;
-
+    public static Context context;
+    int color;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        /*skin = new Skin(this);
-        int color = skin.skinSetting();
-        int skinCode = skin.skinCode;*/
+        context = this;
+        skin = new Skin(this);
+        color = skin.skinSetting();
+        int skinCode = skin.getSkinCode();
         super.onCreate(savedInstanceState);
-        setTheme(R.style.AppThemeVer1);
         setContentView(R.layout.activity_main);
 
         btNav = findViewById(R.id.btNavMain);
@@ -54,17 +56,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*switch(skinCode){
-            case 1:
-                headerLayout.setBackground(getResources().getDrawable(R.drawable.side_nav_bar_mint));
-                break;
-            case 2:
-                headerLayout.setBackground(getResources().getDrawable(R.drawable.side_nav_bar_blue));
-                break;
-            case 3:
-                headerLayout.setBackground(getResources().getDrawable(R.drawable.side_nav_bar_black));
-                break;
-        }*/
     }
     void loadFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
