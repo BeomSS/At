@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class MainFragment extends Fragment {
@@ -19,10 +20,11 @@ public class MainFragment extends Fragment {
     TextView text1, text2, text3, content, picture1, picture2, picture3, music1, music2, music3;
     Button textbtn, picturebtn, musicbtn, pause, play, stop;
     ImageView imageView;
-    NestedScrollView scrollView1,scrollView2;
+    NestedScrollView scrollView1;
+    ScrollView scrollView2;
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class MainFragment extends Fragment {
         stop = (Button) view.findViewById(R.id.Stop);
         imageView = (ImageView) view.findViewById(R.id.Picture4);
         scrollView1 = (NestedScrollView) view.findViewById(R.id.scrollView);
-        scrollView2 = (NestedScrollView) view.findViewById(R.id.text4);
+        scrollView2 = (ScrollView) view.findViewById(R.id.text4);
 
         scrollView2.setOnTouchListener(new View.OnTouchListener() {                  //이중 스크롤을 사용할때 안쪽 스크롤 터치시 바깥쪽 스크롤 터치이벤트 정지
             @Override
