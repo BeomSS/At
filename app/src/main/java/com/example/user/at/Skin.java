@@ -20,39 +20,17 @@ public class Skin {
         switch(skinCode){
             case 1:
                 context.setTheme(R.style.AppThemeVer1);
-                color = getColor(color, R.color.colorMint);
+                color = context.getResources().getColor( R.color.colorMint);
                 break;
             case 2:
                 context.setTheme(R.style.AppThemeVer2);
-                color = getColor(color, R.color.colorBlue);
+                color = context.getResources().getColor(R.color.colorBlue);
                 break;
             case 3:
                 context.setTheme(R.style.AppThemeVer3);
-                color = getColor(color, R.color.colorDark);
+                color = context.getResources().getColor(R.color.colorDark);
                 break;
         }
-        return color;
-    }
-
-    public int colorSetting(){
-        skinCode = getPreferenceInt(key);
-        int color = 0;
-        switch(skinCode){
-            case 1:
-                color = getColor(color, R.color.colorMint);
-                break;
-            case 2:
-                color = getColor(color, R.color.colorBlue);
-                break;
-            case 3:
-                color = getColor(color, R.color.colorDark);
-                break;
-        }
-        return color;
-    }
-
-    public int getColor(int color, int colorID){
-        color = context.getResources().getColor(colorID);
         return color;
     }
 
