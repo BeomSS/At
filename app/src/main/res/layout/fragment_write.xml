@@ -59,6 +59,7 @@
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/title_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
@@ -82,21 +83,23 @@
         app:layout_constraintTop_toBottomOf="@id/guideline2">
 
         <TextView
+            android:id="@+id/explain_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBlackAlpha"
             android:gravity="center"
-            android:text="설 명"
+            android:text="내 용"
             android:textColor="@color/colorWhite"
             android:textSize="15dp"
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/explain_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:hint="설명을 입력해 주세요."
+            android:hint="내용을 입력해주세요."
             android:textColor="@color/colorBlue"
             android:maxLength="200" />
 
@@ -124,22 +127,25 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/file_textview"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
             android:text="파일을 첨부하시려면 클릭해주세요"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:enabled="false"/>
     </LinearLayout>
 
     <Button
+        android:id="@+id/done_button"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorBlueAlpha"
-        android:text="파일 올리기"
+        android:text="글올리기"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
