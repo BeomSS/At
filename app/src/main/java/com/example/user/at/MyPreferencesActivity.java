@@ -18,6 +18,7 @@ public class MyPreferencesActivity extends AppCompatActivity {
     Button btnSaveMyPreference;
     Skin skin;
     int skinCode;
+    CustomDialog dlg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,14 +36,27 @@ public class MyPreferencesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (skinCode != spnSkin.getSelectedItemPosition() + 1) {
-                    skin.setPreference(skin.key, spnSkin.getSelectedItemPosition() + 1);
-                    Intent intent = new Intent(MyPreferencesActivity.this, SplashActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
-                    ((MainActivity) MainActivity.context).finish();
-                    finish();
+                    dlg = new CustomDialog(MyPreferencesActivity.this, "스킨 색상 변경", "스킨 색상을 변경하시면 앱이 재시작됩니다.\n계속 진행 하시겠습니까?", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dlg.dismiss();
+                        }
+                    }, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            skin.setPreference(skin.key, spnSkin.getSelectedItemPosition() + 1);
+                            Intent intent = new Intent(MyPreferencesActivity.this, SplashActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+                            ((MainActivity) MainActivity.context).finish();
+                            dlg.dismiss();
+                            finish();
+                        }
+                    });
+                    dlg.show();
                 } else {
                     finish();
+                    overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
                 }
             }
         });

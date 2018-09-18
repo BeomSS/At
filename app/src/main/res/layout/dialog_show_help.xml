@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/help_background">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpHelpViewer"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/help_view_pager_background"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/loDlgHelpButtonSpace"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.pm10.library.CircleIndicator
+        android:id="@+id/indicatorHelpViewer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/loDlgHelpButtonSpace"
+        app:layout_constraintLeft_toLeftOf="@id/vpHelpViewer"
+        app:layout_constraintRight_toRightOf="@id/vpHelpViewer"
+        app:layout_constraintTop_toBottomOf="@+id/vpHelpViewer" />
+
+    <LinearLayout
+        android:id="@+id/loDlgHelpButtonSpace"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vpHelpViewer">
+
+        <Button
+            android:id="@+id/btnHelpForeverClose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@color/colorGrey"
+            android:text="다시보지않기"
+            android:textColor="@color/colorWhite"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
+
+        <Button
+            android:id="@+id/btnHelpClose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="#dddddd"
+            android:text="닫기"
+            android:textColor="@color/colorBlack"
+            android:textSize="20dp"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
