@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.user.at.MainActivity"/>
-        <activity android:name=".HelpActivity"/>
         <activity android:name=".LetterMainActivity"/>
         <activity android:name=".LikeActivity"/>
         <activity android:name=".MyInfoListActivity"/>
