@@ -29,7 +29,6 @@ public class WriteFragment extends Fragment {
     Button doneBtn;
     int putCategory;
     String putTitle,putExplain;
-    private String URL="http://58.226.161.152:800/At/Writing.php";
 
     @Nullable
     @Override

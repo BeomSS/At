@@ -14,5 +14,5 @@ public class MyInfoViewHolder extends RecyclerView.ViewHolder {
         vhTitle=(TextView)itemView.findViewById(R.id.layout_titles);
         vhFeedback=(TextView)itemView.findViewById(R.id.layout_feedback);
         vhRecommend=(TextView)itemView.findViewById(R.id.layout_recommend);
-}
+    }
 }

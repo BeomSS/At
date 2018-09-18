@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardRequest extends StringRequest {
-    final static private String URL="http://58.226.161.152:800/At/SeeBoard.php";
+    final static private String URL="http://218.50.169.50:800/At/SeeBoard.php";
     private Map<String,String> parameter;
 
     public BoardRequest(int category, Response.Listener<String> listener){

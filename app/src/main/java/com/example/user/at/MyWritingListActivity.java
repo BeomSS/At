@@ -20,7 +20,6 @@ public class MyWritingListActivity extends AppCompatActivity {
     String[] testTitles={"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","bbbb","cccc","abcd","555"};
     String[] testWriters={"Tea","Coffee","Bean","Tom","behind"};
     String[] testfeedbacks={"2","3","2","1","4"};
-    int num;
 
     RecyclerView myInfoRecycler;
     LinearLayoutManager layoutManager;
@@ -39,9 +38,10 @@ public class MyWritingListActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         items=new ArrayList();
-        for (num=0;num<=4;num++){
+        for (int num=0;num<=4;num++){
             items.add(new MyInfoItem(testTimes[num],testTitles[num],testWriters[num],testfeedbacks[num]));
         };
+
         myInfoRecycler.setLayoutManager(layoutManager);
         myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
         adapter=new MyInfoAdapter(items);

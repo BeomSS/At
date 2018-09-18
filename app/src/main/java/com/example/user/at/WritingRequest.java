@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WritingRequest extends StringRequest {
-    final static private String URL="http://58.226.161.152:800/At/Writing.php";
+    final static private String URL="http://218.50.169.50:800/At/Writing.php";
     private Map<String,String> parameter;
 
     public WritingRequest(String userID, int category, String post_title, String explain, Response.Listener<String> listener){
