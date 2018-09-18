@@ -1,6 +1,5 @@
 package com.example.user.at;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoViewHolder> {
-    private Context myInfoContext;
     private ArrayList<MyInfoItem> items;
 
     MyInfoAdapter(ArrayList item){items=item;}
@@ -19,7 +17,6 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoViewHolder> {
     @Override
     public MyInfoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.my_info_recycler_item,parent,false);
-        myInfoContext=parent.getContext();
         MyInfoViewHolder holder = new MyInfoViewHolder(v);
         return holder;
     }
