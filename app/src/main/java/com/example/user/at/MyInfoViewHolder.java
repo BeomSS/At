@@ -6,9 +6,10 @@ import android.widget.TextView;
 
 
 public class MyInfoViewHolder extends RecyclerView.ViewHolder {
-    public TextView vhTime,vhWriter,vhTitle,vhFeedback,vhRecommend;
+    public TextView vhTime,vhWriter,vhTitle,vhFeedback,vhRecommend,vhCategory;
     public MyInfoViewHolder(View itemView){
         super(itemView);
+        vhCategory=(TextView)itemView.findViewById(R.id.layout_category);
         vhTime=(TextView)itemView.findViewById(R.id.layout_times);
         vhWriter=(TextView)itemView.findViewById(R.id.layout_writers);
         vhTitle=(TextView)itemView.findViewById(R.id.layout_titles);

@@ -10,7 +10,6 @@ import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -25,8 +24,6 @@ public class BoardActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     ArrayList<MyInfoItem> items;
     MyInfoAdapter adapter;
-    int num;
-    JsonObjectRequest jsonRequest;
     String time,title,writer,feedback,recommend;
 
     @Override
@@ -57,7 +54,7 @@ public class BoardActivity extends AppCompatActivity {
                         writer=row.getString("member_id");
                         feedback="0";
                         recommend=String.valueOf(row.getInt("recommend"));
-                        items.add(new MyInfoItem(time,title,writer,feedback,recommend));
+                        items.add(new MyInfoItem(0,null,time,title,writer,feedback,recommend));
                     }
 
                     boardRecycler.setLayoutManager(layoutManager);

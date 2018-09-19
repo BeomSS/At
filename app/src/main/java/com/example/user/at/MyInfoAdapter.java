@@ -23,6 +23,7 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyInfoViewHolder holder, int position) {
+        holder.vhCategory.setText(items.get(position).category);
         holder.vhTime.setText(items.get(position).times);
         holder.vhTitle.setText(items.get(position).titles);
         holder.vhWriter.setText(items.get(position).writers);
