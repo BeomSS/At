@@ -6,6 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -16,37 +24,59 @@ import java.util.ArrayList;
 public class MyWritingListActivity extends AppCompatActivity {
     Skin skin;
     int color;
-    String[] testTimes={"2018.04.30 14:20","2018.04.28 14:20","2018.04.27 14:20","2018.04.01 14:20","2018.04.01 14:20"};
-        String[] testTitles={"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","bbbb","cccc","abcd","555"};
-        String[] testWriters={"Tea","Coffee","Bean","Tom","behind"};
-        String[] testfeedbacks={"2","3","2","1","4"};
 
-        RecyclerView myInfoRecycler;
-        LinearLayoutManager layoutManager;
-        MyInfoAdapter adapter;
-        ArrayList<MyInfoItem> items;
+    RecyclerView myInfoRecycler;
+    LinearLayoutManager layoutManager;
+    MyInfoAdapter adapter;
+    ArrayList<MyInfoItem> items;
+    String category,time,title,feedback,recommend,writer;
 
-        @Override
-        protected void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            skin = new Skin(this);
-            color = skin.skinSetting();
-            setContentView(R.layout.my_writing_post);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        skin = new Skin(this);
+        color = skin.skinSetting();
+        setContentView(R.layout.my_writing_post);
 
-            myInfoRecycler=(RecyclerView) findViewById(R.id.my_info_recycler);
-            layoutManager=new LinearLayoutManager(this);
-            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        myInfoRecycler = (RecyclerView) findViewById(R.id.my_info_recycler);
+        layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-            items=new ArrayList();
-            for (int num=0;num<=4;num++){
-                items.add(new MyInfoItem(testTimes[num],testTitles[num],testWriters[num],testfeedbacks[num]));
-            };
+        Response.Listener wListener=new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG", "JSONObj response=" + response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray jsonArray=jsonResponse.getJSONArray("sign");
 
-            myInfoRecycler.setLayoutManager(layoutManager);
-            myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
-            adapter=new MyInfoAdapter(items);
-            myInfoRecycler.setAdapter(adapter);
+                    items=new ArrayList<>();
 
+                    for(int i=0;i<jsonArray.length();i++){
+                        JSONObject row=jsonArray.getJSONObject(i);
+                        time=row.getString("create_time");
+                        title=row.getString("post_title");
+                        category=row.getString("category");
+                        writer=row.getString("member_id");
+                        feedback="0";
+                        recommend=String.valueOf(row.getInt("recommend"));
+                        items.add(new MyInfoItem(1,category,time,title,writer,feedback,recommend));
+                    }
+
+                    myInfoRecycler.setLayoutManager(layoutManager);
+                    myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
+                    adapter = new MyInfoAdapter(items);
+                    myInfoRecycler.setAdapter(adapter);
+
+                }catch (Exception e){
+                    Log.d("dberror",e.toString());
+                }
+            }
+        };
+
+        MyRequest wRequest = new MyRequest("test",wListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(wRequest);
     }
 
     @Override
