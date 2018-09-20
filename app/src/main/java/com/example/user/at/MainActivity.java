@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView btNav;
     public static Context context;
     int color;
+    BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         color = skin.skinSetting();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         btNav = findViewById(R.id.btNavMain);
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) btNav.getLayoutParams();
@@ -64,4 +66,8 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        backPressCloseHandler.onBackPressed();
+    }
 }
