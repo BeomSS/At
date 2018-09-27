@@ -1,6 +1,7 @@
 package com.example.user.at;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,10 +16,12 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 public class MainFragment extends Fragment {
     View view;
     TextView text1, text2, text3, content, picture1, picture2, picture3, music1, music2, music3;
-    Button textbtn, picturebtn, musicbtn, pause, play, stop;
+    Button textbtn, btnPicture, musicbtn, pause, play, stop;
     ImageView imageView;
     NestedScrollView scrollView1;
     ScrollView scrollView2;
@@ -40,7 +43,7 @@ public class MainFragment extends Fragment {
         music2 = view.findViewById(R.id.Music2_1);
         music3 = view.findViewById(R.id.Music3_1);
         textbtn = view.findViewById(R.id.Textbtn);
-        picturebtn = view.findViewById(R.id.Picturebtn);
+        btnPicture = view.findViewById(R.id.btnPicture);
         musicbtn = view.findViewById(R.id.Musicbtn);
         pause = view.findViewById(R.id.Pause);
         play = view.findViewById(R.id.Play);
@@ -67,10 +70,12 @@ public class MainFragment extends Fragment {
             }
         });
 
-        picturebtn.setOnClickListener(new View.OnClickListener() {
+        btnPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getActivity(), ShowPictureActivity.class);
+                startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
             }
         });
 
