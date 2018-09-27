@@ -11,6 +11,7 @@ import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.user.at.request.MyWritingRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,7 +30,7 @@ public class MyWritingListActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     MyInfoAdapter adapter;
     ArrayList<MyInfoItem> items;
-    String category,time,title,feedback,recommend,writer;
+    String postid,category,time,title,feedback,recommend,writer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,13 +55,14 @@ public class MyWritingListActivity extends AppCompatActivity {
 
                     for(int i=0;i<jsonArray.length();i++){
                         JSONObject row=jsonArray.getJSONObject(i);
+                        postid=row.getString("post_id");
                         time=row.getString("create_time");
                         title=row.getString("post_title");
                         category=row.getString("category");
                         writer=row.getString("member_id");
                         feedback="0";
                         recommend=String.valueOf(row.getInt("recommend"));
-                        items.add(new MyInfoItem(1,category,time,title,writer,feedback,recommend));
+                        items.add(new MyInfoItem(1,postid,category,time,title,writer,feedback,recommend));
                     }
 
                     myInfoRecycler.setLayoutManager(layoutManager);
@@ -74,7 +76,7 @@ public class MyWritingListActivity extends AppCompatActivity {
             }
         };
 
-        MyRequest wRequest = new MyRequest("test",wListener);
+        MyWritingRequest wRequest = new MyWritingRequest("test",wListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(wRequest);
     }

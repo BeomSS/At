@@ -4,7 +4,7 @@ public class MyInfoItem {
 
     //게시판flag0 ,내가쓴글=flag1
     int flag=0;
-    public String category,times,titles,writers,feedbacks,recommends;
+    public String num,category,times,titles,writers,feedbacks,recommends;
 
     //리사이클러 테스트용 생성자
     public MyInfoItem(String time,String title,String writer,String feed){//내가 쓴 글
@@ -14,7 +14,7 @@ public class MyInfoItem {
         feedbacks="피드백("+feed+")";
     }
 
-    public MyInfoItem(int fl,String cate,String time,String title,String writer,String feed,String recommend){ //게시판
+    public MyInfoItem(int fl,String idnum,String cate,String time,String title,String writer,String feed,String recommend){ //게시판
         flag=fl;
         switch (flag){
             case 0:
@@ -25,8 +25,9 @@ public class MyInfoItem {
                 recommends="추천수("+recommend+")";
                 break;
             case 1:
+                num="게시물ID:"+idnum;
                 if(cate.equals("0")){
-                    category="글   ";
+                    category="글 ";
                 }else if(cate.equals("1")){
                     category="그림 ";
                 }else if(cate.equals("2")){
@@ -37,6 +38,12 @@ public class MyInfoItem {
                 times=time;
                 titles=title;
                 feedbacks="피드백("+feed+")";
+                recommends="추천수("+recommend+")";
+                break;
+            case 2:
+                num="게시물ID:"+idnum;
+                times=time;
+                titles=title;
                 recommends="추천수("+recommend+")";
                 break;
         }

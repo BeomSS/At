@@ -11,6 +11,7 @@ import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.user.at.request.BoardRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -54,7 +55,7 @@ public class BoardActivity extends AppCompatActivity {
                         writer=row.getString("member_id");
                         feedback="0";
                         recommend=String.valueOf(row.getInt("recommend"));
-                        items.add(new MyInfoItem(0,null,time,title,writer,feedback,recommend));
+                        items.add(new MyInfoItem(0,null,null,time,title,writer,feedback,recommend));
                     }
 
                     boardRecycler.setLayoutManager(layoutManager);

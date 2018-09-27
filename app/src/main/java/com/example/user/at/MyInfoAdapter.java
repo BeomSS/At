@@ -6,6 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.user.at.MyInfoItem;
+import com.example.user.at.MyInfoViewHolder;
+import com.example.user.at.R;
+
 import java.util.ArrayList;
 
 public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoViewHolder> {
@@ -23,6 +27,7 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyInfoViewHolder holder, int position) {
+        holder.vhNum.setText(items.get(position).num);
         holder.vhCategory.setText(items.get(position).category);
         holder.vhTime.setText(items.get(position).times);
         holder.vhTitle.setText(items.get(position).titles);
