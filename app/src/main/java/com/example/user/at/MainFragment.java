@@ -16,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.user.at.R;
+import com.example.user.at.ShowPictureActivity;
+
 import java.util.Objects;
 
 public class MainFragment extends Fragment {

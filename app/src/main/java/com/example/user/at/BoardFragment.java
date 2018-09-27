@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.user.at.BoardActivity;
+import com.example.user.at.R;
+
 public class BoardFragment extends Fragment{
     ImageButton text,music,picture;
     View view;
