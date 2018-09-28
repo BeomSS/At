@@ -13,12 +13,14 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
     Skin skin;
     BottomNavigationView btNav;
+    public static String ipAddress;
     public static Context context;
     int color;
     BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ipAddress = getString(R.string.ip_address);
         context = this;
         skin = new Skin(this);
         color = skin.skinSetting();

@@ -48,10 +48,10 @@ public class ShowPictureActivity extends Activity {
         btnPictureFeedbackLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pictureFeedbackLiked){
+                if (pictureFeedbackLiked) {
                     btnPictureFeedbackLike.setImageResource(R.drawable.ic_thumb_up_outline_30dp);
                     pictureFeedbackLiked = false;
-                } else{
+                } else {
                     btnPictureFeedbackLike.setImageResource(R.drawable.ic_thumb_up_color_30dp);
                     pictureFeedbackLiked = true;
                 }

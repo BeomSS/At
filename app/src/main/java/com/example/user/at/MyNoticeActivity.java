@@ -18,10 +18,10 @@ public class MyNoticeActivity extends AppCompatActivity {
     Skin skin;
     int color;
     View view;
-    String[] testTimes={"2018.04.30 14:20","2018.04.28 14:20","2018.04.27 14:20","2018.04.01 14:20","2018.04.01 14:20"};
-    String[] testTitles={"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","bbbb","cccc","abcd","555"};
-    String[] testWriters={"Tea","Coffee","Bean","Tom","behind"};
-    String[] testfeedbacks={"2","3","2","1","4"};
+    String[] testTimes = {"2018.04.30 14:20", "2018.04.28 14:20", "2018.04.27 14:20", "2018.04.01 14:20", "2018.04.01 14:20"};
+    String[] testTitles = {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbb", "cccc", "abcd", "555"};
+    String[] testWriters = {"Tea", "Coffee", "Bean", "Tom", "behind"};
+    String[] testfeedbacks = {"2", "3", "2", "1", "4"};
 
     RecyclerView myInfoRecycler;
     LinearLayoutManager layoutManager;
@@ -35,18 +35,19 @@ public class MyNoticeActivity extends AppCompatActivity {
         color = skin.skinSetting();
         setContentView(R.layout.my_writing_post);
 
-        myInfoRecycler=(RecyclerView) findViewById(R.id.my_info_recycler);
-        layoutManager=new LinearLayoutManager(this);
+        myInfoRecycler = (RecyclerView) findViewById(R.id.my_info_recycler);
+        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        items=new ArrayList();
-        for (int num=0;num<=4;num++){
-            items.add(new MyInfoItem(testTimes[num],testTitles[num],testWriters[num],testfeedbacks[num]));
-        };
+        items = new ArrayList();
+        for (int num = 0; num <= 4; num++) {
+            items.add(new MyInfoItem(testTimes[num], testTitles[num], testWriters[num], testfeedbacks[num]));
+        }
+        ;
 
         myInfoRecycler.setLayoutManager(layoutManager);
         myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
-        adapter=new MyInfoAdapter(items);
+        adapter = new MyInfoAdapter(items);
         myInfoRecycler.setAdapter(adapter);
     }
 

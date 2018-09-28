@@ -30,7 +30,7 @@ public class MyWritingListActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     MyInfoAdapter adapter;
     ArrayList<MyInfoItem> items;
-    String postid,category,time,title,feedback,recommend,writer;
+    String postid, category, time, title, feedback, recommend, writer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,26 +43,26 @@ public class MyWritingListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        Response.Listener wListener=new Response.Listener<String>(){
+        Response.Listener wListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("TAG", "JSONObj response=" + response);
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    JSONArray jsonArray=jsonResponse.getJSONArray("sign");
+                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
 
-                    items=new ArrayList<>();
+                    items = new ArrayList<>();
 
-                    for(int i=0;i<jsonArray.length();i++){
-                        JSONObject row=jsonArray.getJSONObject(i);
-                        postid=row.getString("post_id");
-                        time=row.getString("create_time");
-                        title=row.getString("post_title");
-                        category=row.getString("category");
-                        writer=row.getString("member_id");
-                        feedback="0";
-                        recommend=String.valueOf(row.getInt("recommend"));
-                        items.add(new MyInfoItem(1,postid,category,time,title,writer,feedback,recommend));
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject row = jsonArray.getJSONObject(i);
+                        postid = row.getString("post_id");
+                        time = row.getString("create_time");
+                        title = row.getString("post_title");
+                        category = row.getString("category");
+                        writer = row.getString("member_id");
+                        feedback = "0";
+                        recommend = String.valueOf(row.getInt("recommend"));
+                        items.add(new MyInfoItem(1, postid, category, time, title, writer, feedback, recommend));
                     }
 
                     myInfoRecycler.setLayoutManager(layoutManager);
@@ -70,13 +70,13 @@ public class MyWritingListActivity extends AppCompatActivity {
                     adapter = new MyInfoAdapter(items);
                     myInfoRecycler.setAdapter(adapter);
 
-                }catch (Exception e){
-                    Log.d("dberror",e.toString());
+                } catch (Exception e) {
+                    Log.d("dberror", e.toString());
                 }
             }
         };
 
-        MyWritingRequest wRequest = new MyWritingRequest("test",wListener);
+        MyWritingRequest wRequest = new MyWritingRequest("test", wListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(wRequest);
     }

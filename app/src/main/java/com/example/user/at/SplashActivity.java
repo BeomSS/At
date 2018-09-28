@@ -30,7 +30,7 @@ public class SplashActivity extends Activity {
         int color = skin.skinSetting();
         setContentView(R.layout.activity_splash);
         // SPLASH_DISPLAY_LENGTH 뒤에 메뉴 액티비티를 실행시키고 종료
-        new Handler().postDelayed(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (!getPreferenceBoolean(key)) {
@@ -73,7 +73,7 @@ public class SplashActivity extends Activity {
         }, SPLASH_DISPLAY_LENGTH);
     }
 
-    void goNext(){
+    void goNext() {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
