@@ -31,7 +31,7 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     MyInfoAdapter adapter;
     ArrayList<MyInfoItem> items;
-    String feedbackid,postid,memberid,fcontent,time,frecommend;
+    String feedbackid, postid, memberid, fcontent, time, frecommend;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,12 +56,12 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject row = jsonArray.getJSONObject(i);
-                        feedbackid=row.getString("feedback_id");
+                        feedbackid = row.getString("feedback_id");
                         postid = row.getString("post_id");
-                        memberid=row.getString("member_id");
-                        fcontent=row.getString("f_content");
+                        memberid = row.getString("member_id");
+                        fcontent = row.getString("f_content");
                         time = row.getString("create_time");
-                        frecommend=row.getString("f_recommend");
+                        frecommend = row.getString("f_recommend");
                         items.add(new MyInfoItem(2, postid, null, time, fcontent, null, null, frecommend));
                     }
 

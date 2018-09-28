@@ -15,12 +15,14 @@ import java.util.ArrayList;
 public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoViewHolder> {
     private ArrayList<MyInfoItem> items;
 
-    MyInfoAdapter(ArrayList item){items=item;}
+    MyInfoAdapter(ArrayList item) {
+        items = item;
+    }
 
     @NonNull
     @Override
     public MyInfoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.my_info_recycler_item,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_info_recycler_item, parent, false);
         MyInfoViewHolder holder = new MyInfoViewHolder(v);
         return holder;
     }

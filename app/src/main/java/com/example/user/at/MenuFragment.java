@@ -39,12 +39,12 @@ public class MenuFragment extends Fragment {
         btnLogout = view.findViewById(R.id.btnLogout);
         menuHeaderLayout = view.findViewById(R.id.menuHeaderLayout);
 
-        menuHeaderLayout.setBackgroundColor(((MainActivity)MainActivity.context).color);
+        menuHeaderLayout.setBackgroundColor(((MainActivity) MainActivity.context).color);
 
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(getActivity(),MyPreferencesActivity.class);
+                intent = new Intent(getActivity(), MyPreferencesActivity.class);
                 startActivityInMenu();
             }
         });
@@ -120,7 +120,7 @@ public class MenuFragment extends Fragment {
         return view;
     }
 
-    void startActivityInMenu(){
+    void startActivityInMenu() {
         startActivity(intent);
         Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
     }

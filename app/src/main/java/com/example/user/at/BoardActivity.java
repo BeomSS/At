@@ -25,7 +25,7 @@ public class BoardActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     ArrayList<MyInfoItem> items;
     MyInfoAdapter adapter;
-    String time,title,writer,feedback,recommend;
+    String time, title, writer, feedback, recommend;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,42 +34,42 @@ public class BoardActivity extends AppCompatActivity {
         color = skin.skinSetting();
         setContentView(R.layout.board);
 
-        boardRecycler=findViewById(R.id.board_recycler);
-        layoutManager=new LinearLayoutManager(this);
+        boardRecycler = findViewById(R.id.board_recycler);
+        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        Response.Listener bListener=new Response.Listener<String>(){
+        Response.Listener bListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("TAG", "JSONObj response=" + response);
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    JSONArray jsonArray=jsonResponse.getJSONArray("sign");
+                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
 
-                    items=new ArrayList<>();
+                    items = new ArrayList<>();
 
-                    for(int i=0;i<jsonArray.length();i++){
-                        JSONObject row=jsonArray.getJSONObject(i);
-                        time=row.getString("create_time");
-                        title=row.getString("post_title");
-                        writer=row.getString("member_id");
-                        feedback="0";
-                        recommend=String.valueOf(row.getInt("recommend"));
-                        items.add(new MyInfoItem(0,null,null,time,title,writer,feedback,recommend));
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject row = jsonArray.getJSONObject(i);
+                        time = row.getString("create_time");
+                        title = row.getString("post_title");
+                        writer = row.getString("member_id");
+                        feedback = "0";
+                        recommend = String.valueOf(row.getInt("recommend"));
+                        items.add(new MyInfoItem(0, null, null, time, title, writer, feedback, recommend));
                     }
 
                     boardRecycler.setLayoutManager(layoutManager);
                     boardRecycler.setItemAnimator(new DefaultItemAnimator());
-                    adapter=new MyInfoAdapter(items);
+                    adapter = new MyInfoAdapter(items);
                     boardRecycler.setAdapter(adapter);
 
-                }catch (Exception e){
-                    Log.d("dberror",e.toString());
+                } catch (Exception e) {
+                    Log.d("dberror", e.toString());
                 }
             }
         };
 
-        BoardRequest bRequest = new BoardRequest(0,bListener);
+        BoardRequest bRequest = new BoardRequest(0, bListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(bRequest);
     }

@@ -14,9 +14,10 @@ import android.widget.Toast;
 import com.example.user.at.BoardActivity;
 import com.example.user.at.R;
 
-public class BoardFragment extends Fragment{
-    ImageButton text,music,picture;
+public class BoardFragment extends Fragment {
+    ImageButton text, music, picture;
     View view;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,20 +31,20 @@ public class BoardFragment extends Fragment{
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),BoardActivity.class);
+                Intent intent = new Intent(getActivity(), BoardActivity.class);
                 startActivity(intent);
             }
         });
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"양호",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "양호", Toast.LENGTH_SHORT).show();
             }
         });
         music.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"33",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "33", Toast.LENGTH_SHORT).show();
             }
         });
         return view;

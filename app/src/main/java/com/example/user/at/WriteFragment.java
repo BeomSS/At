@@ -25,23 +25,23 @@ import org.json.JSONObject;
 public class WriteFragment extends Fragment {
     View view;
     Spinner categorySpinner;
-    EditText titleEdit,explainEdit;
-    TextView fileTextView,explainTextView;
+    EditText titleEdit, explainEdit;
+    TextView fileTextView, explainTextView;
     Button doneBtn;
     int putCategory;
-    String putTitle,putExplain;
+    String putTitle, putExplain;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_write, container,false);
+        view = inflater.inflate(R.layout.fragment_write, container, false);
 
-        categorySpinner=(Spinner)view.findViewById(R.id.write_spinner);
-        titleEdit =(EditText)view.findViewById(R.id.title_edit);
-        explainTextView=(TextView)view.findViewById(R.id.explain_textview);
-        explainEdit=(EditText)view.findViewById(R.id.explain_edit);
-        fileTextView=(TextView) view.findViewById(R.id.file_textview);
-        doneBtn=(Button)view.findViewById(R.id.done_button);
+        categorySpinner = (Spinner) view.findViewById(R.id.write_spinner);
+        titleEdit = (EditText) view.findViewById(R.id.title_edit);
+        explainTextView = (TextView) view.findViewById(R.id.explain_textview);
+        explainEdit = (EditText) view.findViewById(R.id.explain_edit);
+        fileTextView = (TextView) view.findViewById(R.id.file_textview);
+        doneBtn = (Button) view.findViewById(R.id.done_button);
 
 
         //게시판 변경시 발생하는 이벤트
@@ -66,40 +66,42 @@ public class WriteFragment extends Fragment {
                         break;
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) { }
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
 
         //글올리기 버튼 클릭시
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                putCategory=categorySpinner.getSelectedItemPosition();
-                putTitle=titleEdit.getText().toString();
-                putExplain=explainEdit.getText().toString();
+                putCategory = categorySpinner.getSelectedItemPosition();
+                putTitle = titleEdit.getText().toString();
+                putExplain = explainEdit.getText().toString();
 
 
-                Response.Listener rListener=new Response.Listener<String>(){
+                Response.Listener rListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
 
-                            if(success){
+                            if (success) {
                                 Toast.makeText(getActivity(), "글 등록 완료", Toast.LENGTH_SHORT).show();
-                            }else {
+                            } else {
                                 Toast.makeText(getActivity(), "글 등록 실패", Toast.LENGTH_SHORT).show();
                             }
 
-                        }catch (Exception e){
-                            Log.d("dberror",e.toString());
+                        } catch (Exception e) {
+                            Log.d("dberror", e.toString());
                         }
                     }
                 };
 
                 //회원 아이디 부분 수정 필요
-                WritingRequest wRequest = new WritingRequest("test",putCategory,putTitle,putExplain,rListener);
+                WritingRequest wRequest = new WritingRequest("test", putCategory, putTitle, putExplain, rListener);
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
                 queue.add(wRequest);
 

@@ -28,7 +28,7 @@ public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomN
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, BottomNavigationView child, View dependency) {
         return dependency instanceof FrameLayout;   //instanceof 연산자
-                                                    //dependency 가 FrameLayout 타입으로 형변환 가능하면 참, 아니면 거짓
+        //dependency 가 FrameLayout 타입으로 형변환 가능하면 참, 아니면 거짓
     }
 
     @Override
@@ -39,9 +39,9 @@ public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomN
 
     @Override
     public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child, @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
-        if(isScrolling && dy < 0){
+        if (isScrolling && dy < 0) {
             showBottomNavigationView(child);
-        } else if(isScrolling && dy > 0){
+        } else if (isScrolling && dy > 0) {
             hideBottomNavigationView(child);
         }
         isScrolling = false;

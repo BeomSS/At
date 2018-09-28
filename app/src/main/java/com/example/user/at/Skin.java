@@ -10,17 +10,17 @@ public class Skin {
     public Context context;
     public int skinCode;
 
-    Skin(Context context){
+    Skin(Context context) {
         this.context = context;
     }
 
-    public int skinSetting(){
+    public int skinSetting() {
         skinCode = getPreferenceInt(key);
         int color = 0;
-        switch(skinCode){
+        switch (skinCode) {
             case 1:
                 context.setTheme(R.style.AppThemeVer1);
-                color = context.getResources().getColor( R.color.colorMint);
+                color = context.getResources().getColor(R.color.colorMint);
                 break;
             case 2:
                 context.setTheme(R.style.AppThemeVer2);
@@ -47,7 +47,7 @@ public class Skin {
         return pref.getInt(key, 1);
     }
 
-    public int getSkinCode(){
+    public int getSkinCode() {
         return skinCode;
     }
 
