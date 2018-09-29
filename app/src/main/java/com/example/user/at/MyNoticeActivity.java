@@ -6,7 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.user.at.request.NoticeRequest;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -18,15 +27,12 @@ public class MyNoticeActivity extends AppCompatActivity {
     Skin skin;
     int color;
     View view;
-    String[] testTimes = {"2018.04.30 14:20", "2018.04.28 14:20", "2018.04.27 14:20", "2018.04.01 14:20", "2018.04.01 14:20"};
-    String[] testTitles = {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbb", "cccc", "abcd", "555"};
-    String[] testWriters = {"Tea", "Coffee", "Bean", "Tom", "behind"};
-    String[] testfeedbacks = {"2", "3", "2", "1", "4"};
 
     RecyclerView myInfoRecycler;
     LinearLayoutManager layoutManager;
     MyInfoAdapter adapter;
     ArrayList<MyInfoItem> items;
+    String noticeId, noticeValue, noticeUserId, noticeMessage, noticeTime, noticeDirect;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,16 +45,42 @@ public class MyNoticeActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        items = new ArrayList();
-        for (int num = 0; num <= 4; num++) {
-            items.add(new MyInfoItem(testTimes[num], testTitles[num], testWriters[num], testfeedbacks[num]));
-        }
-        ;
+        Response.Listener nListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG", "JSONObj response=" + response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
 
-        myInfoRecycler.setLayoutManager(layoutManager);
-        myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
-        adapter = new MyInfoAdapter(items);
-        myInfoRecycler.setAdapter(adapter);
+                    items = new ArrayList<>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject row = jsonArray.getJSONObject(i);
+                        noticeId = row.getString("notice_id");
+                        noticeValue = row.getString("notice_value");
+                        noticeUserId = row.getString("notice_user");
+                        noticeMessage = row.getString("notice_message");
+                        noticeTime = row.getString("notice_time");
+                        noticeDirect = row.getString("notice_direct");
+                        items.add(new MyInfoItem(3, noticeId, noticeValue, noticeTime, noticeMessage, noticeUserId, noticeDirect, null));
+                        //(int fl, String idnum, String cate, String time, String title, String writer, String feed, String recommend)
+                    }
+
+                    myInfoRecycler.setLayoutManager(layoutManager);
+                    myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
+                    adapter = new MyInfoAdapter(items);
+                    myInfoRecycler.setAdapter(adapter);
+
+                } catch (Exception e) {
+                    Log.d("dberror", e.toString());
+                }
+            }
+        };
+
+        NoticeRequest nRequest = new NoticeRequest("test", nListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(nRequest);
     }
 
     @Override
