@@ -11,8 +11,6 @@ import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.user.at.request.MyFeedbackRequest;
-import com.example.user.at.request.MyWritingRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

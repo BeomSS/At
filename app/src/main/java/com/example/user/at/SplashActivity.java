@@ -5,14 +5,10 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
-
-import java.util.Objects;
 
 public class SplashActivity extends Activity {
     Skin skin;
@@ -74,7 +70,7 @@ public class SplashActivity extends Activity {
     }
 
     void goNext() {
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
         finish();

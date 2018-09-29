@@ -1,22 +1,21 @@
-package com.example.user.at.request;
+package com.example.user.at;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
-import com.example.user.at.MainActivity;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardRequest extends StringRequest {
-    final static private String URL = MainActivity.ipAddress + ":800/At/SeeBoard.php";
+public class MyWritingRequest extends StringRequest {
+    final static private String URL = MainActivity.ipAddress + ":800/At/SeeMyContents.php";
     private Map<String, String> parameter;
 
-    public BoardRequest(int category, Response.Listener<String> listener) {
+    public MyWritingRequest(String toid, Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
         parameter = new HashMap<>();
-        parameter.put("category", String.valueOf(category));
+        parameter.put("id", toid);
     }
 
     @Override

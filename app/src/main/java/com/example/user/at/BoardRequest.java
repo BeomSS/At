@@ -1,4 +1,4 @@
-package com.example.user.at.request;
+package com.example.user.at;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -9,14 +9,14 @@ import com.example.user.at.MainActivity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyFeedbackRequest extends StringRequest {
-    final static private String URL = MainActivity.ipAddress + ":800/At/SeeMyFeedback.php";
+public class BoardRequest extends StringRequest {
+    final static private String URL = MainActivity.ipAddress + ":800/At/SeeBoard.php";
     private Map<String, String> parameter;
 
-    public MyFeedbackRequest(String toid, Response.Listener<String> listener) {
+    public BoardRequest(int category, Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
         parameter = new HashMap<>();
-        parameter.put("id", toid);
+        parameter.put("category", String.valueOf(category));
     }
 
     @Override
