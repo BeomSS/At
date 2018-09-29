@@ -17,14 +17,14 @@ public class MyInfoItem {
     public MyInfoItem(int fl, String idnum, String cate, String time, String title, String writer, String feed, String recommend) { //게시판
         flag = fl;
         switch (flag) {
-            case 0:
+            case 0: //게시판
                 times = time;
                 titles = title;
                 writers = "작성자: " + writer;
                 feedbacks = "피드백(" + feed + ")";
                 recommends = "추천수(" + recommend + ")";
                 break;
-            case 1:
+            case 1: //내가쓴 게시물
                 num = "게시물ID:" + idnum;
                 if (cate.equals("0")) {
                     category = "글 ";
@@ -40,11 +40,23 @@ public class MyInfoItem {
                 feedbacks = "피드백(" + feed + ")";
                 recommends = "추천수(" + recommend + ")";
                 break;
-            case 2:
+            case 2: //내가쓴 피드백
                 num = "게시물ID:" + idnum;
                 times = time;
                 titles = title;
                 recommends = "추천수(" + recommend + ")";
+                break;
+            case 3: //알림
+                times = time;
+                if (cate.equals("0")) {//쪽지받았을 때
+                    titles = title;
+                } else if (cate.equals("1")) {//추천받았을 때
+                    titles = title;
+                } else if (cate.equals("2")) {//피드백 써줬을 때
+                    titles = title;
+                } else if (cate.equals("3")) {//베스트 올라갔을 때
+                    titles = title;
+                }
                 break;
         }
 
