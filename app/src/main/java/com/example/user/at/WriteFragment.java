@@ -1,6 +1,11 @@
 package com.example.user.at;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,6 +35,7 @@ public class WriteFragment extends Fragment {
     Button doneBtn;
     int putCategory;
     String putTitle, putExplain;
+    int flag=0;
 
     @Nullable
     @Override
@@ -50,16 +56,19 @@ public class WriteFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
+                        flag=0;
                         explainTextView.setText("내 용");
                         explainEdit.setHint("내용을 입력해주세요");
                         fileTextView.setEnabled(false);
                         break;
                     case 1:
+                        flag=1;
                         explainTextView.setText("설 명");
                         explainEdit.setHint("설명을 입력해주세요");
                         fileTextView.setEnabled(true);
                         break;
                     case 2:
+                        flag=2;
                         explainTextView.setText("설 명");
                         explainEdit.setHint("설명을 입력해주세요");
                         fileTextView.setEnabled(true);
@@ -69,6 +78,18 @@ public class WriteFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        fileTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(flag==1) { //그림일때
+                    Intent fintent = new Intent(Intent.ACTION_PICK);
+                    fintent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    fintent.setType("image/*");
+                    startActivityForResult(fintent, 1111);
+                }
             }
         });
 
@@ -107,6 +128,27 @@ public class WriteFragment extends Fragment {
 
             }
         });
+
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+            String imagePath=getRealPathFromURI(data.getData());
+
+        }
+    }
+
+    private String getRealPathFromURI(Uri fileUri){
+        int column_index=0;
+        String[] proj={MediaStore.Images.Media.DATA};
+        Cursor cursor=getContext().getContentResolver().query(fileUri,proj,null,null,null);
+        if(cursor.moveToFirst()){
+            column_index=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        }
+        Log.d("mytest",cursor.getString(column_index));
+        return cursor.getString(column_index);
     }
 }
