@@ -41,10 +41,11 @@ public class WriteFragment extends Fragment {
     TextView fileTextView, explainTextView;
     Button doneBtn;
     int putCategory;
-    String putTitle, putExplain, filePath;
+    String putTitle, putExplain, filePath = null;
     String upLoadServerUri = null; //서버 주소를 담을 변수
     int flag = 0;
     int serverResponseCode = 0;
+    String postId;
 
     @Nullable
     @Override
@@ -70,21 +71,21 @@ public class WriteFragment extends Fragment {
                         flag = 0;
                         explainTextView.setText("내 용");
                         explainEdit.setHint("내용을 입력해주세요");
-                        fileTextView.setText("파일을 첨부하시려면 클릭해주세요.");
+                        fileTextView.setText("글게시판에서는 파일첨부가 불가능합니다.");
                         fileTextView.setEnabled(false);
                         break;
                     case 1:
                         flag = 1;
                         explainTextView.setText("설 명");
                         explainEdit.setHint("설명을 입력해주세요");
-                        fileTextView.setText("파일을 첨부하시려면 클릭해주세요.");
+                        fileTextView.setText("이미지를 첨부하시려면 클릭해주세요.(jpg,png,gif)");
                         fileTextView.setEnabled(true);
                         break;
                     case 2:
                         flag = 2;
                         explainTextView.setText("설 명");
                         explainEdit.setHint("설명을 입력해주세요");
-                        fileTextView.setText("파일을 첨부하시려면 클릭해주세요.");
+                        fileTextView.setText("음악을 첨부하시려면 클릭해주세요.");
                         fileTextView.setEnabled(true);
                         break;
                 }
@@ -103,7 +104,6 @@ public class WriteFragment extends Fragment {
                 putTitle = titleEdit.getText().toString();
                 putExplain = explainEdit.getText().toString();
 
-
                 Response.Listener rListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -112,10 +112,32 @@ public class WriteFragment extends Fragment {
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success) {
-                                Toast.makeText(getActivity(), "글 등록 완료", Toast.LENGTH_SHORT).show();
+                                int tPostId = jsonResponse.getInt("postid"); //파일 url을 넣기 위해 게시글의 id를 받아온다.
+                                postId = new String(String.valueOf(tPostId));
                             } else {
                                 Toast.makeText(getActivity(), "글 등록 실패", Toast.LENGTH_SHORT).show();
                             }
+
+                            //게시물의 id를 받아서 보내야되기 때문에 response에 배치
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    upLoadFile(filePath);
+                                    filePath = null;
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (flag == 1) {
+                                                fileTextView.setText("이미지를 첨부하시려면 클릭해주세요.(jpg,png,gif)");
+                                            } else if (flag == 2) {
+                                                fileTextView.setText("음악을 첨부하시려면 클릭해주세요.");
+                                            }
+                                            titleEdit.setText(null);
+                                            explainEdit.setText(null);
+                                        }
+                                    });
+                                }
+                            }.start();
 
                         } catch (Exception e) {
                             Log.d("dberror", e.toString());
@@ -124,13 +146,29 @@ public class WriteFragment extends Fragment {
                 };
 
                 //회원 아이디 부분 수정 필요
-                WritingRequest wRequest = new WritingRequest("test", putCategory, putTitle, putExplain, rListener);
-                RequestQueue queue = Volley.newRequestQueue(getActivity());
-                queue.add(wRequest);
+                boolean checkEmpty = check(titleEdit.getText().toString(), explainEdit.getText().toString()); //제목과 내용이 빈상태인지 검사하는 메소드
+
+                if (checkEmpty) {
+                    if (flag == 1 || flag == 2) {
+                        if (filePath != null) { //파일첨부가 되었는지 확인
+                            WritingRequest wRequest = new WritingRequest("test", putCategory, putTitle, putExplain, rListener);
+                            RequestQueue queue = Volley.newRequestQueue(getActivity());
+                            queue.add(wRequest);
+                        } else {
+                            Toast.makeText(getActivity(), "피드백 받을 파일을 첨부해주세요.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else { //글게시판에서는 파일첨부가 안되었어도 되므로 빈 부분이 없는지만 체크한다.
+                        WritingRequest wRequest = new WritingRequest("test", putCategory, putTitle, putExplain, rListener);
+                        RequestQueue queue = Volley.newRequestQueue(getActivity());
+                        queue.add(wRequest);
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "제목이나 내용을 채워주셔야 합니다.", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
-
 
         fileTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +181,6 @@ public class WriteFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
 
@@ -152,13 +189,14 @@ public class WriteFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             filePath = getRealPathFromURI(data.getData());
-            fileTextView.setText(filePath);
-            new Thread() {
-                @Override
-                public void run() {
-                    upLoadFile(filePath);
-                }
-            }.start();
+            //파일 확장자 검사
+            if (filePath.contains(".jpg") || filePath.contains(".png") || filePath.contains(".gif")) {
+                fileTextView.setText(filePath);
+            } else {
+                filePath = null;
+                Toast.makeText(getActivity(), "jpg,png,gif 이미지 파일만 업로드 가능합니다.", Toast.LENGTH_SHORT);
+            }
+
         }
     }
 
@@ -214,12 +252,20 @@ public class WriteFragment extends Fragment {
                 conn.setRequestProperty("Connection", "Keep-Alive");
                 conn.setRequestProperty("ENCTYPE", "multipart/form-data");
                 conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                conn.setRequestProperty("uploadedfile", fileName);
+                conn.setRequestProperty("uploadedfile", fileName); //파일이름을 php로 보내준다.
 
                 //DataOutputStream 객체 생성하기.
                 dos = new DataOutputStream(conn.getOutputStream());
 
-                //전송할 데이터의 시작임을 알린다.
+                //이미지와 함께 문자도 보내기 위해 이미지 업로드 전에 문자를 같이 보낸다.
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"postId\"" + lineEnd);
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(postId);
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+
+                //전송할 데이터의 시작임을 알린다.(이미지)
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + fileName + "\"" + lineEnd);
                 dos.writeBytes(lineEnd);
@@ -259,7 +305,7 @@ public class WriteFragment extends Fragment {
 
                     getActivity().runOnUiThread(new Runnable() { //프래그먼트이기 때문에 앞에 getActivity()를 붙인다.
                         public void run() {
-                            String msg = "File Upload Completed.\n\n See uploaded file here : \n\n" + fileName;
+                            String msg = "글 등록 성공!" + fileName;
                             Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -269,7 +315,7 @@ public class WriteFragment extends Fragment {
                 dos.flush();
                 dos.close();
 
-            }catch (MalformedURLException ex) {
+            } catch (MalformedURLException ex) {
 
                 ex.printStackTrace();
 
@@ -287,6 +333,14 @@ public class WriteFragment extends Fragment {
                 Toast.makeText(getActivity(), "업로드중 에러발생!(" + e.toString() + ")", Toast.LENGTH_SHORT).show();
 
             }
+        }
+    }
+
+    public boolean check(String title, String explain) {
+        if (title.equals("") || title.equals(null) || explain.equals("") || explain.equals(null)) {
+            return false;
+        } else {
+            return true;
         }
     }
 }
