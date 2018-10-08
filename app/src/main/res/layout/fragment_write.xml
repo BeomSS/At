@@ -133,7 +133,7 @@
             android:layout_marginLeft="5dp"
             android:enabled="false"
             android:gravity="center_vertical"
-            android:text="파일을 첨부하시려면 클릭해주세요"
+            android:text="글게시판에서는 파일첨부가 불가능합니다."
             android:textSize="12dp" />
     </LinearLayout>
 
