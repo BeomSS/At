@@ -178,6 +178,17 @@ public class WriteFragment extends Fragment {
                     fintent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     fintent.setType("image/*");
                     startActivityForResult(fintent, 1111);
+                } else if (flag == 2) { //음악일때
+//                    Intent mintent = new Intent(getActivity(), FileView.class);
+//                    startActivityForResult(mintent, 1111);
+//                    startAc
+
+                    Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(i,1);
+
+//                    startActivityForResult( Intent.createChooser( new Intent(Intent.ACTION_GET_CONTENT) .setType("image/*"), "Choose an image"), PICK_FROM_FILE);
+
+
                 }
             }
         });
@@ -190,7 +201,7 @@ public class WriteFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             filePath = getRealPathFromURI(data.getData());
             //파일 확장자 검사
-            if (filePath.contains(".jpg") || filePath.contains(".png") || filePath.contains(".gif")) {
+            if (filePath.contains(".jpg") || filePath.contains(".png") || filePath.contains(".gif")||filePath.contains(".mp3")) {
                 fileTextView.setText(filePath);
             } else {
                 filePath = null;
@@ -201,6 +212,7 @@ public class WriteFragment extends Fragment {
     }
 
     private String getRealPathFromURI(Uri fileUri) { //갤러리에서 받아온 데이터를 절대 주소로 변환
+        String path;
         int column_index = 0;
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContext().getContentResolver().query(fileUri, proj, null, null, null);
@@ -208,7 +220,9 @@ public class WriteFragment extends Fragment {
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         }
         Log.d("mytest", cursor.getString(column_index));
-        return cursor.getString(column_index);
+        path=cursor.getString(column_index);
+        cursor.close();
+        return path;
     }
 
     public void upLoadFile(String sourceFileUri) {
