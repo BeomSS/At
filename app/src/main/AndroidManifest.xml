@@ -32,7 +32,6 @@
         <activity android:name=".ShowPictureActivity"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".SignUpActivity"/>
-        <activity android:name=".FileView"/>
     </application>
 
 </manifest>
