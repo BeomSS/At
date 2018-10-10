@@ -18,6 +18,7 @@ public class MyInfoItem {
         flag = fl;
         switch (flag) {
             case 0: //게시판
+                num=idnum;
                 times = time;
                 titles = title;
                 writers = "작성자: " + writer;

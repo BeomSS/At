@@ -122,20 +122,22 @@ public class WriteFragment extends Fragment {
                             new Thread() {
                                 @Override
                                 public void run() {
-                                    upLoadFile(filePath);
-                                    filePath = null;
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (flag == 1) {
-                                                fileTextView.setText("이미지를 첨부하시려면 클릭해주세요.(jpg,png,gif)");
-                                            } else if (flag == 2) {
-                                                fileTextView.setText("음악을 첨부하시려면 클릭해주세요.");
+                                    if (flag != 0) {
+                                        upLoadFile(filePath);
+                                        filePath = null;
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (flag == 1) {
+                                                    fileTextView.setText("이미지를 첨부하시려면 클릭해주세요.(jpg,png,gif)");
+                                                } else if (flag == 2) {
+                                                    fileTextView.setText("음악을 첨부하시려면 클릭해주세요.");
+                                                }
+                                                titleEdit.setText(null);
+                                                explainEdit.setText(null);
                                             }
-                                            titleEdit.setText(null);
-                                            explainEdit.setText(null);
-                                        }
-                                    });
+                                        });
+                                    }
                                 }
                             }.start();
 
@@ -179,12 +181,9 @@ public class WriteFragment extends Fragment {
                     fintent.setType("image/*");
                     startActivityForResult(fintent, 1111);
                 } else if (flag == 2) { //음악일때
-//                    Intent mintent = new Intent(getActivity(), FileView.class);
-//                    startActivityForResult(mintent, 1111);
-//                    startAc
 
                     Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(i,1);
+                    startActivityForResult(i, 1);
 
 //                    startActivityForResult( Intent.createChooser( new Intent(Intent.ACTION_GET_CONTENT) .setType("image/*"), "Choose an image"), PICK_FROM_FILE);
 
@@ -201,7 +200,7 @@ public class WriteFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             filePath = getRealPathFromURI(data.getData());
             //파일 확장자 검사
-            if (filePath.contains(".jpg") || filePath.contains(".png") || filePath.contains(".gif")||filePath.contains(".mp3")) {
+            if (filePath.contains(".jpg") || filePath.contains(".png") || filePath.contains(".gif") || filePath.contains(".mp3")) {
                 fileTextView.setText(filePath);
             } else {
                 filePath = null;
@@ -220,7 +219,7 @@ public class WriteFragment extends Fragment {
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         }
         Log.d("mytest", cursor.getString(column_index));
-        path=cursor.getString(column_index);
+        path = cursor.getString(column_index);
         cursor.close();
         return path;
     }
