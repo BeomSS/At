@@ -9,10 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
-
-import com.example.user.at.BoardActivity;
-import com.example.user.at.R;
 
 public class BoardFragment extends Fragment {
     ImageButton text, music, picture;
@@ -32,19 +28,24 @@ public class BoardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), BoardActivity.class);
+                intent.putExtra("category",0);
                 startActivity(intent);
             }
         });
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "양호", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), BoardActivity.class);
+                intent.putExtra("category",1);
+                startActivity(intent);
             }
         });
         music.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "33", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), BoardActivity.class);
+                intent.putExtra("category",2);
+                startActivity(intent);
             }
         });
         return view;

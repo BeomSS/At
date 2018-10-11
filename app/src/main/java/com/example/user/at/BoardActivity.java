@@ -76,7 +76,8 @@ public class BoardActivity extends AppCompatActivity {
             }
         };
 
-        BoardRequest bRequest = new BoardRequest(0, bListener);
+        Intent intent = getIntent();
+        BoardRequest bRequest = new BoardRequest(intent.getIntExtra("category",0), bListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(bRequest);
 
