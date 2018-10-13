@@ -137,6 +137,16 @@ public class WriteFragment extends Fragment {
                                                 explainEdit.setText(null);
                                             }
                                         });
+                                    }else
+                                    {
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                titleEdit.setText(null);
+                                                explainEdit.setText(null);
+                                                Toast.makeText(getActivity(),"글쓰기가 완료되었습니다.",Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                                     }
                                 }
                             }.start();
@@ -204,7 +214,7 @@ public class WriteFragment extends Fragment {
                 fileTextView.setText(filePath);
             } else {
                 filePath = null;
-                Toast.makeText(getActivity(), "jpg,png,gif 이미지 파일만 업로드 가능합니다.", Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), "jpg,png,gif,mp3 파일만 업로드 가능합니다.", Toast.LENGTH_SHORT);
             }
 
         }
