@@ -100,7 +100,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:hint="내용을 입력해주세요."
-            android:maxLength="200"
+            android:maxLength="4000"
             android:textColor="@color/colorBlue" />
 
     </LinearLayout>

@@ -29,17 +29,26 @@ import java.net.URL;
 public class ShowPictureActivity extends Activity implements Runnable{
     ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike,postImageView;
     EditText edtPictureWriteFeedback;
-    TextView titleTextView, explainTextView;
+    TextView titleTextView, explainTextView, writesTextView;
     Boolean showPictureLiked, pictureFeedbackLiked;
     Bitmap bitmap;
     URL url=null;
+    Intent pintent;
+    int category;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_picture);
+        pintent = getIntent();
+        category=pintent.getIntExtra("category",0);
+        //어느 게시판인지에 따라 다른 레이아웃을 가져온다
+        if(category==0) {
+            setContentView(R.layout.activity_show_write);
+        }else if (category==1){
+            setContentView(R.layout.activity_show_picture);
+            postImageView=findViewById(R.id.ivShowPictureImg);
+        }
 
-        postImageView=findViewById(R.id.ivShowPictureImg);
         btnShowPictureBack = findViewById(R.id.btnShowPictureBack);
         btnShowPictureLike = findViewById(R.id.btnShowPictureLike);
         btnPictureFeedbackLike = findViewById(R.id.btnPictureFeedbackLike);
@@ -92,10 +101,12 @@ public class ShowPictureActivity extends Activity implements Runnable{
 
                     titleTextView.setText(jsonResponse.getString("post_title"));
                     explainTextView.setText(jsonResponse.getString("explain"));
-                    String strUrl=MainActivity.ipAddress +":800/uploads/"+ jsonResponse.getString("url");
-                    url=new URL(strUrl);
-                    Thread imgThread = new Thread(ShowPictureActivity.this);
-                    imgThread.start();
+                    if(category==1) {
+                        String strUrl = MainActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
+                        url = new URL(strUrl);
+                        Thread imgThread = new Thread(ShowPictureActivity.this);
+                        imgThread.start();
+                    }
 
                 } catch (Exception e) {
                     Log.d("dberror", e.toString());
@@ -103,8 +114,7 @@ public class ShowPictureActivity extends Activity implements Runnable{
             }
         };
 
-        Intent intent = getIntent();
-        PostRequest pRequest = new PostRequest(intent.getStringExtra("postid"), pListener);
+        PostRequest pRequest = new PostRequest(pintent.getStringExtra("postid"), pListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(pRequest);
 

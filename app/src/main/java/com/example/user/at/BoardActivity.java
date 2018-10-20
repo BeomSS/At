@@ -31,6 +31,7 @@ public class BoardActivity extends AppCompatActivity {
     ArrayList<MyInfoItem> items;
     MyInfoAdapter adapter;
     String num,time, title, writer, feedback, recommend;
+    Intent intent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +77,7 @@ public class BoardActivity extends AppCompatActivity {
             }
         };
 
-        Intent intent = getIntent();
+        intent = getIntent();
         BoardRequest bRequest = new BoardRequest(intent.getIntExtra("category",0), bListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(bRequest);
@@ -97,7 +98,7 @@ public class BoardActivity extends AppCompatActivity {
                     TextView wTextView = boardRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_writers);
                     TextView nTextView = boardRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_num);
                     cIntent.putExtra("putter", "게시판");
-                    cIntent.putExtra("category", "글");
+                    cIntent.putExtra("category", intent.getIntExtra("category",0));
                     cIntent.putExtra("writer", wTextView.getText().toString());
                     cIntent.putExtra("postid", nTextView.getText().toString());
                     Log.d("board put test", wTextView.getText().toString() + " || " + nTextView.getText().toString());
