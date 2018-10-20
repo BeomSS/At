@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,7 @@ public class WriteFragment extends Fragment {
     int putCategory;
     String putTitle, putExplain, filePath = null;
     String upLoadServerUri = null; //서버 주소를 담을 변수
-    int flag = 0;
+    int flag = 0,maxLength;
     int serverResponseCode = 0;
     String postId;
 
@@ -71,6 +72,12 @@ public class WriteFragment extends Fragment {
                         flag = 0;
                         explainTextView.setText("내 용");
                         explainEdit.setHint("내용을 입력해주세요");
+                        explainEdit.setText("");
+                        //글자수 제한 변경
+                        maxLength = 4000;
+                        explainEdit.setFilters(new InputFilter[] {
+                                new InputFilter.LengthFilter(maxLength)
+                        });
                         fileTextView.setText("글게시판에서는 파일첨부가 불가능합니다.");
                         fileTextView.setEnabled(false);
                         break;
@@ -78,6 +85,11 @@ public class WriteFragment extends Fragment {
                         flag = 1;
                         explainTextView.setText("설 명");
                         explainEdit.setHint("설명을 입력해주세요");
+                        explainEdit.setText("");
+                        maxLength = 200;
+                        explainEdit.setFilters(new InputFilter[] {
+                                new InputFilter.LengthFilter(maxLength)
+                        });
                         fileTextView.setText("이미지를 첨부하시려면 클릭해주세요.(jpg,png,gif)");
                         fileTextView.setEnabled(true);
                         break;
@@ -85,6 +97,11 @@ public class WriteFragment extends Fragment {
                         flag = 2;
                         explainTextView.setText("설 명");
                         explainEdit.setHint("설명을 입력해주세요");
+                        explainEdit.setText("");
+                        maxLength = 200;
+                        explainEdit.setFilters(new InputFilter[] {
+                                new InputFilter.LengthFilter(maxLength)
+                        });
                         fileTextView.setText("음악을 첨부하시려면 클릭해주세요.");
                         fileTextView.setEnabled(true);
                         break;
