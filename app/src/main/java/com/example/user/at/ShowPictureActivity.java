@@ -1,26 +1,51 @@
 package com.example.user.at;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class ShowPictureActivity extends Activity {
-    ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.user.at.request.PostRequest;
+
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class ShowPictureActivity extends Activity implements Runnable{
+    ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike,postImageView;
     EditText edtPictureWriteFeedback;
+    TextView titleTextView, explainTextView;
     Boolean showPictureLiked, pictureFeedbackLiked;
+    Bitmap bitmap;
+    URL url=null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_picture);
 
+        postImageView=findViewById(R.id.ivShowPictureImg);
         btnShowPictureBack = findViewById(R.id.btnShowPictureBack);
         btnShowPictureLike = findViewById(R.id.btnShowPictureLike);
         btnPictureFeedbackLike = findViewById(R.id.btnPictureFeedbackLike);
         edtPictureWriteFeedback = findViewById(R.id.edtPictureWriteFeedback);
+        titleTextView = findViewById(R.id.tvShowPictureTitle);
+        explainTextView = findViewById(R.id.tvShowPictureContent);
         showPictureLiked = false;
         pictureFeedbackLiked = false;
 
@@ -57,5 +82,69 @@ public class ShowPictureActivity extends Activity {
                 }
             }
         });
+
+        Response.Listener pListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG", "JSONObj response=" + response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+
+                    titleTextView.setText(jsonResponse.getString("post_title"));
+                    explainTextView.setText(jsonResponse.getString("explain"));
+                    String strUrl=MainActivity.ipAddress +":800/uploads/"+ jsonResponse.getString("url");
+                    url=new URL(strUrl);
+                    Thread imgThread = new Thread(ShowPictureActivity.this);
+                    imgThread.start();
+
+                } catch (Exception e) {
+                    Log.d("dberror", e.toString());
+                }
+            }
+        };
+
+        Intent intent = getIntent();
+        PostRequest pRequest = new PostRequest(intent.getStringExtra("postid"), pListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(pRequest);
+
+    }
+
+    //서버에서 받아온 이미지를 핸들러를 경유해서 이미지뷰에 넣는다
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            postImageView.setImageBitmap(bitmap);
+        }
+    };
+
+    @Override
+    public void run() {
+        if(url!=null){
+            try{
+                // url에 접속 시도
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.connect();
+
+                // 스트림 생성
+                InputStream iStream = conn.getInputStream();
+
+                // 스트림에서 받은 데이터를 비트맵 변환
+                // 인터넷에서 이미지 가져올 때는 Bitmap을 사용해야함
+                bitmap = BitmapFactory.decodeStream(iStream);
+
+                // 핸들러에게 화면 갱신을 요청한다.
+                handler.sendEmptyMessage(0);
+
+                // 연결 종료
+                iStream.close();
+                conn.disconnect();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            Toast.makeText(this,"이미지 불러오기 오류",Toast.LENGTH_SHORT).show();
+        }
     }
 }
