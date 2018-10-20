@@ -12,6 +12,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.user.at.request.AddFeedbackRequest;
 import com.example.user.at.request.PostRequest;
 
 import org.json.JSONObject;
@@ -30,15 +32,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ShowPictureActivity extends Activity implements Runnable {
-    ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike, postImageView;
+    ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike,postImageView;
     EditText edtPictureWriteFeedback;
-    TextView titleTextView, explainTextView;
+    TextView titleTextView, explainTextView, tvBestFeedbackName,tvBestFeedbackContent,tvBestFeedbackCount;
     ImageButton musicStartBtn, musicStopBtn, musicResetBtn;
+    Button btnFeedbackUpload;
     Boolean showPictureLiked, pictureFeedbackLiked;
     Bitmap bitmap;
     URL url = null;
     Intent pintent;
-    int category;
+    int category,usingBestFeedback=0;
     private MediaPlayer mediaPlayer;
 
 
@@ -82,10 +85,14 @@ public class ShowPictureActivity extends Activity implements Runnable {
             });
         }
 
+        tvBestFeedbackName=findViewById(R.id.tvPictureFeedbackUserName);
+        tvBestFeedbackContent=findViewById(R.id.tvPictureFeedbackContent);
+        tvBestFeedbackCount=findViewById(R.id.tvPictureFeedbackLikeCount);
         btnShowPictureBack = findViewById(R.id.btnShowPictureBack);
         btnShowPictureLike = findViewById(R.id.btnShowPictureLike);
         btnPictureFeedbackLike = findViewById(R.id.btnPictureFeedbackLike);
         edtPictureWriteFeedback = findViewById(R.id.edtPictureWriteFeedback);
+        btnFeedbackUpload=findViewById(R.id.btnPictureWriteFeedback);
         titleTextView = findViewById(R.id.tvShowPictureTitle);
         explainTextView = findViewById(R.id.tvShowPictureContent);
         showPictureLiked = false;
@@ -125,6 +132,33 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         });
 
+        btnFeedbackUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Response.Listener feedbackListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("TAG", "JSONObj response=" + response);
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            if(jsonResponse.getBoolean("success")){
+                                Toast.makeText(ShowPictureActivity.this,"피드백을 남겼습니다.",Toast.LENGTH_SHORT).show();
+                                edtPictureWriteFeedback.setText("");
+                            }else{
+                                Toast.makeText(ShowPictureActivity.this,"오류가 발생했습니다.",Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (Exception e) {
+                            Log.d("feedbackDBerror", e.toString());
+                        }
+                    }
+                };
+                AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pintent.getStringExtra("postid"),"test",edtPictureWriteFeedback.getText().toString(), feedbackListener);
+                RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
+                queue.add(feedbackRequest);
+            }
+        });
+
         Response.Listener pListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -134,6 +168,18 @@ public class ShowPictureActivity extends Activity implements Runnable {
 
                     titleTextView.setText(jsonResponse.getString("post_title"));
                     explainTextView.setText(jsonResponse.getString("explain"));
+                    usingBestFeedback=jsonResponse.getInt("f_use");
+                    if(usingBestFeedback==0){
+                        tvBestFeedbackName.setText("추천을 받은 피드백이 없습니다.");
+                        tvBestFeedbackContent.setText("");
+                        btnPictureFeedbackLike.setVisibility(View.INVISIBLE);
+                        tvBestFeedbackCount.setVisibility(View.INVISIBLE);
+
+                    }else if (usingBestFeedback==1){
+                        tvBestFeedbackName.setText(jsonResponse.getString("f_member_id"));
+                        tvBestFeedbackContent.setText(jsonResponse.getString("f_content"));
+                        tvBestFeedbackCount.setText(jsonResponse.getString("f_recommend"));
+                    }
                     if (category == 1) {
                         String strUrl = MainActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
                         url = new URL(strUrl);
