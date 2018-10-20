@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,27 +29,35 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ShowPictureActivity extends Activity implements Runnable{
-    ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike,postImageView;
+public class ShowPictureActivity extends Activity implements Runnable {
+    ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike, postImageView;
     EditText edtPictureWriteFeedback;
     TextView titleTextView, explainTextView, writesTextView;
+    ImageButton musicStartBtn, musicStopBtn, musicResetBtn;
     Boolean showPictureLiked, pictureFeedbackLiked;
     Bitmap bitmap;
-    URL url=null;
+    URL url = null;
     Intent pintent;
     int category;
+    private MediaPlayer mediaPlayer;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pintent = getIntent();
-        category=pintent.getIntExtra("category",0);
+        category = pintent.getIntExtra("category", 0);
         //어느 게시판인지에 따라 다른 레이아웃을 가져온다
-        if(category==0) {
+        if (category == 0) {
             setContentView(R.layout.activity_show_write);
-        }else if (category==1){
+        } else if (category == 1) {
             setContentView(R.layout.activity_show_picture);
-            postImageView=findViewById(R.id.ivShowPictureImg);
+            postImageView = findViewById(R.id.ivShowPictureImg);
+        } else if (category == 2) {
+            setContentView(R.layout.activity_show_music);
+            musicStartBtn = findViewById(R.id.musicStart);
+            musicStopBtn = findViewById(R.id.musicStop);
+            musicResetBtn = findViewById(R.id.musicReset);
         }
 
         btnShowPictureBack = findViewById(R.id.btnShowPictureBack);
@@ -101,11 +112,17 @@ public class ShowPictureActivity extends Activity implements Runnable{
 
                     titleTextView.setText(jsonResponse.getString("post_title"));
                     explainTextView.setText(jsonResponse.getString("explain"));
-                    if(category==1) {
+                    if (category == 1) {
                         String strUrl = MainActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
                         url = new URL(strUrl);
                         Thread imgThread = new Thread(ShowPictureActivity.this);
                         imgThread.start();
+                    } else if (category == 2) {
+                        String strUrl = MainActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
+                        mediaPlayer = new MediaPlayer();
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        mediaPlayer.setDataSource(strUrl);
+                        mediaPlayer.prepare();
                     }
 
                 } catch (Exception e) {
@@ -118,10 +135,31 @@ public class ShowPictureActivity extends Activity implements Runnable{
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(pRequest);
 
+        musicStartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!mediaPlayer.isPlaying())
+                    mediaPlayer.start();
+            }
+        });
+        musicStopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mediaPlayer.pause();
+            }
+        });
+        musicResetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mediaPlayer.pause();
+                mediaPlayer.seekTo(0);
+            }
+        });
+
     }
 
     //서버에서 받아온 이미지를 핸들러를 경유해서 이미지뷰에 넣는다
-    Handler handler = new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -131,10 +169,10 @@ public class ShowPictureActivity extends Activity implements Runnable{
 
     @Override
     public void run() {
-        if(url!=null){
-            try{
+        if (url != null) {
+            try {
                 // url에 접속 시도
-                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.connect();
 
                 // 스트림 생성
@@ -150,11 +188,20 @@ public class ShowPictureActivity extends Activity implements Runnable{
                 // 연결 종료
                 iStream.close();
                 conn.disconnect();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
-            Toast.makeText(this,"이미지 불러오기 오류",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "이미지 불러오기 오류", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        mediaPlayer.stop();
+        mediaPlayer.reset();
+        mediaPlayer.release();
+        mediaPlayer = null;
+        super.onStop();
     }
 }
