@@ -32,7 +32,7 @@ import java.net.URL;
 public class ShowPictureActivity extends Activity implements Runnable {
     ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike, postImageView;
     EditText edtPictureWriteFeedback;
-    TextView titleTextView, explainTextView, writesTextView;
+    TextView titleTextView, explainTextView;
     ImageButton musicStartBtn, musicStopBtn, musicResetBtn;
     Boolean showPictureLiked, pictureFeedbackLiked;
     Bitmap bitmap;
@@ -58,6 +58,28 @@ public class ShowPictureActivity extends Activity implements Runnable {
             musicStartBtn = findViewById(R.id.musicStart);
             musicStopBtn = findViewById(R.id.musicStop);
             musicResetBtn = findViewById(R.id.musicReset);
+
+            musicStartBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!mediaPlayer.isPlaying()) {
+                        mediaPlayer.start();
+                    }
+                }
+            });
+            musicStopBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mediaPlayer.pause();
+                }
+            });
+            musicResetBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mediaPlayer.pause();
+                    mediaPlayer.seekTo(0);
+                }
+            });
         }
 
         btnShowPictureBack = findViewById(R.id.btnShowPictureBack);
@@ -135,27 +157,6 @@ public class ShowPictureActivity extends Activity implements Runnable {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(pRequest);
 
-        musicStartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!mediaPlayer.isPlaying())
-                    mediaPlayer.start();
-            }
-        });
-        musicStopBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mediaPlayer.pause();
-            }
-        });
-        musicResetBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mediaPlayer.pause();
-                mediaPlayer.seekTo(0);
-            }
-        });
-
     }
 
     //서버에서 받아온 이미지를 핸들러를 경유해서 이미지뷰에 넣는다
@@ -198,10 +199,12 @@ public class ShowPictureActivity extends Activity implements Runnable {
 
     @Override
     protected void onStop() {
-        mediaPlayer.stop();
-        mediaPlayer.reset();
-        mediaPlayer.release();
-        mediaPlayer = null;
+        if (category == 2) {
+            mediaPlayer.stop();
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
         super.onStop();
     }
 }
