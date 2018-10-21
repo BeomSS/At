@@ -9,18 +9,19 @@ import com.example.user.at.LoginActivity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyFeedbackRequest extends StringRequest {
-    final static private String URL = LoginActivity.ipAddress + ":800/At/SeeMyFeedback.php";
-    private Map<String, String> parameter;
 
-    public MyFeedbackRequest(String toid, Response.Listener<String> listener) {
+public class ValidateRequest extends StringRequest {
+    final static private String URL = LoginActivity.ipAddress + ":800/At/UserValidate.php";
+    private Map<String, String> parameters;
+
+    public ValidateRequest(String userID, Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
-        parameter = new HashMap<>();
-        parameter.put("id", toid);
+        parameters = new HashMap<>();
+        parameters.put("userID", userID);
     }
 
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
-        return parameter;
+        return parameters;
     }
 }

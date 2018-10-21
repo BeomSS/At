@@ -75,7 +75,9 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
             }
         };
 
-        MyFeedbackRequest wRequest = new MyFeedbackRequest("test", fListener);
+        Skin pId=new Skin(MyWritingFeedbackActivity.this);
+
+        MyFeedbackRequest wRequest = new MyFeedbackRequest(pId.getPreferenceString("LoginId"), fListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(wRequest);
     }

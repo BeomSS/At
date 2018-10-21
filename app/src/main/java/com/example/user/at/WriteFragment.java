@@ -47,13 +47,14 @@ public class WriteFragment extends Fragment {
     int flag = 0,maxLength;
     int serverResponseCode = 0;
     String postId;
+    Skin pId=new Skin(MainActivity.context);
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_write, container, false);
 
-        upLoadServerUri = MainActivity.ipAddress + ":800/At/upload.php";
+        upLoadServerUri = LoginActivity.ipAddress + ":800/At/upload.php";
 
         categorySpinner = (Spinner) view.findViewById(R.id.write_spinner);
         titleEdit = (EditText) view.findViewById(R.id.title_edit);
@@ -180,14 +181,14 @@ public class WriteFragment extends Fragment {
                 if (checkEmpty) {
                     if (flag == 1 || flag == 2) {
                         if (filePath != null) { //파일첨부가 되었는지 확인
-                            WritingRequest wRequest = new WritingRequest("test", putCategory, putTitle, putExplain, rListener);
+                            WritingRequest wRequest = new WritingRequest(pId.getPreferenceString("LoginId"), putCategory, putTitle, putExplain, rListener);
                             RequestQueue queue = Volley.newRequestQueue(getActivity());
                             queue.add(wRequest);
                         } else {
                             Toast.makeText(getActivity(), "피드백 받을 파일을 첨부해주세요.", Toast.LENGTH_SHORT).show();
                         }
                     } else { //글게시판에서는 파일첨부가 안되었어도 되므로 빈 부분이 없는지만 체크한다.
-                        WritingRequest wRequest = new WritingRequest("test", putCategory, putTitle, putExplain, rListener);
+                        WritingRequest wRequest = new WritingRequest(pId.getPreferenceString("LoginId"), putCategory, putTitle, putExplain, rListener);
                         RequestQueue queue = Volley.newRequestQueue(getActivity());
                         queue.add(wRequest);
                     }
