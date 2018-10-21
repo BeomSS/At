@@ -1,5 +1,6 @@
 package com.example.user.at;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,39 +12,36 @@ import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.user.at.request.MyWritingRequest;
+import com.example.user.at.request.FeedbackRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by johan on 2018-06-05.
- */
-
-public class MyWritingListActivity extends AppCompatActivity {
+public class MoreFeedback extends AppCompatActivity {
     Skin skin;
     int color;
-
-    RecyclerView myInfoRecycler;
+    RecyclerView rclFeedback;
     LinearLayoutManager layoutManager;
-    MyInfoAdapter adapter;
-    ArrayList<MyInfoItem> items;
-    String postid, category, time, title, feedback, recommend, writer;
+    ArrayList<FeedbackItem> items;
+    FeedbackAdapter adapter;
+    String postId;
+    String fId,fMemberId,time,fContent,recommend;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         skin = new Skin(this);
         color = skin.skinSetting();
-        setContentView(R.layout.my_writing_post);
+        setContentView(R.layout.activity_more_feedback);
 
-        myInfoRecycler = (RecyclerView) findViewById(R.id.my_info_recycler);
+        rclFeedback=findViewById(R.id.rclFeedbackMore);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        Response.Listener wListener = new Response.Listener<String>() {
+        Response.Listener fListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("TAG", "JSONObj response=" + response);
@@ -55,20 +53,19 @@ public class MyWritingListActivity extends AppCompatActivity {
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject row = jsonArray.getJSONObject(i);
-                        postid = row.getString("post_id");
+
+                        fId=row.getString("feedback_id");
+                        fMemberId = row.getString("member_id");
                         time = row.getString("create_time");
-                        title = row.getString("post_title");
-                        category = row.getString("category");
-                        writer = row.getString("member_id");
-                        feedback = "0";
+                        fContent = row.getString("feedback_content");
                         recommend = String.valueOf(row.getInt("recommend"));
-                        items.add(new MyInfoItem(1, postid, category, time, title, writer, feedback, recommend));
+                        items.add(new FeedbackItem(fId,fMemberId,fContent,time,recommend));
                     }
 
-                    myInfoRecycler.setLayoutManager(layoutManager);
-                    myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new MyInfoAdapter(items);
-                    myInfoRecycler.setAdapter(adapter);
+                    rclFeedback.setLayoutManager(layoutManager);
+                    rclFeedback.setItemAnimator(new DefaultItemAnimator());
+                    adapter = new FeedbackAdapter(items);
+                    rclFeedback.setAdapter(adapter);
 
                 } catch (Exception e) {
                     Log.d("dberror", e.toString());
@@ -76,16 +73,12 @@ public class MyWritingListActivity extends AppCompatActivity {
             }
         };
 
-        Skin pId=new Skin(MyWritingListActivity.this);
-
-        MyWritingRequest wRequest = new MyWritingRequest(pId.getPreferenceString("LoginId"), wListener);
+        Intent fIntent=getIntent();
+        postId=fIntent.getStringExtra("f_postId");
+        FeedbackRequest fRequest = new FeedbackRequest(postId, fListener);
         RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(wRequest);
-    }
+        queue.add(fRequest);
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
+
     }
 }

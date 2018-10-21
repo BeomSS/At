@@ -1,5 +1,7 @@
 package com.example.user.at.request;
 
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -9,21 +11,20 @@ import com.example.user.at.LoginActivity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WritingRequest extends StringRequest {
-    final static private String URL = LoginActivity.ipAddress + ":800/At/Writing.php";
+public class FeedbackRequest extends StringRequest {
+    final static private String URL = LoginActivity.ipAddress + ":800/At/SeeFeedback.php";
     private Map<String, String> parameter;
 
-    public WritingRequest(String userID, int category, String post_title, String explain, Response.Listener<String> listener) {
+    public FeedbackRequest(String postId, Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
         parameter = new HashMap<>();
-        parameter.put("userID", userID);
-        parameter.put("category", String.valueOf(category));
-        parameter.put("postTitle", post_title);
-        parameter.put("explain", explain);
+        Log.d("feedbackView", "FeedbackRequest: "+ postId);
+        parameter.put("postId", postId);
     }
 
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
         return parameter;
     }
+
 }

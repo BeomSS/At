@@ -42,9 +42,21 @@ public class Skin {
         editor.commit();
     }
 
+    public void setPreference(String key, String value) {
+        SharedPreferences pref = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
     public int getPreferenceInt(String key) {
         SharedPreferences pref = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
         return pref.getInt(key, 1);
+    }
+
+    public String getPreferenceString(String key) {
+        SharedPreferences pref = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
+        return pref.getString(key,"!@#");
     }
 
     public int getSkinCode() {

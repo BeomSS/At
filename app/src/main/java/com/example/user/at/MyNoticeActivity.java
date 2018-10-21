@@ -78,7 +78,10 @@ public class MyNoticeActivity extends AppCompatActivity {
             }
         };
 
-        NoticeRequest nRequest = new NoticeRequest("test", nListener);
+        Skin pId=new Skin(MyNoticeActivity.this);
+        pId.getPreferenceString("LoginId");
+
+        NoticeRequest nRequest = new NoticeRequest(pId.getPreferenceString("LoginId"), nListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(nRequest);
     }

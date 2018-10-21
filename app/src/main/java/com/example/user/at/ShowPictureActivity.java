@@ -36,14 +36,14 @@ public class ShowPictureActivity extends Activity implements Runnable {
     EditText edtPictureWriteFeedback;
     TextView titleTextView, explainTextView, tvBestFeedbackName,tvBestFeedbackContent,tvBestFeedbackCount;
     ImageButton musicStartBtn, musicStopBtn, musicResetBtn;
-    Button btnFeedbackUpload;
+    Button btnFeedbackUpload,btnFeedbackView;
     Boolean showPictureLiked, pictureFeedbackLiked;
     Bitmap bitmap;
     URL url = null;
     Intent pintent;
     int category,usingBestFeedback=0;
     private MediaPlayer mediaPlayer;
-
+    Skin pId=new Skin(ShowPictureActivity.this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,6 +95,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
         btnFeedbackUpload=findViewById(R.id.btnPictureWriteFeedback);
         titleTextView = findViewById(R.id.tvShowPictureTitle);
         explainTextView = findViewById(R.id.tvShowPictureContent);
+        btnFeedbackView=findViewById(R.id.btnPictureMoreFeedback);
         showPictureLiked = false;
         pictureFeedbackLiked = false;
 
@@ -153,7 +154,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         }
                     }
                 };
-                AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pintent.getStringExtra("postid"),"test",edtPictureWriteFeedback.getText().toString(), feedbackListener);
+                AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pintent.getStringExtra("postid"),pId.getPreferenceString("LoginId"),edtPictureWriteFeedback.getText().toString(), feedbackListener);
                 RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                 queue.add(feedbackRequest);
             }
@@ -181,12 +182,12 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         tvBestFeedbackCount.setText(jsonResponse.getString("f_recommend"));
                     }
                     if (category == 1) {
-                        String strUrl = MainActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
+                        String strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
                         url = new URL(strUrl);
                         Thread imgThread = new Thread(ShowPictureActivity.this);
                         imgThread.start();
                     } else if (category == 2) {
-                        String strUrl = MainActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
+                        String strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
                         mediaPlayer = new MediaPlayer();
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                         mediaPlayer.setDataSource(strUrl);
@@ -202,6 +203,15 @@ public class ShowPictureActivity extends Activity implements Runnable {
         PostRequest pRequest = new PostRequest(pintent.getStringExtra("postid"), pListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(pRequest);
+
+        btnFeedbackView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent feedbackIntent = new Intent(ShowPictureActivity.this,MoreFeedback.class);
+                feedbackIntent.putExtra("f_postId",pintent.getStringExtra("postid"));
+                startActivity(feedbackIntent);
+            }
+        });
 
     }
 

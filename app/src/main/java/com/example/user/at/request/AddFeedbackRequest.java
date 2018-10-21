@@ -4,13 +4,13 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
-import com.example.user.at.MainActivity;
+import com.example.user.at.LoginActivity;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class AddFeedbackRequest extends StringRequest {
-    final static private String URL = MainActivity.ipAddress + ":800/At/AddFeedback.php";
+    final static private String URL = LoginActivity.ipAddress + ":800/At/AddFeedback.php";
     private Map<String, String> parameter;
 
     public AddFeedbackRequest(String postID, String userID, String content, Response.Listener<String> listener) {
