@@ -2,162 +2,88 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:clickable="true">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/letter_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="받은 쪽지함"
-        android:textSize="20dp"
-        android:textStyle="bold"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/loLetterHeader"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorMint"
+        app:layout_constraintBottom_toBottomOf="@id/gdlLetterH1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <View
-        android:id="@+id/line1"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="5dp"
-        android:background="#A7ABB1"
+        <ImageView
+            android:id="@+id/btnLetterBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/ic_arrow_back_white_50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/spnLetterTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/btnLetterBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/btnLetterAllDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="전체삭제"
+            android:textColor="@color/colorWhite"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rclLetter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorBrightGrey"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/letter_text" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gdlLetterH1"
+        app:layout_constraintBottom_toTopOf="@+id/btnWriteLetter"/>
 
     <Button
-        android:id="@+id/letter_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="삭제"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/line2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/letter_spinner"
-        app:layout_constraintTop_toBottomOf="@id/line1" />
-
-    <Spinner
-        android:id="@+id/letter_spinner"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnWriteLetter"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:entries="@array/letter"
-        app:layout_constraintBottom_toTopOf="@+id/line2"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line1" />
-
-    <View
-        android:id="@+id/line2"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginBottom="5dp"
-        android:background="#A7ABB1"
-        app:layout_constraintTop_toBottomOf="@+id/letter_btn" />
-
-    <LinearLayout
-        android:id="@+id/letter_att"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/line3"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line2">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="닉네임" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="제목" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="날짜" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/line3"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginBottom="5dp"
-        android:background="#A7ABB1"
-        app:layout_constraintBottom_toTopOf="@id/letter_list"
-        app:layout_constraintTop_toBottomOf="@+id/letter_att" />
-
-    <ListView
-        android:id="@+id/letter_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/letter_list_page"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line3" />
-
-    <LinearLayout
-        android:id="@+id/letter_list_page"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:text="편지쓰기"
+        android:textSize="20dp"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:background="@color/colorMint"
+        app:layout_constraintTop_toTopOf="@+id/gdlLetterH2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/letter_list">
+        app:layout_constraintRight_toRightOf="parent"/>
 
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/arrow_left" />
-
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:enabled="false"
-            android:text="1" />
-
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:text="2" />
-
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:text="3" />
-
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/arrow_right" />
-
-    </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/letter_floting"
+    <android.support.constraint.Guideline
+        android:id="@+id/gdlLetterH1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:backgroundTint="@color/colorBlack"
-        android:src="@drawable/ic_add_black_24dp"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:rippleColor="@color/colorWhite" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gdlLetterH2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
 
 
 </android.support.constraint.ConstraintLayout>

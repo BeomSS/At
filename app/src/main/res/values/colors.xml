@@ -16,4 +16,5 @@
     <color name="colorBlueAlpha">#7c4a4aca</color>
     <color name="colorDarkBlue">#000059</color>
     <color name="colorBrightBlue">#9b9bff</color>
+    <color name="colorBrightGrey">#c1c1c1</color>
 </resources>

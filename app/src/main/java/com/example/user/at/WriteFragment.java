@@ -63,6 +63,7 @@ public class WriteFragment extends Fragment {
         fileTextView = (TextView) view.findViewById(R.id.file_textview);
         doneBtn = (Button) view.findViewById(R.id.done_button);
 
+        doneBtn.setBackgroundColor(((MainActivity) MainActivity.context).color);
 
         //게시판 변경시 발생하는 이벤트
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
