@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@color/colorWhite"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvLetterRclId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="아이디ABC"
+        android:textColor="@color/colorBlack"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnLetterRclReply"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLetterRclTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="제목ㄱㄴㄷ"
+        android:textColor="@color/colorBlack"
+        android:textSize="18dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnLetterRclReply"
+        app:layout_constraintTop_toBottomOf="@+id/tvLetterRclId" />
+
+    <TextView
+        android:id="@+id/tvLetterRclTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="2018.10.29"
+        android:textSize="13dp"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintTop_toBottomOf="@+id/tvLetterRclTitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnLetterRclReply"/>
+
+    <ImageView
+        android:id="@+id/btnLetterRclDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_delete_black_40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btnLetterRclReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_reply_black_40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnLetterRclDelete"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLetterRclHiddenId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="숨겨진 아이디"
+        android:textColor="#00000000"
+        android:visibility="invisible"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>

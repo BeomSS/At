@@ -46,4 +46,5 @@
         <item name="android:windowExitAnimation">@anim/center_to_bottom_translate</item>
     </style>
 
+
 </resources>
