@@ -9,15 +9,16 @@ import com.example.user.at.LoginActivity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostRequest extends StringRequest {
-    final static private String URL = LoginActivity.ipAddress + ":800/At/PostView.php";
+public class FeedbackLikingRequest extends StringRequest {
+    final static private String URL = LoginActivity.ipAddress + ":800/At/FeedbackLiking.php";
     private Map<String, String> parameter;
 
-    public PostRequest(String postnum,String userId, Response.Listener<String> listener) {
+    public FeedbackLikingRequest(String postId, String userId, String feedbackId, Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
         parameter = new HashMap<>();
-        parameter.put("PostNum",postnum);
-        parameter.put("userId",userId);
+        parameter.put("postId", postId);
+        parameter.put("userId", userId);
+        parameter.put("feedbackId", feedbackId);
     }
 
     @Override

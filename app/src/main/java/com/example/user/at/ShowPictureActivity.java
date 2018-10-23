@@ -23,6 +23,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.user.at.request.AddFeedbackRequest;
+import com.example.user.at.request.FeedbackLikingRequest;
 import com.example.user.at.request.PostRequest;
 
 import org.json.JSONObject;
@@ -32,18 +33,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ShowPictureActivity extends Activity implements Runnable {
-    ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike,postImageView;
+    ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike, postImageView;
     EditText edtPictureWriteFeedback;
-    TextView titleTextView, explainTextView, tvBestFeedbackName,tvBestFeedbackContent,tvBestFeedbackCount;
+    TextView titleTextView, explainTextView, tvBestFeedbackName, tvBestFeedbackContent, tvBestFeedbackCount, tvBestFeedbackId;
     ImageButton musicStartBtn, musicStopBtn, musicResetBtn;
-    Button btnFeedbackUpload,btnFeedbackView;
+    Button btnFeedbackUpload, btnFeedbackView;
     Boolean showPictureLiked, pictureFeedbackLiked;
     Bitmap bitmap;
     URL url = null;
     Intent pintent;
-    int category,usingBestFeedback=0;
+    int category, usingBestFeedback = 0;
     private MediaPlayer mediaPlayer;
-    Skin pId=new Skin(ShowPictureActivity.this);
+    Skin pId = new Skin(ShowPictureActivity.this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,18 +85,18 @@ public class ShowPictureActivity extends Activity implements Runnable {
                 }
             });
         }
-
-        tvBestFeedbackName=findViewById(R.id.tvPictureFeedbackUserName);
-        tvBestFeedbackContent=findViewById(R.id.tvPictureFeedbackContent);
-        tvBestFeedbackCount=findViewById(R.id.tvPictureFeedbackLikeCount);
+        tvBestFeedbackId = findViewById(R.id.tvPictureFeedbackId);
+        tvBestFeedbackName = findViewById(R.id.tvPictureFeedbackUserName);
+        tvBestFeedbackContent = findViewById(R.id.tvPictureFeedbackContent);
+        tvBestFeedbackCount = findViewById(R.id.tvPictureFeedbackLikeCount);
         btnShowPictureBack = findViewById(R.id.btnShowPictureBack);
         btnShowPictureLike = findViewById(R.id.btnShowPictureLike);
         btnPictureFeedbackLike = findViewById(R.id.btnPictureFeedbackLike);
         edtPictureWriteFeedback = findViewById(R.id.edtPictureWriteFeedback);
-        btnFeedbackUpload=findViewById(R.id.btnPictureWriteFeedback);
+        btnFeedbackUpload = findViewById(R.id.btnPictureWriteFeedback);
         titleTextView = findViewById(R.id.tvShowPictureTitle);
         explainTextView = findViewById(R.id.tvShowPictureContent);
-        btnFeedbackView=findViewById(R.id.btnPictureMoreFeedback);
+        btnFeedbackView = findViewById(R.id.btnPictureMoreFeedback);
         showPictureLiked = false;
         pictureFeedbackLiked = false;
 
@@ -126,7 +127,31 @@ public class ShowPictureActivity extends Activity implements Runnable {
                 if (pictureFeedbackLiked) {
                     btnPictureFeedbackLike.setImageResource(R.drawable.ic_thumb_up_outline_30dp);
                     pictureFeedbackLiked = false;
+                    //TODO 추천버튼 다시 눌렀을 때 구현
                 } else {
+                    Response.Listener feedbackLikingListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("TAG", "JSONObj response=" + response);
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                if (jsonResponse.getBoolean("update") && jsonResponse.getBoolean("insert")) {
+                                    Toast.makeText(ShowPictureActivity.this, "추천하였습니다.", Toast.LENGTH_SHORT).show();
+                                    int recommend=Integer.parseInt(tvBestFeedbackCount.getText().toString());
+                                    recommend++;
+                                    tvBestFeedbackCount.setText(String.valueOf(recommend));
+                                } else {
+                                    Toast.makeText(ShowPictureActivity.this, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (Exception e) {
+                                Log.d("feedbackDBerror", e.toString());
+                            }
+                        }
+                    };
+                    FeedbackLikingRequest fLikingRequest = new FeedbackLikingRequest(pintent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), tvBestFeedbackId.getText().toString(), feedbackLikingListener);
+                    RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
+                    queue.add(fLikingRequest);
                     btnPictureFeedbackLike.setImageResource(R.drawable.ic_thumb_up_color_30dp);
                     pictureFeedbackLiked = true;
                 }
@@ -142,11 +167,11 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         Log.d("TAG", "JSONObj response=" + response);
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
-                            if(jsonResponse.getBoolean("success")){
-                                Toast.makeText(ShowPictureActivity.this,"피드백을 남겼습니다.",Toast.LENGTH_SHORT).show();
+                            if (jsonResponse.getBoolean("success")) {
+                                Toast.makeText(ShowPictureActivity.this, "피드백을 남겼습니다.", Toast.LENGTH_SHORT).show();
                                 edtPictureWriteFeedback.setText("");
-                            }else{
-                                Toast.makeText(ShowPictureActivity.this,"오류가 발생했습니다.",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ShowPictureActivity.this, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (Exception e) {
@@ -154,7 +179,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         }
                     }
                 };
-                AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pintent.getStringExtra("postid"),pId.getPreferenceString("LoginId"),edtPictureWriteFeedback.getText().toString(), feedbackListener);
+                AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pintent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), edtPictureWriteFeedback.getText().toString(), feedbackListener);
                 RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                 queue.add(feedbackRequest);
             }
@@ -169,17 +194,24 @@ public class ShowPictureActivity extends Activity implements Runnable {
 
                     titleTextView.setText(jsonResponse.getString("post_title"));
                     explainTextView.setText(jsonResponse.getString("explain"));
-                    usingBestFeedback=jsonResponse.getInt("f_use");
-                    if(usingBestFeedback==0){
+                    usingBestFeedback = jsonResponse.getInt("f_use");
+                    if (usingBestFeedback == 0) {
                         tvBestFeedbackName.setText("추천을 받은 피드백이 없습니다.");
                         tvBestFeedbackContent.setText("");
                         btnPictureFeedbackLike.setVisibility(View.INVISIBLE);
                         tvBestFeedbackCount.setVisibility(View.INVISIBLE);
 
-                    }else if (usingBestFeedback==1){
+                    } else if (usingBestFeedback == 1) {
+                        tvBestFeedbackId.setText(jsonResponse.getString("feedback_id"));
                         tvBestFeedbackName.setText(jsonResponse.getString("f_member_id"));
                         tvBestFeedbackContent.setText(jsonResponse.getString("f_content"));
                         tvBestFeedbackCount.setText(jsonResponse.getString("f_recommend"));
+
+                        //베스트 피드백이 추천 받았었는지 체크
+                        if(jsonResponse.getString("best_feedback_liked")=="true"){
+                            btnPictureFeedbackLike.setImageResource(R.drawable.ic_thumb_up_color_30dp);
+                            pictureFeedbackLiked = true;
+                        }
                     }
                     if (category == 1) {
                         String strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
@@ -200,15 +232,15 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         };
 
-        PostRequest pRequest = new PostRequest(pintent.getStringExtra("postid"), pListener);
+        PostRequest pRequest = new PostRequest(pintent.getStringExtra("postid"),pId.getPreferenceString("LoginId"), pListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(pRequest);
 
         btnFeedbackView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent feedbackIntent = new Intent(ShowPictureActivity.this,MoreFeedback.class);
-                feedbackIntent.putExtra("f_postId",pintent.getStringExtra("postid"));
+                Intent feedbackIntent = new Intent(ShowPictureActivity.this, MoreFeedback.class);
+                feedbackIntent.putExtra("f_postId", pintent.getStringExtra("postid"));
                 startActivity(feedbackIntent);
             }
         });
