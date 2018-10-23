@@ -55,7 +55,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
         if (category == 0) {
             setContentView(R.layout.activity_show_write);
         } else if (category == 1) {
-            setContentView(R.layout.activity_show_picture);
+            setContentView(R.layout.activity_show_picture_ver2);
             postImageView = findViewById(R.id.ivShowPictureImg);
         } else if (category == 2) {
             setContentView(R.layout.activity_show_music);

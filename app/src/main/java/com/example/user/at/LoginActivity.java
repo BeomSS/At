@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -87,32 +88,28 @@ public class LoginActivity extends Activity {
                 Response.Listener<String> responseLister = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try
-                        {
+                        try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
-                            if (success){
+                            if (success) {
 
                                 //쉐어드프리퍼런스에 아이디 저장
                                 Skin pId = new Skin(LoginActivity.this);
-                                pId.setPreference("LoginId",userID);
+                                pId.setPreference("LoginId", userID);
 
                                 Toast.makeText(LoginActivity.this, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
                                 lintent = new Intent(LoginActivity.this, MainActivity.class);
                                 lintent.putExtra("userID", userID);
                                 startActivity(lintent);
                                 finish();
-                            }
-                            else {
+                            } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                 dialog = builder.setMessage("계정을 다시 확인하세요")
                                         .setNegativeButton("다시시도", null)
                                         .create();
                                 dialog.show();
                             }
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -134,8 +131,9 @@ public class LoginActivity extends Activity {
             }
         });
     }
+
     @Override
-    protected  void onStop(){
+    protected void onStop() {
         super.onStop();
         if (dialog != null) {
             dialog.dismiss();
