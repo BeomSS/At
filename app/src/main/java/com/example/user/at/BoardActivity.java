@@ -61,7 +61,7 @@ public class BoardActivity extends AppCompatActivity {
                         time = row.getString("create_time");
                         title = row.getString("post_title");
                         writer = row.getString("member_id");
-                        feedback = "0";
+                        feedback = row.getString("feedback_count");
                         recommend = String.valueOf(row.getInt("recommend"));
                         items.add(new MyInfoItem(0, num, null, time, title, writer, feedback, recommend));
                     }
