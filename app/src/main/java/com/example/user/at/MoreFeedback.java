@@ -66,7 +66,7 @@ public class MoreFeedback extends AppCompatActivity {
 
                     rclFeedback.setLayoutManager(layoutManager);
                     rclFeedback.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new FeedbackAdapter(items);
+                    adapter = new FeedbackAdapter(items,MoreFeedback.this);
                     rclFeedback.setAdapter(adapter);
 
                 } catch (Exception e) {
