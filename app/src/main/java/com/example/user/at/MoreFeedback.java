@@ -28,6 +28,7 @@ public class MoreFeedback extends AppCompatActivity {
     FeedbackAdapter adapter;
     String postId;
     String fId,fMemberId,time,fContent,recommend;
+    Boolean feedbackLiked;
 
 
     @Override
@@ -59,7 +60,8 @@ public class MoreFeedback extends AppCompatActivity {
                         time = row.getString("create_time");
                         fContent = row.getString("feedback_content");
                         recommend = String.valueOf(row.getInt("recommend"));
-                        items.add(new FeedbackItem(fId,fMemberId,fContent,time,recommend));
+                        feedbackLiked = row.getBoolean("feedback_liked");
+                        items.add(new FeedbackItem(fId,fMemberId,fContent,time,recommend,feedbackLiked));
                     }
 
                     rclFeedback.setLayoutManager(layoutManager);
@@ -75,7 +77,7 @@ public class MoreFeedback extends AppCompatActivity {
 
         Intent fIntent=getIntent();
         postId=fIntent.getStringExtra("f_postId");
-        FeedbackRequest fRequest = new FeedbackRequest(postId, fListener);
+        FeedbackRequest fRequest = new FeedbackRequest(postId,skin.getPreferenceString("LoginId"), fListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(fRequest);
 

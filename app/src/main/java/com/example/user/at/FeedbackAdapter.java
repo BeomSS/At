@@ -30,6 +30,9 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackViewHolder> {
         holder.vhWriter.setText(items.get(position).writer);
         holder.vhContent.setText(items.get(position).contents);
         holder.vhLike.setText(items.get(position).likes);
+        if(items.get(position).f_liked){
+            holder.vhImage.setImageResource(R.drawable.ic_thumb_up_color_30dp);
+        }
     }
 
     @Override
