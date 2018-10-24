@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.AudioManager;
+import android.media.ExifInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -276,16 +278,43 @@ public class ShowPictureActivity extends Activity implements Runnable {
     public void run() {
         if (url != null) {
             try {
-                // url에 접속 시도
+                //이미지가 지멋대로 돌아가는 경우가 발생하므로 ExifInterface를 먼저 받아온다.
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.connect();
 
-                // 스트림 생성
                 InputStream iStream = conn.getInputStream();
 
-                // 스트림에서 받은 데이터를 비트맵 변환
-                // 인터넷에서 이미지 가져올 때는 Bitmap을 사용해야함
+                ExifInterface ei = new ExifInterface(iStream);
+                int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+                iStream.close();
+                conn.disconnect();
+
+                //이미지를 받은 뒤 위에서 받은 회전값으로 수정을 해준 뒤 핸들러에 전달
+                conn = (HttpURLConnection) url.openConnection();
+                conn.connect();
+
+                iStream = conn.getInputStream();
+
                 bitmap = BitmapFactory.decodeStream(iStream);
+
+                switch (orientation) {
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        bitmap=rotate(bitmap, 90);
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        bitmap=rotate(bitmap, 180);
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        bitmap=rotate(bitmap, 270);
+                        break;
+                    case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                        bitmap=flip(bitmap, true, false);
+                        break;
+                    case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                        bitmap=flip(bitmap, false, true);
+                        break;
+                }
 
                 // 핸들러에게 화면 갱신을 요청한다.
                 handler.sendEmptyMessage(0);
@@ -318,5 +347,17 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         }
         super.onStop();
+    }
+
+    public static Bitmap rotate(Bitmap bitmap, float degrees) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degrees);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    public static Bitmap flip(Bitmap bitmap, boolean horizontal, boolean vertical) {
+        Matrix matrix = new Matrix();
+        matrix.preScale(horizontal ? -1 : 1, vertical ? -1 : 1);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 }
