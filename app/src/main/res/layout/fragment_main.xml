@@ -2,7 +2,7 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView"
+    android:id="@+id/srv_Best_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true">
@@ -11,6 +11,8 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/Textlayout"
@@ -23,6 +25,15 @@
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="26dp"
             tools:layout_editor_absoluteY="0dp">
+
+            <TextView
+                android:id="@+id/txvTextWriteId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
 
             <TextView
                 android:id="@+id/Text"
@@ -62,7 +73,7 @@
                 android:id="@+id/Text1.1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="aaa"
+                android:text="로딩중..."
                 android:textSize="20dp"
                 app:layout_constraintLeft_toRightOf="@id/Text1"
                 app:layout_constraintTop_toBottomOf="@id/Text" />
@@ -84,7 +95,7 @@
                 android:id="@+id/Text2.1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="bbb"
+                android:text="로딩중..."
                 android:textSize="20dp"
                 app:layout_constraintBottom_toTopOf="@id/text4"
                 app:layout_constraintLeft_toRightOf="@id/Text2"
@@ -105,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
-                android:text="ccc"
+                android:text="로딩중..."
                 android:textSize="20dp"
                 app:layout_constraintBottom_toTopOf="@id/text4"
                 app:layout_constraintRight_toRightOf="parent"
@@ -128,7 +139,7 @@
                     android:layout_height="260dp"
                     android:layout_margin="20dp"
                     android:layout_marginTop="8dp"
-                    android:text="생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와...생텍쥐페리의 어린 시절의 모습은 『어린왕자』의 주인공과 너무나 흡사하다.굽슬굽슬한 갈색 머리털을 가진 이 소년은 눈앞에서 벌어지는 온갖 사소한 일들을 경이와..."
+                    android:text="로딩중..."
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -157,6 +168,15 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/line1">
+
+            <TextView
+                android:id="@+id/txvImageWriteId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
 
             <TextView
                 android:id="@+id/Picture"
@@ -196,7 +216,7 @@
                 android:id="@+id/Picture1.1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="aaa"
+                android:text="로딩중..."
                 android:textSize="20dp"
                 app:layout_constraintLeft_toRightOf="@id/Picture1"
                 app:layout_constraintTop_toBottomOf="@id/Picture" />
@@ -218,7 +238,7 @@
                 android:id="@+id/Picture2.1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="bbb"
+                android:text="로딩중..."
                 android:textSize="20dp"
                 app:layout_constraintBottom_toTopOf="@id/Picture4"
                 app:layout_constraintLeft_toRightOf="@id/Picture2"
@@ -239,7 +259,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
-                android:text="ccc"
+                android:text="로딩중..."
                 android:textSize="20dp"
                 app:layout_constraintBottom_toTopOf="@id/Picture4"
                 app:layout_constraintRight_toRightOf="parent"
@@ -247,14 +267,15 @@
 
             <ImageView
                 android:id="@+id/Picture4"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:background="@drawable/bonobono"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/Picture2" />
+                app:layout_constraintTop_toBottomOf="@id/Picture2"
+                android:scaleType="fitCenter"
+            />
         </android.support.constraint.ConstraintLayout>
 
         <View
@@ -279,6 +300,15 @@
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="26dp"
             tools:layout_editor_absoluteY="0dp">
+
+            <TextView
+                android:id="@+id/txvMusicWriteId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
 
             <TextView
                 android:id="@+id/Music"
@@ -320,7 +350,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="aaa"
+                android:text="로딩중..."
                 android:textSize="20dp"
                 app:layout_constraintLeft_toRightOf="@id/Music1"
                 app:layout_constraintTop_toBottomOf="@id/Music" />
@@ -333,7 +363,7 @@
                 android:layout_marginTop="20dp"
                 android:text="작성자 : "
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@id/Pause"
+                app:layout_constraintBottom_toTopOf="@id/btnBestMusicPause"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/Music2.1"
                 app:layout_constraintTop_toBottomOf="@id/Music1" />
@@ -342,10 +372,10 @@
                 android:id="@+id/Music2.1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="bbb"
+                android:text="로딩중..."
                 android:textSize="20dp"
 
-                app:layout_constraintBottom_toTopOf="@id/Pause"
+                app:layout_constraintBottom_toTopOf="@id/btnBestMusicPause"
                 app:layout_constraintLeft_toRightOf="@id/Music2"
                 app:layout_constraintTop_toBottomOf="@id/Music1" />
 
@@ -355,7 +385,7 @@
                 android:layout_height="wrap_content"
                 android:text="추천수 : "
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@id/Pause"
+                app:layout_constraintBottom_toTopOf="@id/btnBestMusicPause"
                 app:layout_constraintRight_toLeftOf="@id/Music3.1"
                 app:layout_constraintTop_toBottomOf="@id/Music1.1" />
 
@@ -364,42 +394,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
-                android:text="ccc"
+                android:text="로딩중..."
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@id/Pause"
+                app:layout_constraintBottom_toTopOf="@id/btnBestMusicPause"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/Music1" />
 
             <Button
-                android:id="@+id/Pause"
+                android:id="@+id/btnBestMusicPause"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="일시정지"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/Play"
+                app:layout_constraintRight_toLeftOf="@id/btnBestMusicPlay"
                 app:layout_constraintTop_toBottomOf="@id/Music2" />
 
             <Button
-                android:id="@+id/Play"
+                android:id="@+id/btnBestMusicPlay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="재생"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/Pause"
-                app:layout_constraintRight_toLeftOf="@id/Stop"
+                app:layout_constraintLeft_toRightOf="@id/btnBestMusicPause"
+                app:layout_constraintRight_toLeftOf="@id/btnBestMusicStop"
                 app:layout_constraintTop_toBottomOf="@id/Music2" />
 
             <Button
-                android:id="@+id/Stop"
+                android:id="@+id/btnBestMusicStop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="정지"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/Play"
+                app:layout_constraintLeft_toRightOf="@id/btnBestMusicPlay"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/Music2" />
 
