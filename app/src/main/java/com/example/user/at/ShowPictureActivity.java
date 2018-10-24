@@ -1,5 +1,6 @@
 package com.example.user.at;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -49,7 +50,6 @@ public class ShowPictureActivity extends Activity implements Runnable {
     int category, usingBestFeedback = 0;
     private MediaPlayer mediaPlayer;
     Skin pId = new Skin(ShowPictureActivity.this);
-    int color;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,12 +60,12 @@ public class ShowPictureActivity extends Activity implements Runnable {
         category = pIntent.getIntExtra("category", 0);
         //어느 게시판인지에 따라 다른 레이아웃을 가져온다
         if (category == 0) {
-            setContentView(R.layout.activity_show_write_ver2);
+            setContentView(R.layout.activity_show_write);
         } else if (category == 1) {
             setContentView(R.layout.activity_show_picture);
             postImageView = findViewById(R.id.ivShowPictureImg);
         } else if (category == 2) {
-            setContentView(R.layout.activity_show_music_ver2);
+            setContentView(R.layout.activity_show_music);
             musicStartBtn = findViewById(R.id.musicStart);
             musicStopBtn = findViewById(R.id.musicStop);
             musicResetBtn = findViewById(R.id.musicReset);
@@ -144,7 +144,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             Log.d("TAG", "JSONObj response=" + response);
                             try {
                                 JSONObject jsonResponse = new JSONObject(response);
-                                if(jsonResponse.getBoolean("check")) {
+                                if (jsonResponse.getBoolean("check")) {
                                     if (jsonResponse.getBoolean("update") && jsonResponse.getBoolean("insert")) {
                                         Toast.makeText(ShowPictureActivity.this, "추천하였습니다.", Toast.LENGTH_SHORT).show();
                                         int recommend = Integer.parseInt(tvBestFeedbackCount.getText().toString());
@@ -156,7 +156,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                                     } else {
                                         Toast.makeText(ShowPictureActivity.this, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
                                     }
-                                }else{
+                                } else {
                                     Toast.makeText(ShowPictureActivity.this, "자신의 피드백은 추천하지 못합니다.", Toast.LENGTH_SHORT).show();
                                 }
 
@@ -223,7 +223,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         tvBestFeedbackCount.setText(jsonResponse.getString("f_recommend"));
 
                         //베스트 피드백이 추천 받았었는지 체크
-                        if(jsonResponse.getString("best_feedback_liked")=="true"){
+                        if (jsonResponse.getString("best_feedback_liked") == "true") {
                             btnPictureFeedbackLike.setImageResource(R.drawable.ic_thumb_up_color_30dp);
                             pictureFeedbackLiked = true;
                         }
@@ -247,7 +247,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         };
 
-        PostRequest pRequest = new PostRequest(pIntent.getStringExtra("postid"),pId.getPreferenceString("LoginId"), pListener);
+        PostRequest pRequest = new PostRequest(pIntent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), pListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(pRequest);
 
@@ -263,6 +263,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
     }
 
     //서버에서 받아온 이미지를 핸들러를 경유해서 이미지뷰에 넣는다
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -309,10 +310,12 @@ public class ShowPictureActivity extends Activity implements Runnable {
     @Override
     protected void onStop() {
         if (category == 2) {
-            mediaPlayer.stop();
-            mediaPlayer.reset();
-            mediaPlayer.release();
-            mediaPlayer = null;
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer.reset();
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
         }
         super.onStop();
     }
