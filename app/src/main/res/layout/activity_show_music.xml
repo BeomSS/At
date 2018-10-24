@@ -6,7 +6,7 @@
     android:background="@color/colorWhite">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/headerShowPicture"
+        android:id="@+id/loHeaderShowPicture"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorMint"
@@ -51,7 +51,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/btnShowPictureLike"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerShowPicture" />
+        app:layout_constraintTop_toBottomOf="@+id/loHeaderShowPicture" />
 
     <TextView
         android:id="@+id/tvShowPictureTitle"
@@ -64,7 +64,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/btnShowPictureLike"
         app:layout_constraintLeft_toRightOf="@id/tvShowPictureTitleLabel"
         app:layout_constraintRight_toLeftOf="@+id/btnShowPictureLike"
-        app:layout_constraintTop_toBottomOf="@id/headerShowPicture" />
+        app:layout_constraintTop_toBottomOf="@id/loHeaderShowPicture" />
 
     <ImageView
         android:id="@+id/btnShowPictureLike"
@@ -74,7 +74,7 @@
         android:layout_marginTop="5dp"
         android:src="@drawable/ic_no_like_40dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerShowPicture" />
+        app:layout_constraintTop_toBottomOf="@id/loHeaderShowPicture" />
 
     <ScrollView
         android:id="@+id/scrShowPictureContent"
