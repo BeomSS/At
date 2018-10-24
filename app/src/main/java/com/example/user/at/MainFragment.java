@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.media.AudioManager;
 import android.media.ExifInterface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,11 +35,10 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Objects;
+
 
 public class MainFragment extends Fragment {
     View view;
@@ -49,6 +50,7 @@ public class MainFragment extends Fragment {
     String imageURL,musicURL,strUrl;
     URL url;
     Bitmap bitmap;
+    private MediaPlayer mediaPlayer;
 
     @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Nullable
@@ -106,7 +108,7 @@ public class MainFragment extends Fragment {
 
                             content.setText(jsonResponse.getString("w_explain"));
 
-                            //이미지 불러오기
+                            //베스트이미지 불러오기
                             strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("i_url");
                             url = new URL(strUrl);
                             new Thread(new Runnable() {
@@ -114,17 +116,47 @@ public class MainFragment extends Fragment {
                                 public void run() {
                                     if (url != null) {
                                         try {
-                                            // url에 접속 시도
+                                            //이미지가 지멋대로 돌아가는 경우가 발생하므로 ExifInterface를 먼저 받아온다.
                                             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                                             conn.connect();
 
-                                            // 스트림 생성
                                             InputStream iStream = conn.getInputStream();
 
-                                            // 스트림에서 받은 데이터를 비트맵 변환
-                                            // 인터넷에서 이미지 가져올 때는 Bitmap을 사용해야함
+                                            ExifInterface ei = new ExifInterface(iStream);
+                                            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+                                            iStream.close();
+                                            conn.disconnect();
+
+                                            //이미지를 받은 뒤 위에서 받은 회전값으로 수정을 해준 뒤 핸들러에 전달
+                                            conn = (HttpURLConnection) url.openConnection();
+                                            conn.connect();
+
+                                            iStream = conn.getInputStream();
+
                                             bitmap = BitmapFactory.decodeStream(iStream);
-                                            bitmap=modifyOrientation(bitmap,iStream);
+
+                                            switch (orientation) {
+                                                case ExifInterface.ORIENTATION_ROTATE_90:
+                                                    bitmap=rotate(bitmap, 90);
+                                                    break;
+
+                                                case ExifInterface.ORIENTATION_ROTATE_180:
+                                                    bitmap=rotate(bitmap, 180);
+                                                    break;
+
+                                                case ExifInterface.ORIENTATION_ROTATE_270:
+                                                    bitmap=rotate(bitmap, 270);
+                                                    break;
+
+                                                case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                                                    bitmap=flip(bitmap, true, false);
+                                                    break;
+
+                                                case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                                                    bitmap=flip(bitmap, false, true);
+                                                    break;
+                                            }
 
                                             // 핸들러에게 화면 갱신을 요청한다.
                                             handler.sendEmptyMessage(0);
@@ -140,6 +172,13 @@ public class MainFragment extends Fragment {
                                     }
                                 }
                             }).start();
+
+                            //베스트 음악 불러오기
+                            String strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("m_url");
+                            mediaPlayer = new MediaPlayer();
+                            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                            mediaPlayer.setDataSource(strUrl);
+                            mediaPlayer.prepare();
 
                         } catch (Exception e) {
                             Log.d("BestDBerror", e.toString());
@@ -167,32 +206,67 @@ public class MainFragment extends Fragment {
             }
         });
 
-        textbtn.setOnClickListener(new View.OnClickListener()
-
-        {
+        //글 베스트 게시물 이동 버튼 클릭
+        textbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
+                cIntent.putExtra("putter", "게시판");
+                cIntent.putExtra("category", 0);
+                cIntent.putExtra("writer",text2.getText().toString());
+                cIntent.putExtra("postid",txvTextWriteId.getText().toString());
+                Log.d("board put test", text2.getText().toString() + " || " + txvTextWriteId.getText().toString());
+                startActivity(cIntent);
+            }
+        });
+        //그림 베스트 게시물 이동 버튼 클릭
+        btnPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
+                cIntent.putExtra("putter", "게시판");
+                cIntent.putExtra("category", 1);
+                cIntent.putExtra("writer",picture2.getText().toString());
+                cIntent.putExtra("postid",txvImageWriteId.getText().toString());
+                Log.d("board put test", text2.getText().toString() + " || " + txvTextWriteId.getText().toString());
+                startActivity(cIntent);
+            }
+        });
+        //음악 베스트 게시물 이동 버튼 클릭
+        musicbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
+                cIntent.putExtra("putter", "게시판");
+                cIntent.putExtra("category", 2);
+                cIntent.putExtra("writer",music2.getText().toString());
+                cIntent.putExtra("postid",txvMusicWriteId.getText().toString());
+                startActivity(cIntent);
             }
         });
 
-        btnPicture.setOnClickListener(new View.OnClickListener()
-
-        {
+        //베스트 음악 버튼 클릭시 이벤트
+        btnBestMusicPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ShowPictureActivity.class);
-                startActivity(intent);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+                if (!mediaPlayer.isPlaying()) {
+                    mediaPlayer.start();
+                }
             }
         });
 
-        musicbtn.setOnClickListener(new View.OnClickListener()
-
-        {
+        btnBestMusicPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mediaPlayer.pause();
+            }
+        });
 
+        btnBestMusicStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mediaPlayer.pause();
+                mediaPlayer.seekTo(0);
             }
         });
 
@@ -208,31 +282,6 @@ public class MainFragment extends Fragment {
         }
     };
 
-    public static Bitmap modifyOrientation(Bitmap bitmap, InputStream image_absolute_path) throws IOException {
-        ExifInterface ei = new ExifInterface(image_absolute_path);
-        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                return rotate(bitmap, 90);
-
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                return rotate(bitmap, 180);
-
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                return rotate(bitmap, 270);
-
-            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
-                return flip(bitmap, true, false);
-
-            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
-                return flip(bitmap, false, true);
-
-            default:
-                return bitmap;
-        }
-    }
-
     public static Bitmap rotate(Bitmap bitmap, float degrees) {
         Matrix matrix = new Matrix();
         matrix.postRotate(degrees);
@@ -243,5 +292,22 @@ public class MainFragment extends Fragment {
         Matrix matrix = new Matrix();
         matrix.preScale(horizontal ? -1 : 1, vertical ? -1 : 1);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    @Override
+    public void onPause() {
+        mediaPlayer.pause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        super.onDestroyView();
     }
 }
