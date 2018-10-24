@@ -122,6 +122,6 @@ public class MenuFragment extends Fragment {
 
     void startActivityInMenu() {
         startActivity(intent);
-        Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+        Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
     }
 }

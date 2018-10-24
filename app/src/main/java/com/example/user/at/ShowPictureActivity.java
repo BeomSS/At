@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,15 +34,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ShowPictureActivity extends Activity implements Runnable {
+    Skin skin;
+    int color;
+    ConstraintLayout loHeaderShowPicture;
     ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike, postImageView;
     EditText edtPictureWriteFeedback;
     TextView titleTextView, explainTextView, tvBestFeedbackName, tvBestFeedbackContent, tvBestFeedbackCount, tvBestFeedbackId;
     ImageButton musicStartBtn, musicStopBtn, musicResetBtn;
-    Button btnFeedbackUpload, btnFeedbackView;
+    Button btnPictureWriteFeedback, btnPictureMoreFeedBack;
     Boolean showPictureLiked, pictureFeedbackLiked;
     Bitmap bitmap;
     URL url = null;
-    Intent pintent;
+    Intent pIntent;
     int category, usingBestFeedback = 0;
     private MediaPlayer mediaPlayer;
     Skin pId = new Skin(ShowPictureActivity.this);
@@ -50,14 +54,15 @@ public class ShowPictureActivity extends Activity implements Runnable {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        color = pId.skinSetting();
-        pintent = getIntent();
-        category = pintent.getIntExtra("category", 0);
+        skin = new Skin(this);
+        color = skin.skinSetting();
+        pIntent = getIntent();
+        category = pIntent.getIntExtra("category", 0);
         //어느 게시판인지에 따라 다른 레이아웃을 가져온다
         if (category == 0) {
             setContentView(R.layout.activity_show_write_ver2);
         } else if (category == 1) {
-            setContentView(R.layout.activity_show_picture_ver2);
+            setContentView(R.layout.activity_show_picture);
             postImageView = findViewById(R.id.ivShowPictureImg);
         } else if (category == 2) {
             setContentView(R.layout.activity_show_music_ver2);
@@ -87,6 +92,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                 }
             });
         }
+        loHeaderShowPicture = findViewById(R.id.loHeaderShowPicture);
         tvBestFeedbackId = findViewById(R.id.tvPictureFeedbackId);
         tvBestFeedbackName = findViewById(R.id.tvPictureFeedbackUserName);
         tvBestFeedbackContent = findViewById(R.id.tvPictureFeedbackContent);
@@ -95,12 +101,16 @@ public class ShowPictureActivity extends Activity implements Runnable {
         btnShowPictureLike = findViewById(R.id.btnShowPictureLike);
         btnPictureFeedbackLike = findViewById(R.id.btnPictureFeedbackLike);
         edtPictureWriteFeedback = findViewById(R.id.edtPictureWriteFeedback);
-        btnFeedbackUpload = findViewById(R.id.btnPictureWriteFeedback);
+        btnPictureWriteFeedback = findViewById(R.id.btnPictureWriteFeedback);
         titleTextView = findViewById(R.id.tvShowPictureTitle);
         explainTextView = findViewById(R.id.tvShowPictureContent);
-        btnFeedbackView = findViewById(R.id.btnPictureMoreFeedback);
+        btnPictureMoreFeedBack = findViewById(R.id.btnPictureMoreFeedback);
         showPictureLiked = false;
         pictureFeedbackLiked = false;
+
+        loHeaderShowPicture.setBackgroundColor(color);
+        btnPictureMoreFeedBack.setBackgroundColor(color);
+        btnPictureWriteFeedback.setBackgroundColor(color);
 
         btnShowPictureBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +165,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             }
                         }
                     };
-                    FeedbackLikingRequest fLikingRequest = new FeedbackLikingRequest(pintent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), tvBestFeedbackId.getText().toString(), feedbackLikingListener);
+                    FeedbackLikingRequest fLikingRequest = new FeedbackLikingRequest(pIntent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), tvBestFeedbackId.getText().toString(), feedbackLikingListener);
                     RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                     queue.add(fLikingRequest);
 
@@ -163,7 +173,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         });
 
-        btnFeedbackUpload.setOnClickListener(new View.OnClickListener() {
+        btnPictureWriteFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Response.Listener feedbackListener = new Response.Listener<String>() {
@@ -184,7 +194,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         }
                     }
                 };
-                AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pintent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), edtPictureWriteFeedback.getText().toString(), feedbackListener);
+                AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pIntent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), edtPictureWriteFeedback.getText().toString(), feedbackListener);
                 RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                 queue.add(feedbackRequest);
             }
@@ -237,15 +247,15 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         };
 
-        PostRequest pRequest = new PostRequest(pintent.getStringExtra("postid"),pId.getPreferenceString("LoginId"), pListener);
+        PostRequest pRequest = new PostRequest(pIntent.getStringExtra("postid"),pId.getPreferenceString("LoginId"), pListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(pRequest);
 
-        btnFeedbackView.setOnClickListener(new View.OnClickListener() {
+        btnPictureMoreFeedBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent feedbackIntent = new Intent(ShowPictureActivity.this, MoreFeedback.class);
-                feedbackIntent.putExtra("f_postId", pintent.getStringExtra("postid"));
+                feedbackIntent.putExtra("f_postId", pIntent.getStringExtra("postid"));
                 startActivity(feedbackIntent);
             }
         });

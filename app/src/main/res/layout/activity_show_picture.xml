@@ -6,7 +6,7 @@
     android:background="@color/colorWhite">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/headerShowPicture"
+        android:id="@+id/loHeaderShowPicture"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorMint"
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:background="@drawable/ic_arrow_back_white_50dp"
+            android:src="@drawable/ic_arrow_back_white_50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,205 +40,196 @@
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/tvShowPictureTitleLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="제목 : "
-        android:textColor="@color/colorBlack"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/btnShowPictureLike"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerShowPicture" />
-
-    <TextView
-        android:id="@+id/tvShowPictureTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="제에에에에에목"
-        android:textColor="@color/colorBlack"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/btnShowPictureLike"
-        app:layout_constraintLeft_toRightOf="@id/tvShowPictureTitleLabel"
-        app:layout_constraintRight_toLeftOf="@+id/btnShowPictureLike"
-        app:layout_constraintTop_toBottomOf="@id/headerShowPicture" />
-
-    <ImageView
-        android:id="@+id/btnShowPictureLike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/ic_no_like_40dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerShowPicture" />
-
     <ScrollView
-        android:id="@+id/scrShowPictureContent"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/gdlShowPictureH2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnShowPictureLike">
-
-        <TextView
-            android:id="@+id/tvShowPictureContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="내애애애애애애용"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp" />
-    </ScrollView>
-
-    <ImageView
-        android:id="@+id/ivShowPictureImg"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:src="@drawable/bonobono"
-        app:layout_constraintBottom_toBottomOf="@id/gdlShowPictureH3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/gdlShowPictureH2" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/loPictureWriteFeedbackSpace"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        app:layout_constraintBottom_toBottomOf="@id/gdlShowPictureH4"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/gdlShowPictureH3">
-
-        <EditText
-            android:id="@+id/edtPictureWriteFeedback"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/colorWhite"
-            android:hint="피드백을 남겨 주세요"
-            android:padding="5dp"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="@id/gdlPictureFeedbackSpaceV1"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btnPictureWriteFeedback"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/colorMint"
-            android:text="입력"
-            android:textColor="@color/colorWhite"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/gdlPictureFeedbackSpaceV1"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/gdlPictureFeedbackSpaceV1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.8" />
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/loPictureFeedbackSpace"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:background="@drawable/background_black_outline"
         app:layout_constraintBottom_toBottomOf="@+id/gdlShowPictureH5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/gdlShowPictureH4">
+        app:layout_constraintTop_toTopOf="@+id/gdlShowPictureH1">
 
-        <TextView
-            android:id="@+id/tvPictureFeedbackUserName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:text="User123"
-            android:textColor="@color/colorBlack"
-            android:textSize="18dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvPictureFeedbackId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="invisible"/>
-
-        <ScrollView
-            android:id="@+id/sclPictureFeedbackContent"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/btnPictureFeedbackLike"
-            app:layout_constraintTop_toBottomOf="@id/tvPictureFeedbackUserName">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvPictureFeedbackContent"
-                android:layout_width="match_parent"
+                android:id="@+id/tvShowPictureTitle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:text="ABCDEFGFDSAFDSAFSDAFDSAFDSFDSFDSAFSDFSDAFDFSDAFSDFDSAFDSAFDSAFDSAFDSFDSFSDAFFSDFDSAFSDAFSADFSADFSDAFSADFDS"
+                android:layout_marginStart="10dp"
+                android:text="제에에에에에목"
                 android:textColor="@color/colorBlack"
-                android:textSize="18dp" />
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/btnShowPictureLike"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/btnShowPictureLike"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </ScrollView>
+            <ImageView
+                android:id="@+id/btnShowPictureLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_no_like_40dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/btnPictureFeedbackLike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_thumb_up_outline_30dp"
-            app:layout_constraintBottom_toTopOf="@id/tvPictureFeedbackLikeCount"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tvShowPictureContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:gravity="start"
+                android:text="내애애애애애애용"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnShowPictureLike" />
 
-        <TextView
-            android:id="@+id/tvPictureFeedbackLikeCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintLeft_toLeftOf="@id/btnPictureFeedbackLike"
-            app:layout_constraintRight_toRightOf="@id/btnPictureFeedbackLike"
-            app:layout_constraintTop_toBottomOf="@id/btnPictureFeedbackLike" />
+            <ImageView
+                android:id="@+id/ivShowPictureImg"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/bonobono"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvShowPictureContent" />
 
-    </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/loPictureWriteFeedbackSpace"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivShowPictureImg">
+
+                <EditText
+                    android:id="@+id/edtPictureWriteFeedback"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="피드백을 남겨 주세요"
+                    android:padding="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="@id/gdlPictureFeedbackSpaceV1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btnPictureWriteFeedback"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/colorMint"
+                    android:text="입력"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="@id/gdlPictureFeedbackSpaceV1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/gdlPictureFeedbackSpaceV1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.8" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/loPictureFeedbackSpace"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/background_black_outline"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loPictureWriteFeedbackSpace">
+
+                <TextView
+                    android:id="@+id/tvPictureFeedbackUserName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="User123"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPictureFeedbackId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:visibility="invisible"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ScrollView
+                    android:id="@+id/sclPictureFeedbackContent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/btnPictureFeedbackLike"
+                    app:layout_constraintTop_toBottomOf="@id/tvPictureFeedbackUserName">
+
+                    <TextView
+                        android:id="@+id/tvPictureFeedbackContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="ABCDEFGFDSAFDSAFSDAFDSAFDSFDSFDSAFSDFSDAFDFSDAFSDFDSAFDSAFDSAFDSAFDSFDSFSDAFFSDFDSAFSDAFSADFSADFSDAFSADFDS"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18dp" />
+
+                </ScrollView>
+
+                <ImageView
+                    android:id="@+id/btnPictureFeedbackLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/ic_thumb_up_outline_30dp"
+                    app:layout_constraintBottom_toTopOf="@id/tvPictureFeedbackLikeCount"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPictureFeedbackLikeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintLeft_toLeftOf="@id/btnPictureFeedbackLike"
+                    app:layout_constraintRight_toRightOf="@id/btnPictureFeedbackLike"
+                    app:layout_constraintTop_toBottomOf="@id/btnPictureFeedbackLike" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
 
     <Button
         android:id="@+id/btnPictureMoreFeedback"
@@ -246,6 +237,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:background="@color/colorMint"
+        android:elevation="10dp"
         android:text="댓글 더 보기"
         android:textColor="@color/colorWhite"
         android:textSize="20dp"
@@ -261,27 +253,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/gdlShowPictureH2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/gdlShowPictureH3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/gdlShowPictureH4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
 
     <android.support.constraint.Guideline
         android:id="@+id/gdlShowPictureH5"
