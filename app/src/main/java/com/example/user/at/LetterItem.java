@@ -1,14 +1,15 @@
 package com.example.user.at;
 
 public class LetterItem {
-    public String sentUser, receivedUser, letterTitle, letterTime, letterId;
+    public String sentUser, receivedUser, letterTitle, letterTime, letterId,letterContent;
 
-    public LetterItem(String sentUser, String receivedUser, String letterTitle, String letterTime, String letterId) {
+    public LetterItem(String sentUser, String receivedUser, String letterTitle, String letterTime, String letterId,String content) {
         this.sentUser = sentUser;
         this.receivedUser = receivedUser;
         this.letterTitle = letterTitle;
         this.letterTime = letterTime;
         this.letterId = letterId;
+        this.letterContent=content;
     }
 
     String getSentUser() {
@@ -30,4 +31,6 @@ public class LetterItem {
     String getLetterId() {
         return letterId;
     }
+
+    String getLetterContent(){return letterContent;}
 }
