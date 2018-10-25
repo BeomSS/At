@@ -51,7 +51,7 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, items.get(position).getLetterTitle() + " 자세히 보기", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, items.get(position).getLetterContent() + " 자세히 보기", Toast.LENGTH_SHORT).show();
             }
         });
     }
