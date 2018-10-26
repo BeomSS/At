@@ -3,9 +3,8 @@ package com.example.user.at;
 public class LetterItem {
     public String sentUser, receivedUser, letterTitle, letterTime, letterId,letterContent;
 
-    public LetterItem(String sentUser, String receivedUser, String letterTitle, String letterTime, String letterId,String content) {
-        this.sentUser = sentUser;
-        this.receivedUser = receivedUser;
+    public LetterItem(String user, String letterTitle, String letterTime, String letterId,String content) {
+        this.sentUser = user;
         this.letterTitle = letterTitle;
         this.letterTime = letterTime;
         this.letterId = letterId;
