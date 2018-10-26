@@ -86,7 +86,7 @@ public class LetterMainActivity extends Activity {
                         letterTime=row.getString("g_send_time");
                         letterId=row.getString("g_message_id");
                         letterContent=row.getString("g_content");
-                        getitems.add(new LetterItem(letterPutUserId,letterGetUserId,letterTitle,letterTime,letterId,letterContent));
+                        getitems.add(new LetterItem(letterPutUserId,letterTitle,letterTime,letterId,letterContent));
                     }
                     //보낸 쪽지 어레이리스트에 넣기
                     for (int i = 0; i < putLetterJson.length(); i++) {
@@ -97,7 +97,7 @@ public class LetterMainActivity extends Activity {
                         letterTime=row.getString("p_send_time");
                         letterId=row.getString("p_message_id");
                         letterContent=row.getString("p_content");
-                        putitems.add(new LetterItem(letterPutUserId,letterGetUserId,letterTitle,letterTime,letterId,letterContent));
+                        putitems.add(new LetterItem(letterGetUserId,letterTitle,letterTime,letterId,letterContent));
                     }
 
                     LinearLayoutManager layoutManager = new LinearLayoutManager(LetterMainActivity.this);
@@ -136,6 +136,8 @@ public class LetterMainActivity extends Activity {
         btnWriteLetter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LetterDialog dlg=new LetterDialog(LetterMainActivity.this,skin.getPreferenceString("LoginId"));
+                dlg.show();
                 Toast.makeText(LetterMainActivity.this, "편지쓰기", Toast.LENGTH_SHORT).show();
             }
         });
