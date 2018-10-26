@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.Rect;
 import android.media.AudioManager;
 import android.media.ExifInterface;
 import android.media.MediaPlayer;
@@ -18,13 +17,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -167,7 +164,6 @@ public class MainFragment extends Fragment {
 
                                             // 핸들러에게 화면 갱신을 요청한다.
                                             handler.sendEmptyMessage(0);
-                                            pgbBestPictureLoading.setVisibility(View.GONE);
 
                                             // 연결 종료
                                             iStream.close();
@@ -279,6 +275,7 @@ public class MainFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             imageView.setImageBitmap(bitmap);
+            pgbBestPictureLoading.setVisibility(View.GONE);
         }
     };
 
