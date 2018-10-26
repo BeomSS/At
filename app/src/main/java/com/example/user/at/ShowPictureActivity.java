@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.StateListDrawable;
 import android.media.AudioManager;
 import android.media.ExifInterface;
 import android.media.MediaPlayer;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,12 +42,13 @@ public class ShowPictureActivity extends Activity implements Runnable {
     Skin skin;
     int color;
     ConstraintLayout loHeaderShowPicture;
-    ImageView btnShowPictureBack, btnShowPictureLike, btnPictureFeedbackLike, postImageView;
+    ImageView btnShowPictureBack, btnPictureFeedbackLike, postImageView, ivShowPictureLike, ivShowPictureBookmark, btnShowPictureDelete;
     EditText edtPictureWriteFeedback;
-    TextView titleTextView, explainTextView, tvBestFeedbackName, tvBestFeedbackContent, tvBestFeedbackCount, tvBestFeedbackId;
+    TextView titleTextView, explainTextView, tvBestFeedbackName, tvBestFeedbackContent, tvBestFeedbackCount, tvBestFeedbackId, tvShowPictureLikeCount;
     ImageButton musicStartBtn, musicStopBtn, musicResetBtn;
     Button btnPictureWriteFeedback, btnPictureMoreFeedBack;
-    Boolean showPictureLiked, pictureFeedbackLiked;
+    LinearLayout btnShowPictureBookmark, btnShowPictureLike;
+    Boolean showPictureBookMarked, pictureFeedbackLiked, showPictureLiked;
     Bitmap bitmap;
     URL url = null;
     Intent pIntent;
@@ -99,20 +102,28 @@ public class ShowPictureActivity extends Activity implements Runnable {
         tvBestFeedbackName = findViewById(R.id.tvPictureFeedbackUserName);
         tvBestFeedbackContent = findViewById(R.id.tvPictureFeedbackContent);
         tvBestFeedbackCount = findViewById(R.id.tvPictureFeedbackLikeCount);
+        tvShowPictureLikeCount = findViewById(R.id.tvShowPictureLikeCount);
         btnShowPictureBack = findViewById(R.id.btnShowPictureBack);
-        btnShowPictureLike = findViewById(R.id.btnShowPictureLike);
+        btnShowPictureBookmark = findViewById(R.id.btnShowPictureBookmark);
         btnPictureFeedbackLike = findViewById(R.id.btnPictureFeedbackLike);
         edtPictureWriteFeedback = findViewById(R.id.edtPictureWriteFeedback);
         btnPictureWriteFeedback = findViewById(R.id.btnPictureWriteFeedback);
         titleTextView = findViewById(R.id.tvShowPictureTitle);
         explainTextView = findViewById(R.id.tvShowPictureContent);
         btnPictureMoreFeedBack = findViewById(R.id.btnPictureMoreFeedback);
-        showPictureLiked = false;
+        btnShowPictureLike = findViewById(R.id.btnShowPictureLike);
+        ivShowPictureBookmark = findViewById(R.id.ivShowPictureBookmark);
+        ivShowPictureLike = findViewById(R.id.ivShowPictureLike);
+        btnShowPictureDelete = findViewById(R.id.btnShowPictureDelete);
+        showPictureBookMarked = false;
         pictureFeedbackLiked = false;
+        showPictureLiked = false;
 
         loHeaderShowPicture.setBackgroundColor(color);
         btnPictureMoreFeedBack.setBackgroundColor(color);
         btnPictureWriteFeedback.setBackgroundColor(color);
+        btnShowPictureLike.setBackgroundColor(color);
+        btnShowPictureBookmark.setBackgroundColor(color);
 
         btnShowPictureBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,16 +133,38 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         });
 
+        btnShowPictureBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (showPictureBookMarked) {
+                    ivShowPictureBookmark.setImageResource(R.drawable.ic_no_like_40dp);
+                    showPictureBookMarked = false;
+                } else {
+                    ivShowPictureBookmark.setImageResource(R.drawable.ic_like_white_40dp);
+                    showPictureBookMarked = true;
+                }
+            }
+        });
+
         btnShowPictureLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (showPictureLiked) {
-                    btnShowPictureLike.setImageResource(R.drawable.ic_no_like_40dp);
+                    ivShowPictureLike.setImageResource(R.drawable.ic_thumb_up_outline_40dp);
                     showPictureLiked = false;
+                    tvShowPictureLikeCount.setText("00");
                 } else {
-                    btnShowPictureLike.setImageResource(R.drawable.ic_like_40dp);
+                    ivShowPictureLike.setImageResource(R.drawable.ic_thumb_up_white_40dp);
                     showPictureLiked = true;
+                    tvShowPictureLikeCount.setText("01");
                 }
+            }
+        });
+
+        btnShowPictureDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ShowPictureActivity.this, "게시물 삭제", Toast.LENGTH_SHORT).show();
             }
         });
 
