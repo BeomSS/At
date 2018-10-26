@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.media.AudioManager;
 import android.media.ExifInterface;
 import android.media.MediaPlayer;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,9 +47,9 @@ public class MainFragment extends Fragment {
     TextView text1, text2, text3, content, picture1, picture2, picture3, music1, music2, music3, txvTextWriteId, txvImageWriteId, txvMusicWriteId;
     Button textbtn, btnPicture, musicbtn, btnBestMusicPause, btnBestMusicPlay, btnBestMusicStop;
     ImageView imageView;
+    ProgressBar pgbBestPictureLoading, pgbBestMusicLoading;
     NestedScrollView scrollView1;
-    ScrollView scrollView2;
-    String imageURL,musicURL,strUrl;
+    String imageURL, musicURL, strUrl;
     URL url;
     Bitmap bitmap;
     private MediaPlayer mediaPlayer;
@@ -78,8 +80,13 @@ public class MainFragment extends Fragment {
         btnBestMusicPlay = view.findViewById(R.id.btnBestMusicPlay);
         btnBestMusicStop = view.findViewById(R.id.btnBestMusicStop);
         imageView = view.findViewById(R.id.Picture4);
+        pgbBestPictureLoading = view.findViewById(R.id.pgbBestPictureLoading);
+        pgbBestMusicLoading = view.findViewById(R.id.pgbBestMusicLoading);
         scrollView1 = view.findViewById(R.id.scrollView);
-        scrollView2 = view.findViewById(R.id.text4);
+
+        btnBestMusicPause.setVisibility(View.INVISIBLE);
+        btnBestMusicPlay.setVisibility(View.INVISIBLE);
+        btnBestMusicStop.setVisibility(View.INVISIBLE);
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         String besturl = LoginActivity.ipAddress + ":800/At/SeeBest.php";
@@ -103,8 +110,8 @@ public class MainFragment extends Fragment {
                             music1.setText(jsonResponse.getString("m_post_title"));
                             music2.setText(jsonResponse.getString("m_member_id"));
                             music3.setText(jsonResponse.getString("m_recommend"));
-                            imageURL=jsonResponse.getString("i_url");
-                            musicURL=jsonResponse.getString("m_url");
+                            imageURL = jsonResponse.getString("i_url");
+                            musicURL = jsonResponse.getString("m_url");
 
                             content.setText(jsonResponse.getString("w_explain"));
 
@@ -138,28 +145,29 @@ public class MainFragment extends Fragment {
 
                                             switch (orientation) {
                                                 case ExifInterface.ORIENTATION_ROTATE_90:
-                                                    bitmap=rotate(bitmap, 90);
+                                                    bitmap = rotate(bitmap, 90);
                                                     break;
 
                                                 case ExifInterface.ORIENTATION_ROTATE_180:
-                                                    bitmap=rotate(bitmap, 180);
+                                                    bitmap = rotate(bitmap, 180);
                                                     break;
 
                                                 case ExifInterface.ORIENTATION_ROTATE_270:
-                                                    bitmap=rotate(bitmap, 270);
+                                                    bitmap = rotate(bitmap, 270);
                                                     break;
 
                                                 case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
-                                                    bitmap=flip(bitmap, true, false);
+                                                    bitmap = flip(bitmap, true, false);
                                                     break;
 
                                                 case ExifInterface.ORIENTATION_FLIP_VERTICAL:
-                                                    bitmap=flip(bitmap, false, true);
+                                                    bitmap = flip(bitmap, false, true);
                                                     break;
                                             }
 
                                             // 핸들러에게 화면 갱신을 요청한다.
                                             handler.sendEmptyMessage(0);
+                                            pgbBestPictureLoading.setVisibility(View.GONE);
 
                                             // 연결 종료
                                             iStream.close();
@@ -179,6 +187,10 @@ public class MainFragment extends Fragment {
                             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                             mediaPlayer.setDataSource(strUrl);
                             mediaPlayer.prepare();
+                            btnBestMusicPause.setVisibility(View.VISIBLE);
+                            btnBestMusicPlay.setVisibility(View.VISIBLE);
+                            btnBestMusicStop.setVisibility(View.VISIBLE);
+                            pgbBestMusicLoading.setVisibility(View.GONE);
 
                         } catch (Exception e) {
                             Log.d("BestDBerror", e.toString());
@@ -193,19 +205,6 @@ public class MainFragment extends Fragment {
 
         queue.add(bestRequest);
 
-        scrollView2.setOnTouchListener(new View.OnTouchListener()
-
-        {                  //이중 스크롤을 사용할때 안쪽 스크롤 터치시 바깥쪽 스크롤 터치이벤트 정지
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-                    scrollView1.requestDisallowInterceptTouchEvent(false);
-                else
-                    scrollView1.requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-
         //글 베스트 게시물 이동 버튼 클릭
         textbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,8 +212,8 @@ public class MainFragment extends Fragment {
                 Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
                 cIntent.putExtra("putter", "게시판");
                 cIntent.putExtra("category", 0);
-                cIntent.putExtra("writer",text2.getText().toString());
-                cIntent.putExtra("postid",txvTextWriteId.getText().toString());
+                cIntent.putExtra("writer", text2.getText().toString());
+                cIntent.putExtra("postid", txvTextWriteId.getText().toString());
                 Log.d("board put test", text2.getText().toString() + " || " + txvTextWriteId.getText().toString());
                 startActivity(cIntent);
             }
@@ -226,8 +225,8 @@ public class MainFragment extends Fragment {
                 Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
                 cIntent.putExtra("putter", "게시판");
                 cIntent.putExtra("category", 1);
-                cIntent.putExtra("writer",picture2.getText().toString());
-                cIntent.putExtra("postid",txvImageWriteId.getText().toString());
+                cIntent.putExtra("writer", picture2.getText().toString());
+                cIntent.putExtra("postid", txvImageWriteId.getText().toString());
                 Log.d("board put test", text2.getText().toString() + " || " + txvTextWriteId.getText().toString());
                 startActivity(cIntent);
             }
@@ -239,8 +238,8 @@ public class MainFragment extends Fragment {
                 Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
                 cIntent.putExtra("putter", "게시판");
                 cIntent.putExtra("category", 2);
-                cIntent.putExtra("writer",music2.getText().toString());
-                cIntent.putExtra("postid",txvMusicWriteId.getText().toString());
+                cIntent.putExtra("writer", music2.getText().toString());
+                cIntent.putExtra("postid", txvMusicWriteId.getText().toString());
                 startActivity(cIntent);
             }
         });
@@ -272,6 +271,7 @@ public class MainFragment extends Fragment {
 
         return view;
     }
+
     //이미지 핸들러
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
@@ -296,7 +296,8 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onPause() {
-        mediaPlayer.pause();
+        if (mediaPlayer != null && mediaPlayer.isPlaying())
+            mediaPlayer.pause();
         super.onPause();
     }
 
@@ -309,5 +310,16 @@ public class MainFragment extends Fragment {
             mediaPlayer = null;
         }
         super.onDestroyView();
+    }
+
+    @Override
+    public void onStop() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        super.onStop();
     }
 }
