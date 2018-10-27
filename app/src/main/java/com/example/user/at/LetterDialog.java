@@ -23,7 +23,7 @@ public class LetterDialog extends Dialog{
     Button btnCheckReceiverId,btnLetterDlgSend,btnLetterDlgCancel;
     EditText edtMessageTitle,edtMessageContent;
     boolean sendPossible=false;
-    String userId;
+    String userId,sentUser=null;
     private Context cont;
 
     @Override
@@ -37,6 +37,11 @@ public class LetterDialog extends Dialog{
         edtMessageContent = findViewById(R.id.edtMessageContent);
         btnLetterDlgSend=findViewById(R.id.btnLetterDlgSend);
         btnLetterDlgCancel=findViewById(R.id.btnLetterDlgCancel);
+
+        //답장일 경우
+        if(sentUser!=null){
+            edtReceiverId.setText(sentUser);
+        }
 
         //아이디 있는지 체크
         btnCheckReceiverId.setOnClickListener(new View.OnClickListener() {
@@ -133,11 +138,19 @@ public class LetterDialog extends Dialog{
         });
     }
 
-
+    //글쓰기 눌렀을 때 생성자
     public LetterDialog(Context context, String id) {
         //다이얼로그 형태 설정
         super(context,android.R.style.Theme_Translucent_NoTitleBar);
         userId=id;
         cont=context;
+    }
+    //답장쓰기 눌렀을 때 생성자
+    public LetterDialog(Context context, String id, String sentUser) {
+        //다이얼로그 형태 설정
+        super(context,android.R.style.Theme_Translucent_NoTitleBar);
+        userId=id;
+        cont=context;
+        this.sentUser=sentUser;
     }
 }

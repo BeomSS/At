@@ -20,15 +20,17 @@ public class MenuFragment extends Fragment {
     Intent intent;
     ImageView btnSetting;
     Button btnNotice, btnLike, btnMyWrite, btnMyFeedback;
-    TextView btnMessage, btnHelp, btnLogout;
+    TextView btnMessage, btnHelp, btnLogout,tvMenuUserName;
     ConstraintLayout menuHeaderLayout;
     ShowHelpDialog dlgHelp;
     CustomDialog dlg;
+    Skin skin=new Skin(MainActivity.context);
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_menu, container, false);
+        tvMenuUserName=view.findViewById(R.id.tvMenuUserName);
         btnSetting = view.findViewById(R.id.btnSetting);
         btnNotice = view.findViewById(R.id.btnNotice);
         btnLike = view.findViewById(R.id.btnLike);
@@ -40,6 +42,8 @@ public class MenuFragment extends Fragment {
         menuHeaderLayout = view.findViewById(R.id.menuHeaderLayout);
 
         menuHeaderLayout.setBackgroundColor(((MainActivity) MainActivity.context).color);
+
+        tvMenuUserName.setText(skin.getPreferenceString("LoginId"));
 
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override

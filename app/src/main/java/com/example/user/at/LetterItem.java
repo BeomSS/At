@@ -2,8 +2,10 @@ package com.example.user.at;
 
 public class LetterItem {
     public String sentUser, receivedUser, letterTitle, letterTime, letterId,letterContent;
+    public int flag;
 
-    public LetterItem(String user, String letterTitle, String letterTime, String letterId,String content) {
+    public LetterItem(int flag, String user, String letterTitle, String letterTime, String letterId,String content) {
+        this.flag=flag;
         this.sentUser = user;
         this.letterTitle = letterTitle;
         this.letterTime = letterTime;

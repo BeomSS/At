@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.user.at.request.LetterDeleteRequest;
 import com.example.user.at.request.LetterListRequest;
 
 import org.json.JSONArray;
@@ -43,6 +44,7 @@ public class LetterMainActivity extends Activity {
     ArrayList<LetterItem> getitems;
     ArrayList<LetterItem> putitems;
     String letterGetUserId,letterPutUserId,letterTitle,letterTime,letterId,letterContent;
+    int where=0; //전체삭제시 어느 쪽지함인지 분별하는 변수
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +63,7 @@ public class LetterMainActivity extends Activity {
         btnWriteLetter.setBackgroundColor(color);
 
         String letterTitleList[] = {"받은 쪽지함", "보낸 쪽지함"};
-        SpinnerAdapter adapter = new SpinnerAdapter(LetterMainActivity.this, android.R.layout.simple_spinner_item, letterTitleList);
+        final SpinnerAdapter adapter = new SpinnerAdapter(LetterMainActivity.this, android.R.layout.simple_spinner_item, letterTitleList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnLetterTitle.setAdapter(adapter);
 
@@ -86,7 +88,7 @@ public class LetterMainActivity extends Activity {
                         letterTime=row.getString("g_send_time");
                         letterId=row.getString("g_message_id");
                         letterContent=row.getString("g_content");
-                        getitems.add(new LetterItem(letterPutUserId,letterTitle,letterTime,letterId,letterContent));
+                        getitems.add(new LetterItem(0,letterPutUserId,letterTitle,letterTime,letterId,letterContent));
                     }
                     //보낸 쪽지 어레이리스트에 넣기
                     for (int i = 0; i < putLetterJson.length(); i++) {
@@ -97,7 +99,7 @@ public class LetterMainActivity extends Activity {
                         letterTime=row.getString("p_send_time");
                         letterId=row.getString("p_message_id");
                         letterContent=row.getString("p_content");
-                        putitems.add(new LetterItem(letterGetUserId,letterTitle,letterTime,letterId,letterContent));
+                        putitems.add(new LetterItem(1,letterGetUserId,letterTitle,letterTime,letterId,letterContent));
                     }
 
                     LinearLayoutManager layoutManager = new LinearLayoutManager(LetterMainActivity.this);
@@ -126,10 +128,32 @@ public class LetterMainActivity extends Activity {
             }
         });
 
+        //전체삭제 버튼
         btnLetterAllDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LetterMainActivity.this, "전체삭제", Toast.LENGTH_SHORT).show();
+                Response.Listener LetterDeleteListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("TAG", "JSONObj response=" + response);
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success=jsonResponse.getBoolean("success");
+                            if(success){
+                                Toast.makeText(LetterMainActivity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                adapter.notifyDataSetChanged();
+                            }else{
+                                Toast.makeText(LetterMainActivity.this, "쪽지 삭제에 실패하였습니다..", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            Log.d("dberror", e.toString());
+                        }
+                    }
+                };
+
+                LetterDeleteRequest dRequest = new LetterDeleteRequest(1, skin.getPreferenceString("LoginId"),where, LetterDeleteListener);
+                RequestQueue queue = Volley.newRequestQueue(LetterMainActivity.this);
+                queue.add(dRequest);
             }
         });
 
@@ -138,7 +162,6 @@ public class LetterMainActivity extends Activity {
             public void onClick(View v) {
                 LetterDialog dlg=new LetterDialog(LetterMainActivity.this,skin.getPreferenceString("LoginId"));
                 dlg.show();
-                Toast.makeText(LetterMainActivity.this, "편지쓰기", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -146,13 +169,14 @@ public class LetterMainActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(spnLetterTitle.getSelectedItem().toString()=="보낸 쪽지함"){
+                    where = 1; //보낸쪽지함이면 1
                     letterAdapter = new LetterAdapter(LetterMainActivity.this, putitems);
                     rclLetter.setAdapter(letterAdapter);
                 }else{
+                    where = 0; //받은쪽지함이면 0
                     letterAdapter = new LetterAdapter(LetterMainActivity.this, getitems);
                     rclLetter.setAdapter(letterAdapter);
                 }
-                Toast.makeText(LetterMainActivity.this, spnLetterTitle.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
