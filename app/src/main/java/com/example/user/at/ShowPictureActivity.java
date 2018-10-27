@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.StateListDrawable;
 import android.media.AudioManager;
 import android.media.ExifInterface;
 import android.media.MediaPlayer;
@@ -44,7 +43,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
     ConstraintLayout loHeaderShowPicture;
     ImageView btnShowPictureBack, btnPictureFeedbackLike, postImageView, ivShowPictureLike, ivShowPictureBookmark, btnShowPictureDelete;
     EditText edtPictureWriteFeedback;
-    TextView titleTextView, explainTextView, tvBestFeedbackName, tvBestFeedbackContent, tvBestFeedbackCount, tvBestFeedbackId, tvShowPictureLikeCount;
+    TextView titleTextView, explainTextView, tvBestFeedbackName, tvBestFeedbackContent, tvBestFeedbackCount, tvBestFeedbackId, tvShowPictureLikeCount, tvShowPictureWriter, tvShowPictureTime;
     ImageButton musicStartBtn, musicStopBtn, musicResetBtn;
     Button btnPictureWriteFeedback, btnPictureMoreFeedBack;
     LinearLayout btnShowPictureBookmark, btnShowPictureLike;
@@ -55,6 +54,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
     int category, usingBestFeedback = 0;
     private MediaPlayer mediaPlayer;
     Skin pId = new Skin(ShowPictureActivity.this);
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,6 +103,8 @@ public class ShowPictureActivity extends Activity implements Runnable {
         tvBestFeedbackContent = findViewById(R.id.tvPictureFeedbackContent);
         tvBestFeedbackCount = findViewById(R.id.tvPictureFeedbackLikeCount);
         tvShowPictureLikeCount = findViewById(R.id.tvShowPictureLikeCount);
+        tvShowPictureWriter=findViewById(R.id.tvShowPictureWriter);
+        tvShowPictureTime=findViewById(R.id.tvShowPictureTime);
         btnShowPictureBack = findViewById(R.id.btnShowPictureBack);
         btnShowPictureBookmark = findViewById(R.id.btnShowPictureBookmark);
         btnPictureFeedbackLike = findViewById(R.id.btnPictureFeedbackLike);
@@ -149,14 +151,17 @@ public class ShowPictureActivity extends Activity implements Runnable {
         btnShowPictureLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int likeCount=Integer.parseInt(tvShowPictureLikeCount.getText().toString());
                 if (showPictureLiked) {
                     ivShowPictureLike.setImageResource(R.drawable.ic_thumb_up_outline_40dp);
                     showPictureLiked = false;
-                    tvShowPictureLikeCount.setText("00");
+                    likeCount--;
+                    tvShowPictureLikeCount.setText(String.valueOf(likeCount));
                 } else {
                     ivShowPictureLike.setImageResource(R.drawable.ic_thumb_up_white_40dp);
                     showPictureLiked = true;
-                    tvShowPictureLikeCount.setText("01");
+                    likeCount++;
+                    tvShowPictureLikeCount.setText(String.valueOf(likeCount));
                 }
             }
         });
@@ -168,6 +173,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         });
 
+        //베스트 피드백 추천
         btnPictureFeedbackLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,6 +214,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         });
 
+        //피드백 남기기
         btnPictureWriteFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -235,6 +242,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         });
 
+        //게시물 내용 불러오기
         Response.Listener pListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -243,6 +251,9 @@ public class ShowPictureActivity extends Activity implements Runnable {
                     JSONObject jsonResponse = new JSONObject(response);
 
                     titleTextView.setText(jsonResponse.getString("post_title"));
+                    tvShowPictureWriter.setText(jsonResponse.getString("member_id"));
+                    tvShowPictureTime.setText(jsonResponse.getString("create_time"));
+                    tvShowPictureLikeCount.setText(jsonResponse.getString("recommend"));
                     explainTextView.setText(jsonResponse.getString("explain"));
                     usingBestFeedback = jsonResponse.getInt("f_use");
                     if (usingBestFeedback == 0) {
@@ -250,6 +261,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         tvBestFeedbackContent.setText("");
                         btnPictureFeedbackLike.setVisibility(View.INVISIBLE);
                         tvBestFeedbackCount.setVisibility(View.INVISIBLE);
+
 
                     } else if (usingBestFeedback == 1) {
                         tvBestFeedbackId.setText(jsonResponse.getString("feedback_id"));

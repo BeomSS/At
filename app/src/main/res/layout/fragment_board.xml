@@ -16,7 +16,7 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/bonobono" />
+            android:src="@drawable/writing" />
     </LinearLayout>
 
     <LinearLayout
@@ -30,7 +30,7 @@
             android:id="@+id/picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/bonobono" />
+            android:src="@drawable/picture" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,7 +44,7 @@
             android:id="@+id/music"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/bonobono" />
+            android:src="@drawable/music" />
     </LinearLayout>
 
 </LinearLayout>
