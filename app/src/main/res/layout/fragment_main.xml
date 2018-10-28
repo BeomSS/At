@@ -48,12 +48,11 @@
                 android:id="@+id/Textbtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="100dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
                 android:text=">"
-                app:layout_constraintLeft_toRightOf="@+id/Text"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/Text"
+                app:layout_constraintBottom_toBottomOf="@+id/Text"/>
 
             <TextView
                 android:id="@+id/Text1"
@@ -177,12 +176,11 @@
                 android:id="@+id/btnPicture"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="100dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
                 android:text=">"
-                app:layout_constraintLeft_toRightOf="@+id/Picture"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/Picture"
+                app:layout_constraintBottom_toBottomOf="@+id/Picture"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView
                 android:id="@+id/Picture1"
@@ -316,12 +314,11 @@
                 android:id="@+id/Musicbtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="100dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
                 android:text=">"
-                app:layout_constraintLeft_toRightOf="@+id/Music"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/Music"
+                app:layout_constraintBottom_toBottomOf="@+id/Music"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <TextView
                 android:id="@+id/Music1"
