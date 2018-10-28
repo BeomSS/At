@@ -57,7 +57,6 @@ public class ShowPictureActivity extends Activity implements Runnable {
     private MediaPlayer mediaPlayer;
     Skin pId = new Skin(ShowPictureActivity.this);
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,8 +104,8 @@ public class ShowPictureActivity extends Activity implements Runnable {
         tvBestFeedbackContent = findViewById(R.id.tvPictureFeedbackContent);
         tvBestFeedbackCount = findViewById(R.id.tvPictureFeedbackLikeCount);
         tvShowPictureLikeCount = findViewById(R.id.tvShowPictureLikeCount);
-        tvShowPictureWriter=findViewById(R.id.tvShowPictureWriter);
-        tvShowPictureTime=findViewById(R.id.tvShowPictureTime);
+        tvShowPictureWriter = findViewById(R.id.tvShowPictureWriter);
+        tvShowPictureTime = findViewById(R.id.tvShowPictureTime);
         btnShowPictureBack = findViewById(R.id.btnShowPictureBack);
         btnShowPictureBookmark = findViewById(R.id.btnShowPictureBookmark);
         btnPictureFeedbackLike = findViewById(R.id.btnPictureFeedbackLike);
@@ -129,7 +128,6 @@ public class ShowPictureActivity extends Activity implements Runnable {
         btnPictureWriteFeedback.setBackgroundColor(color);
         btnShowPictureLike.setBackgroundColor(color);
         btnShowPictureBookmark.setBackgroundColor(color);
-
 
 
         btnShowPictureBack.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +154,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
         btnShowPictureLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int likeCount=Integer.parseInt(tvShowPictureLikeCount.getText().toString());
+                int likeCount = Integer.parseInt(tvShowPictureLikeCount.getText().toString());
                 if (showPictureLiked) {
                     ivShowPictureLike.setImageResource(R.drawable.ic_thumb_up_outline_40dp);
                     showPictureLiked = false;
@@ -313,6 +311,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                 Intent feedbackIntent = new Intent(ShowPictureActivity.this, MoreFeedback.class);
                 feedbackIntent.putExtra("f_postId", pIntent.getStringExtra("postid"));
                 startActivity(feedbackIntent);
+                overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
 
@@ -356,19 +355,19 @@ public class ShowPictureActivity extends Activity implements Runnable {
 
                 switch (orientation) {
                     case ExifInterface.ORIENTATION_ROTATE_90:
-                        bitmap=rotate(bitmap, 90);
+                        bitmap = rotate(bitmap, 90);
                         break;
                     case ExifInterface.ORIENTATION_ROTATE_180:
-                        bitmap=rotate(bitmap, 180);
+                        bitmap = rotate(bitmap, 180);
                         break;
                     case ExifInterface.ORIENTATION_ROTATE_270:
-                        bitmap=rotate(bitmap, 270);
+                        bitmap = rotate(bitmap, 270);
                         break;
                     case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
-                        bitmap=flip(bitmap, true, false);
+                        bitmap = flip(bitmap, true, false);
                         break;
                     case ExifInterface.ORIENTATION_FLIP_VERTICAL:
-                        bitmap=flip(bitmap, false, true);
+                        bitmap = flip(bitmap, false, true);
                         break;
                 }
 

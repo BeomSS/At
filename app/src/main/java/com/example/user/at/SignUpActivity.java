@@ -36,7 +36,7 @@ public class SignUpActivity extends Activity {
     EditText idSignupEdt;
     EditText psSignupEdt;
     EditText psConfirmEdt;
-    Button validateBtn,registerButton;
+    Button validateBtn, registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +91,7 @@ public class SignUpActivity extends Activity {
                     validate = false;
                     idSignupEdt.setFocusable(true);
 
-                }else{//빈칸이 아닐시
+                } else {//빈칸이 아닐시
 
                     Response.Listener vListener = new Response.Listener<String>() {
                         @Override
@@ -176,6 +176,7 @@ public class SignUpActivity extends Activity {
                                         .create();
                                 dialog.show();
                                 finish();
+                                overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
                                 dialog = builder.setMessage("회원등록에 실패했습니다.")
@@ -202,5 +203,11 @@ public class SignUpActivity extends Activity {
             dialog.dismiss();
             dialog = null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
     }
 }

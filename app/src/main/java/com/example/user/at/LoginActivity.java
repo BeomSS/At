@@ -24,6 +24,7 @@ import com.example.user.at.request.LoginRequest;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends Activity {
@@ -104,6 +105,7 @@ public class LoginActivity extends Activity {
                                 lintent = new Intent(LoginActivity.this, MainActivity.class);
                                 lintent.putExtra("userID", userID);
                                 startActivity(lintent);
+                                overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
                                 finish();
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
@@ -131,6 +133,7 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 Intent signupIntent = new Intent(LoginActivity.this, SignUpActivity.class);
                 LoginActivity.this.startActivity(signupIntent);
+                overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
 

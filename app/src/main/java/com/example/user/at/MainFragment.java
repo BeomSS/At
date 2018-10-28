@@ -38,6 +38,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 
 public class MainFragment extends Fragment {
@@ -243,6 +244,7 @@ public class MainFragment extends Fragment {
                 cIntent.putExtra("postid", txvTextWriteId.getText().toString());
                 Log.d("board put test", text2.getText().toString() + " || " + txvTextWriteId.getText().toString());
                 startActivity(cIntent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
         //그림 베스트 게시물 이동 버튼 클릭
@@ -256,6 +258,7 @@ public class MainFragment extends Fragment {
                 cIntent.putExtra("postid", txvImageWriteId.getText().toString());
                 Log.d("board put test", text2.getText().toString() + " || " + txvTextWriteId.getText().toString());
                 startActivity(cIntent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
         //음악 베스트 게시물 이동 버튼 클릭
@@ -268,6 +271,7 @@ public class MainFragment extends Fragment {
                 cIntent.putExtra("writer", music2.getText().toString());
                 cIntent.putExtra("postid", txvMusicWriteId.getText().toString());
                 startActivity(cIntent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
 
