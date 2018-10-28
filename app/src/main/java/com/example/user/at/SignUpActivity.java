@@ -86,46 +86,49 @@ public class SignUpActivity extends Activity {
             public void onClick(View view) {
                 userID = idSignupEdt.getText().toString();
 
-                if (userID.equals("")) {
+                if (userID.equals("")) {//빈칸일시
                     Toast.makeText(SignUpActivity.this, "아이디를 입력하세요", Toast.LENGTH_SHORT).show();
                     validate = false;
                     idSignupEdt.setFocusable(true);
+
+                }else{//빈칸이 아닐시
+
+                    Response.Listener vListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("TAG", "JSONObj response=" + response);
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                boolean success = jsonResponse.getBoolean("success");
+                                if (success) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+                                    dialog = builder.setMessage("사용할 수 있는 아이디입니다.")
+                                            .setPositiveButton("확인", null)
+                                            .create();
+                                    dialog.show();
+                                    idSignupEdt.setEnabled(false);
+                                    validate = true;
+                                } else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+                                    dialog = builder.setMessage("사용할 수 없는 아이디입니다.")
+                                            .setNegativeButton("확인", null)
+                                            .create();
+                                    dialog.show();
+                                }
+                            } catch (Exception e) {
+                                Log.d("validTest", e.toString());
+                            }
+                        }
+                    };
+
+                    ValidateRequest validateRequest = new ValidateRequest(userID, vListener);
+                    RequestQueue queue = Volley.newRequestQueue(SignUpActivity.this);
+                    queue.add(validateRequest);
                 }
                 if (validate) {
                     return;
                 }
 
-                Response.Listener vListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("TAG", "JSONObj response=" + response);
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if (success) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
-                                dialog = builder.setMessage("사용할 수 있는 아이디입니다.")
-                                        .setPositiveButton("확인", null)
-                                        .create();
-                                dialog.show();
-                                idSignupEdt.setEnabled(false);
-                                validate = true;
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
-                                dialog = builder.setMessage("사용할 수 없는 아이디입니다.")
-                                        .setNegativeButton("확인", null)
-                                        .create();
-                                dialog.show();
-                            }
-                        } catch (Exception e) {
-                            Log.d("validTest", e.toString());
-                        }
-                    }
-                };
-
-                ValidateRequest validateRequest = new ValidateRequest(userID, vListener);
-                RequestQueue queue = Volley.newRequestQueue(SignUpActivity.this);
-                queue.add(validateRequest);
             }
         });
 
