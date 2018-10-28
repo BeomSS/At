@@ -221,6 +221,7 @@ public class WriteFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) { //첨부 파일의 경로를 읽어오는 메소드
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
+            Log.d("파일패스 테스트",data.getData().toString()); // content://media/external/images/media/21
             filePath = getRealPathFromURI(data.getData());
             //파일 확장자 검사
             if (filePath.contains(".jpg") || filePath.contains(".png") || filePath.contains(".gif") || filePath.contains(".mp3")) {
@@ -233,15 +234,17 @@ public class WriteFragment extends Fragment {
         }
     }
 
-    private String getRealPathFromURI(Uri fileUri) { //받아온 데이터를 절대 주소로 변환
+    private String getRealPathFromURI(Uri fileUri) { //받아온 데이터를 실제 주소로 변환
         String path;
         int column_index = 0;
         String[] proj = {MediaStore.Images.Media.DATA};
+        //Content Provider 사용
         Cursor cursor = getContext().getContentResolver().query(fileUri, proj, null, null, null);
         if (cursor.moveToFirst()) {
+            //열이 없을 시 IllegalArgumentException 발생
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         }
-        Log.d("mytest", cursor.getString(column_index));
+        Log.d("myUrlTest", cursor.getString(column_index));
         path = cursor.getString(column_index);
         cursor.close();
         return path;
@@ -251,9 +254,10 @@ public class WriteFragment extends Fragment {
 
         HttpURLConnection conn = null;
         DataOutputStream dos = null;
-        final String fileName = sourceFileUri;
+        final String fileName = sourceFileUri; //파일경로를 서버로 보내기 위해 변수에 저장한다.
 
         String lineEnd = "\r\n";
+        //--와 *****은 데이터의 경계를 나타낼 때 사용한다.
         String twoHyphens = "--";
         String boundary = "*****";
 
@@ -262,7 +266,7 @@ public class WriteFragment extends Fragment {
         int maxBufferSize = 1 * 1024 * 1024;
         File sourceFile = new File(sourceFileUri);
 
-        if (!sourceFile.isFile()) {
+        if (!sourceFile.isFile()) { //isFile()해당 경로의 파일이나 디렉토리가 있는지 확인하는 메소드
 
             Log.e("uploadFile", "파일이 없습니다. :" + sourceFileUri);
 
@@ -278,7 +282,7 @@ public class WriteFragment extends Fragment {
                 //Connection 객체 얻어오기.
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setDoInput(true);//입력할수 있도록
-                conn.setDoOutput(true); //출력할수 있도록
+                conn.setDoOutput(true); //출력할수 있도록, 파일 업로드시 필수
                 conn.setUseCaches(false);  //캐쉬 사용하지 않음
 
                 //post 전송
@@ -286,8 +290,12 @@ public class WriteFragment extends Fragment {
 
                 //파일 업로드 할수 있도록 설정하기.
                 conn.setRequestProperty("Connection", "Keep-Alive");
+                //데이터가 전송된 후 연결이 닫히지 않게 하기 위해서 "Keep-Alive"사용
                 conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                //파일 전송을 위해 multipart 사용 이 외 application / x-www-form-urlencoded, text-plain 이 있다.
                 conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                //여기서 설정한 boundary가 경계선이 된다.
+
                 conn.setRequestProperty("uploadedfile", fileName); //파일이름을 php로 보내준다.
 
                 //DataOutputStream 객체 생성하기.
@@ -306,25 +314,23 @@ public class WriteFragment extends Fragment {
                 dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + fileName + "\"" + lineEnd);
                 dos.writeBytes(lineEnd);
 
-
-                //한번에 읽어들일수있는 스트림의 크기를 얻어온다.
+                //스트림의 크기를 가져온다.
                 bytesAvailable = fileInputStream.available();
 
                 //byte단위로 읽어오기 위하여 byte 배열 객체를 준비한다.
                 bufferSize = Math.min(bytesAvailable, maxBufferSize);
                 buffer = new byte[bufferSize];
 
-                // read file and write it into form..
+                //버퍼에 파일을 넣는다. .read(읽을 버퍼, 시작, 읽는 최대 바이트)
+                //반환값은 버퍼에 읽힌 총 바이트수이다.
                 bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 
-                // read file
+                // 읽은 파일을 서버로 업로드한다.
                 while (bytesRead > 0) {
-
-                    dos.write(buffer, 0, bufferSize);
+                    dos.write(buffer, 0, bufferSize); //outputstream인 dos에 읽은 byte를 출력한다.
                     bytesAvailable = fileInputStream.available();
                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
                 }
 
                 //전송할 데이터의 끝임을 알린다.
