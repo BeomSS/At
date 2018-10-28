@@ -26,7 +26,7 @@ public class MyInfoItem {
                 recommends = "추천수(" + recommend + ")";
                 break;
             case 1: //내가쓴 게시물
-                num = "게시물ID:" + idnum;
+                num = idnum;
                 if (cate.equals("0")) {
                     category = "글 ";
                 } else if (cate.equals("1")) {
@@ -42,7 +42,7 @@ public class MyInfoItem {
                 recommends = "추천수(" + recommend + ")";
                 break;
             case 2: //내가쓴 피드백
-                num = "게시물ID:" + idnum;
+                num = idnum;
                 times = time;
                 titles = title;
                 recommends = "추천수(" + recommend + ")";
