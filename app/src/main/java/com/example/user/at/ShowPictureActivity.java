@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
     ImageButton musicStartBtn, musicStopBtn, musicResetBtn;
     Button btnPictureWriteFeedback, btnPictureMoreFeedBack;
     LinearLayout btnShowPictureBookmark, btnShowPictureLike;
+    ProgressBar pgbShowPictureLoading;
     Boolean showPictureBookMarked, pictureFeedbackLiked, showPictureLiked;
     Bitmap bitmap;
     URL url = null;
@@ -117,6 +119,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
         ivShowPictureBookmark = findViewById(R.id.ivShowPictureBookmark);
         ivShowPictureLike = findViewById(R.id.ivShowPictureLike);
         btnShowPictureDelete = findViewById(R.id.btnShowPictureDelete);
+        pgbShowPictureLoading = findViewById(R.id.pgbShowPictureLoading);
         showPictureBookMarked = false;
         pictureFeedbackLiked = false;
         showPictureLiked = false;
@@ -126,6 +129,8 @@ public class ShowPictureActivity extends Activity implements Runnable {
         btnPictureWriteFeedback.setBackgroundColor(color);
         btnShowPictureLike.setBackgroundColor(color);
         btnShowPictureBookmark.setBackgroundColor(color);
+
+
 
         btnShowPictureBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -286,6 +291,10 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                         mediaPlayer.setDataSource(strUrl);
                         mediaPlayer.prepare();
+                        pgbShowPictureLoading.setVisibility(View.GONE);
+                        musicStartBtn.setVisibility(View.VISIBLE);
+                        musicStopBtn.setVisibility(View.VISIBLE);
+                        musicResetBtn.setVisibility(View.VISIBLE);
                     }
 
                 } catch (Exception e) {
@@ -316,6 +325,8 @@ public class ShowPictureActivity extends Activity implements Runnable {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             postImageView.setImageBitmap(bitmap);
+            pgbShowPictureLoading.setVisibility(View.GONE);
+            postImageView.setVisibility(View.VISIBLE);
         }
     };
 

@@ -116,38 +116,61 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvShowPictureWriter" />
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/tvShowMusicLayout"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="20dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/btnShowPictureLike"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvShowPictureContent"
-                app:layout_constraintBottom_toTopOf="@+id/btnShowPictureLike">
+                app:layout_constraintTop_toBottomOf="@+id/tvShowPictureContent">
+
+                <ProgressBar
+                    android:id="@+id/pgbShowPictureLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/musicStop"
+                    app:layout_constraintLeft_toLeftOf="@+id/musicStop"
+                    app:layout_constraintRight_toRightOf="@+id/musicStop"
+                    app:layout_constraintTop_toTopOf="@+id/musicStop" />
 
                 <ImageButton
                     android:id="@+id/musicStart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_play_arrow_black_24dp" />
+                    android:src="@drawable/ic_play_arrow_black_24dp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/musicStop"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/musicStop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_pause_black_24dp" />
+                    android:src="@drawable/ic_pause_black_24dp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/musicStart"
+                    app:layout_constraintRight_toLeftOf="@+id/musicReset"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/musicReset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_fast_rewind_black_24dp" />
-            </LinearLayout>
+                    android:src="@drawable/ic_fast_rewind_black_24dp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/musicStop"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/btnShowPictureLike"
@@ -163,8 +186,8 @@
                 android:paddingTop="5dp"
                 app:layout_constraintBottom_toTopOf="@+id/loPictureWriteFeedbackSpace"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvShowMusicLayout"
-                app:layout_constraintRight_toLeftOf="@+id/btnShowPictureBookmark">
+                app:layout_constraintRight_toLeftOf="@+id/btnShowPictureBookmark"
+                app:layout_constraintTop_toBottomOf="@+id/tvShowMusicLayout">
 
                 <ImageView
                     android:id="@+id/ivShowPictureLike"
