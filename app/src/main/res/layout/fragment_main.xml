@@ -95,9 +95,9 @@
                 android:layout_height="wrap_content"
                 android:text="로딩중..."
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/Content"
+                app:layout_constraintBottom_toBottomOf="@+id/Text2"
                 app:layout_constraintLeft_toRightOf="@+id/Text2"
-                app:layout_constraintTop_toBottomOf="@+id/Text1" />
+                app:layout_constraintTop_toTopOf="@+id/Text2" />
 
             <TextView
                 android:id="@+id/Text3"
@@ -105,9 +105,9 @@
                 android:layout_height="wrap_content"
                 android:text="추천수 : "
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/Content"
+                app:layout_constraintBottom_toBottomOf="@+id/Text2"
                 app:layout_constraintRight_toLeftOf="@+id/Text3.1"
-                app:layout_constraintTop_toBottomOf="@+id/Text1.1" />
+                app:layout_constraintTop_toTopOf="@+id/Text2" />
 
             <TextView
                 android:id="@+id/Text3.1"
@@ -116,16 +116,15 @@
                 android:layout_marginEnd="20dp"
                 android:text="로딩중..."
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/Content"
+                app:layout_constraintBottom_toBottomOf="@+id/Text2"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Text1" />
+                app:layout_constraintTop_toTopOf="@+id/Text2" />
 
             <TextView
                 android:id="@+id/Content"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_margin="15dp"
                 android:text="로딩중..."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -147,7 +146,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/picturelayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/line2"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -211,7 +210,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:text="작성자 : "
                 android:textSize="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/Picture4"
@@ -225,9 +224,9 @@
                 android:layout_height="wrap_content"
                 android:text="로딩중..."
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/Picture4"
+                app:layout_constraintBottom_toBottomOf="@+id/Picture2"
                 app:layout_constraintLeft_toRightOf="@+id/Picture2"
-                app:layout_constraintTop_toBottomOf="@+id/Picture1.1" />
+                app:layout_constraintTop_toTopOf="@+id/Picture2" />
 
             <TextView
                 android:id="@+id/Picture3"
@@ -235,9 +234,9 @@
                 android:layout_height="wrap_content"
                 android:text="추천수 : "
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/Picture4"
+                app:layout_constraintBottom_toBottomOf="@+id/Picture2"
                 app:layout_constraintRight_toLeftOf="@+id/Picture3.1"
-                app:layout_constraintTop_toBottomOf="@+id/Picture1.1" />
+                app:layout_constraintTop_toTopOf="@+id/Picture2" />
 
             <TextView
                 android:id="@+id/Picture3.1"
@@ -246,15 +245,15 @@
                 android:layout_marginEnd="20dp"
                 android:text="로딩중..."
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/Picture4"
+                app:layout_constraintBottom_toBottomOf="@+id/Picture2"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Picture1" />
+                app:layout_constraintTop_toTopOf="@+id/Picture2" />
 
             <ImageView
                 android:id="@+id/Picture4"
                 android:layout_width="0dp"
                 android:layout_height="280dp"
-                android:layout_margin="20dp"
+                android:layout_margin="15dp"
                 android:adjustViewBounds="true"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -264,10 +263,10 @@
                 android:id="@+id/pgbBestPictureLoading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/Picture4"
+                app:layout_constraintBottom_toBottomOf="@+id/Picture4"
                 app:layout_constraintLeft_toLeftOf="@+id/Picture4"
                 app:layout_constraintRight_toRightOf="@+id/Picture4"
-                app:layout_constraintBottom_toBottomOf="@+id/Picture4"/>
+                app:layout_constraintTop_toTopOf="@+id/Picture4" />
         </android.support.constraint.ConstraintLayout>
 
         <View
@@ -283,7 +282,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/Musiclayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -352,7 +351,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:text="작성자 : "
                 android:textSize="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/btnBestMusicPause"
@@ -366,10 +365,9 @@
                 android:layout_height="wrap_content"
                 android:text="로딩중..."
                 android:textSize="20dp"
-
-                app:layout_constraintBottom_toTopOf="@+id/btnBestMusicPause"
+                app:layout_constraintTop_toTopOf="@+id/Music2"
                 app:layout_constraintLeft_toRightOf="@+id/Music2"
-                app:layout_constraintTop_toBottomOf="@+id/Music1" />
+                app:layout_constraintBottom_toBottomOf="@+id/Music2"/>
 
             <TextView
                 android:id="@+id/Music3"
@@ -377,9 +375,9 @@
                 android:layout_height="wrap_content"
                 android:text="추천수 : "
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/btnBestMusicPause"
+                app:layout_constraintTop_toTopOf="@+id/Music2"
                 app:layout_constraintRight_toLeftOf="@+id/Music3.1"
-                app:layout_constraintTop_toBottomOf="@+id/Music1.1" />
+                app:layout_constraintBottom_toBottomOf="@+id/Music2"/>
 
             <TextView
                 android:id="@+id/Music3.1"
@@ -388,9 +386,9 @@
                 android:layout_marginEnd="20dp"
                 android:text="로딩중..."
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/btnBestMusicPause"
+                app:layout_constraintTop_toTopOf="@+id/Music2"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Music1" />
+                app:layout_constraintBottom_toBottomOf="@+id/Music2"/>
 
             <Button
                 android:id="@+id/btnBestMusicPause"
@@ -429,10 +427,10 @@
                 android:id="@+id/pgbBestMusicLoading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/btnBestMusicPlay"
+                app:layout_constraintBottom_toBottomOf="@+id/btnBestMusicPlay"
                 app:layout_constraintLeft_toLeftOf="@+id/btnBestMusicPlay"
                 app:layout_constraintRight_toRightOf="@+id/btnBestMusicPlay"
-                app:layout_constraintBottom_toBottomOf="@+id/btnBestMusicPlay"/>
+                app:layout_constraintTop_toTopOf="@+id/btnBestMusicPlay" />
 
         </android.support.constraint.ConstraintLayout>
 
