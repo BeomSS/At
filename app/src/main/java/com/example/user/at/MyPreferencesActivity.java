@@ -47,7 +47,7 @@ public class MyPreferencesActivity extends AppCompatActivity {
                             skin.setPreference(skin.key, spnSkin.getSelectedItemPosition() + 1);
                             Intent intent = new Intent(MyPreferencesActivity.this, SplashActivity.class);
                             startActivity(intent);
-                            overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+                            overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
                             ((MainActivity) MainActivity.context).finish();
                             dlg.dismiss();
                             finish();
