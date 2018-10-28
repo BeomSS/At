@@ -131,7 +131,8 @@ public class WriteFragment extends Fragment {
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success) {
-                                int tPostId = jsonResponse.getInt("postid"); //파일 url을 넣기 위해 게시글의 id를 받아온다.
+                                //파일 url을 넣기 위해 게시글의 id를 받아온다.
+                                int tPostId = jsonResponse.getInt("postid");
                                 postId = new String(String.valueOf(tPostId));
                             } else {
                                 Toast.makeText(getActivity(), "글 등록 실패", Toast.LENGTH_SHORT).show();
@@ -209,7 +210,8 @@ public class WriteFragment extends Fragment {
                     fintent.setType("image/*");
                     startActivityForResult(fintent, 1111);
                 } else if (flag == 2) { //음악일때
-                    Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+                    Intent i = new Intent(Intent.ACTION_PICK, android.provider.
+                            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(i, 1);
                 }
             }
@@ -217,18 +219,21 @@ public class WriteFragment extends Fragment {
         return view;
     }
 
+    //첨부 파일의 경로를 읽어오는 메소드
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) { //첨부 파일의 경로를 읽어오는 메소드
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            Log.d("파일패스 테스트",data.getData().toString()); // content://media/external/images/media/21
-            filePath = getRealPathFromURI(data.getData());
+
+            filePath = getRealPathFromURI(data.getData());// content://media/external/images/media/21
             //파일 확장자 검사
-            if (filePath.contains(".jpg") || filePath.contains(".png") || filePath.contains(".gif") || filePath.contains(".mp3")) {
+            if (filePath.contains(".jpg") || filePath.contains(".png") ||
+                    filePath.contains(".gif") || filePath.contains(".mp3")) {
                 fileTextView.setText(filePath);
             } else {
                 filePath = null;
-                Toast.makeText(getActivity(), "jpg,png,gif,mp3 파일만 업로드 가능합니다.", Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), "jpg,png,gif,mp3 파일만 업로드 가능합니다.",
+                        Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -239,7 +244,8 @@ public class WriteFragment extends Fragment {
         int column_index = 0;
         String[] proj = {MediaStore.Images.Media.DATA};
         //Content Provider 사용
-        Cursor cursor = getContext().getContentResolver().query(fileUri, proj, null, null, null);
+        Cursor cursor = getContext().getContentResolver().query(fileUri, proj,
+                null, null, null);
         if (cursor.moveToFirst()) {
             //열이 없을 시 IllegalArgumentException 발생
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -292,8 +298,10 @@ public class WriteFragment extends Fragment {
                 conn.setRequestProperty("Connection", "Keep-Alive");
                 //데이터가 전송된 후 연결이 닫히지 않게 하기 위해서 "Keep-Alive"사용
                 conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                //파일 전송을 위해 multipart 사용 이 외 application / x-www-form-urlencoded, text-plain 이 있다.
-                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                //파일 전송을 위해 multipart 사용 이외에는
+                // application / x-www-form-urlencoded, text-plain 이 있다.
+                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="
+                        + boundary);
                 //여기서 설정한 boundary가 경계선이 된다.
 
                 conn.setRequestProperty("uploadedfile", fileName); //파일이름을 php로 보내준다.
@@ -303,7 +311,8 @@ public class WriteFragment extends Fragment {
 
                 //이미지와 함께 문자도 보내기 위해 이미지 업로드 전에 문자를 같이 보낸다.
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
-                dos.writeBytes("Content-Disposition: form-data; name=\"postId\"" + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"postId\""
+                        + lineEnd);
                 dos.writeBytes(lineEnd);
                 dos.writeBytes(postId);
                 dos.writeBytes(lineEnd);
@@ -311,7 +320,8 @@ public class WriteFragment extends Fragment {
 
                 //전송할 데이터의 시작임을 알린다.(이미지)
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
-                dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + fileName + "\"" + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"" +
+                        "uploadedfile\";filename=\"" + fileName + "\"" + lineEnd);
                 dos.writeBytes(lineEnd);
 
                 //스트림의 크기를 가져온다.
@@ -327,24 +337,19 @@ public class WriteFragment extends Fragment {
 
                 // 읽은 파일을 서버로 업로드한다.
                 while (bytesRead > 0) {
-                    dos.write(buffer, 0, bufferSize); //outputstream인 dos에 읽은 byte를 출력한다.
+                    //outputstream인 dos에 읽은 byte를 출력한다.
+                    dos.write(buffer, 0, bufferSize);
                     bytesAvailable = fileInputStream.available();
                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);
                 }
-
                 //전송할 데이터의 끝임을 알린다.
                 dos.writeBytes(lineEnd);
                 dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
-                // Responses from the server (code and message)
+                // 파일을 전송하고 그 결과 상태값을 받는다.
                 serverResponseCode = conn.getResponseCode();
-                String serverResponseMessage = conn.getResponseMessage();
-
-                Log.i("uploadFile", "HTTP Response is : " + serverResponseMessage + ": " + serverResponseCode);
-
                 if (serverResponseCode == 200) {
-
                     getActivity().runOnUiThread(new Runnable() { //프래그먼트이기 때문에 앞에 getActivity()를 붙인다.
                         public void run() {
                             String msg = "글 등록 성공!" + fileName;
@@ -352,7 +357,6 @@ public class WriteFragment extends Fragment {
                         }
                     });
                 }
-
                 fileInputStream.close();//스트림 닫아주기.
                 dos.flush();
                 dos.close();

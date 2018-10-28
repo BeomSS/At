@@ -347,10 +347,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onStop() {
         if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.reset();
-            mediaPlayer.release();
-            mediaPlayer = null;
+            mediaPlayer.pause();
+            mediaPlayer.seekTo(0);
         }
         super.onStop();
     }
