@@ -12,7 +12,6 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,6 +34,7 @@ public class LoginActivity extends Activity {
     Button loginButton;
     String userID, userPassword;
     Intent lintent;
+    BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class LoginActivity extends Activity {
         skin = new Skin(this);
         color = skin.skinSetting();
         setContentView(R.layout.activity_login);
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         //권한 묻기
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -149,5 +150,9 @@ public class LoginActivity extends Activity {
             dialog.dismiss();
             dialog = null;
         }
+    }
+    @Override
+    public void onBackPressed() {
+        backPressCloseHandler.onBackPressed();
     }
 }

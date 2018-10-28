@@ -44,10 +44,10 @@ public class WriteFragment extends Fragment {
     int putCategory;
     String putTitle, putExplain, filePath = null;
     String upLoadServerUri = null; //서버 주소를 담을 변수
-    int flag = 0,maxLength;
+    int flag = 0, maxLength;
     int serverResponseCode = 0;
     String postId;
-    Skin pId=new Skin(MainActivity.context);
+    Skin pId = new Skin(MainActivity.context);
 
     @Nullable
     @Override
@@ -77,7 +77,7 @@ public class WriteFragment extends Fragment {
                         explainEdit.setText("");
                         //글자수 제한 변경
                         maxLength = 4000;
-                        explainEdit.setFilters(new InputFilter[] {
+                        explainEdit.setFilters(new InputFilter[]{
                                 new InputFilter.LengthFilter(maxLength)
                         });
                         fileTextView.setText("글게시판에서는 파일첨부가 불가능합니다.");
@@ -89,7 +89,7 @@ public class WriteFragment extends Fragment {
                         explainEdit.setHint("설명을 입력해주세요");
                         explainEdit.setText("");
                         maxLength = 200;
-                        explainEdit.setFilters(new InputFilter[] {
+                        explainEdit.setFilters(new InputFilter[]{
                                 new InputFilter.LengthFilter(maxLength)
                         });
                         fileTextView.setText("이미지를 첨부하시려면 클릭해주세요.(jpg,png,gif)");
@@ -101,7 +101,7 @@ public class WriteFragment extends Fragment {
                         explainEdit.setHint("설명을 입력해주세요");
                         explainEdit.setText("");
                         maxLength = 200;
-                        explainEdit.setFilters(new InputFilter[] {
+                        explainEdit.setFilters(new InputFilter[]{
                                 new InputFilter.LengthFilter(maxLength)
                         });
                         fileTextView.setText("음악을 첨부하시려면 클릭해주세요.");
@@ -141,7 +141,7 @@ public class WriteFragment extends Fragment {
                             new Thread() {
                                 @Override
                                 public void run() {
-                                    if (flag != 0) {
+                                    if (flag != 0) { //글게시판과 그림,음악 게시판 구분을 위해 flag사용
                                         upLoadFile(filePath);
                                         filePath = null;
                                         getActivity().runOnUiThread(new Runnable() {
@@ -156,14 +156,13 @@ public class WriteFragment extends Fragment {
                                                 explainEdit.setText(null);
                                             }
                                         });
-                                    }else
-                                    {
+                                    } else {
                                         getActivity().runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
                                                 titleEdit.setText(null);
                                                 explainEdit.setText(null);
-                                                Toast.makeText(getActivity(),"글쓰기가 완료되었습니다.",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getActivity(), "글쓰기가 완료되었습니다.", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                     }
@@ -210,13 +209,8 @@ public class WriteFragment extends Fragment {
                     fintent.setType("image/*");
                     startActivityForResult(fintent, 1111);
                 } else if (flag == 2) { //음악일때
-
                     Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(i, 1);
-
-//                    startActivityForResult( Intent.createChooser( new Intent(Intent.ACTION_GET_CONTENT) .setType("image/*"), "Choose an image"), PICK_FROM_FILE);
-
-
                 }
             }
         });
@@ -224,7 +218,7 @@ public class WriteFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) { //갤러리에서 첨부 파일의 경로를 읽어오는 메소드
+    public void onActivityResult(int requestCode, int resultCode, Intent data) { //첨부 파일의 경로를 읽어오는 메소드
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             filePath = getRealPathFromURI(data.getData());
@@ -239,7 +233,7 @@ public class WriteFragment extends Fragment {
         }
     }
 
-    private String getRealPathFromURI(Uri fileUri) { //갤러리에서 받아온 데이터를 절대 주소로 변환
+    private String getRealPathFromURI(Uri fileUri) { //받아온 데이터를 절대 주소로 변환
         String path;
         int column_index = 0;
         String[] proj = {MediaStore.Images.Media.DATA};
@@ -270,7 +264,7 @@ public class WriteFragment extends Fragment {
 
         if (!sourceFile.isFile()) {
 
-            Log.e("uploadFile", "Source File not exist :" + sourceFileUri);
+            Log.e("uploadFile", "파일이 없습니다. :" + sourceFileUri);
 
         } else {
 

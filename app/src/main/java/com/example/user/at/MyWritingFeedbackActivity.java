@@ -1,5 +1,6 @@
 package com.example.user.at;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -80,6 +85,40 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
         MyFeedbackRequest wRequest = new MyFeedbackRequest(pId.getPreferenceString("LoginId"), fListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(wRequest);
+
+        //클릭시 이벤트
+        final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+        });
+
+        myInfoRecycler.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                View child = myInfoRecycler.findChildViewUnder(e.getX(), e.getY());
+                if (child != null && gestureDetector.onTouchEvent(e)) {
+                    Intent cIntent = new Intent(MyWritingFeedbackActivity.this, MoreFeedback.class);
+                    TextView nTextView = myInfoRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_num);
+                    cIntent.putExtra("putter", "게시판");
+                    cIntent.putExtra("f_postId", nTextView.getText().toString());
+                    Log.d("board put test",nTextView.getText().toString());
+                    startActivity(cIntent);
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
     }
 
     @Override
