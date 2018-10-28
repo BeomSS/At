@@ -102,9 +102,10 @@ public class MyWritingListActivity extends AppCompatActivity {
                     Intent cIntent = new Intent(MyWritingListActivity.this, ShowPictureActivity.class);
                     TextView cTextView = myInfoRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_category);
                     TextView nTextView = myInfoRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_num);
+                    Log.d("내 게시물 보기", cTextView.getText().toString());
                     cIntent.putExtra("putter", "게시판");
                     String category=cTextView.getText().toString();
-                    if(category.equals("글  ")){
+                    if(category.equals("글 ")){
                         numCategory=0;
                     }else if(category.equals("그림 ")){
                         numCategory=1;
