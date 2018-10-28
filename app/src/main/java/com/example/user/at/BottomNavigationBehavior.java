@@ -32,13 +32,15 @@ public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomN
     }
 
     @Override
-    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
-        isScrolling = true;
+    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child,
+                                       @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
+        isScrolling = true;                                 //스크롤 중인지 여부
         return axes == ViewCompat.SCROLL_AXIS_VERTICAL;
     }
 
     @Override
-    public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child, @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
+    public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child,
+                                  @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
         if (isScrolling && dy < 0) {
             showBottomNavigationView(child);
         } else if (isScrolling && dy > 0) {
