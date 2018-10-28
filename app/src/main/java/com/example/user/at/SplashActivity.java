@@ -72,7 +72,7 @@ public class SplashActivity extends Activity {
     void goNext() {
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.right_to_center_translate, R.anim.stop_translate);
+        overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
         finish();
     }
 

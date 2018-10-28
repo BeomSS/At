@@ -103,6 +103,7 @@ public class BoardActivity extends AppCompatActivity {
                     cIntent.putExtra("postid", nTextView.getText().toString());
                     Log.d("board put test", wTextView.getText().toString() + " || " + nTextView.getText().toString());
                     startActivity(cIntent);
+                    overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
                 }
                 return false;
             }

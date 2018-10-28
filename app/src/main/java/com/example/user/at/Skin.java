@@ -46,7 +46,7 @@ public class Skin {
         SharedPreferences pref = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(key, value);
-        editor.commit();
+        editor.apply();
     }
 
     public int getPreferenceInt(String key) {

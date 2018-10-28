@@ -27,7 +27,7 @@ public class MoreFeedback extends AppCompatActivity {
     ArrayList<FeedbackItem> items;
     FeedbackAdapter adapter;
     String postId;
-    String fId,fMemberId,time,fContent,recommend;
+    String fId, fMemberId, time, fContent, recommend;
     Boolean feedbackLiked;
 
 
@@ -38,7 +38,7 @@ public class MoreFeedback extends AppCompatActivity {
         color = skin.skinSetting();
         setContentView(R.layout.activity_more_feedback);
 
-        rclFeedback=findViewById(R.id.rclFeedbackMore);
+        rclFeedback = findViewById(R.id.rclFeedbackMore);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -55,18 +55,18 @@ public class MoreFeedback extends AppCompatActivity {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject row = jsonArray.getJSONObject(i);
 
-                        fId=row.getString("feedback_id");
+                        fId = row.getString("feedback_id");
                         fMemberId = row.getString("member_id");
                         time = row.getString("create_time");
                         fContent = row.getString("feedback_content");
                         recommend = String.valueOf(row.getInt("recommend"));
                         feedbackLiked = row.getBoolean("feedback_liked");
-                        items.add(new FeedbackItem(fId,fMemberId,fContent,time,recommend,feedbackLiked));
+                        items.add(new FeedbackItem(fId, fMemberId, fContent, time, recommend, feedbackLiked));
                     }
 
                     rclFeedback.setLayoutManager(layoutManager);
                     rclFeedback.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new FeedbackAdapter(items,MoreFeedback.this);
+                    adapter = new FeedbackAdapter(items, MoreFeedback.this);
                     rclFeedback.setAdapter(adapter);
 
                 } catch (Exception e) {
@@ -75,12 +75,17 @@ public class MoreFeedback extends AppCompatActivity {
             }
         };
 
-        Intent fIntent=getIntent();
-        postId=fIntent.getStringExtra("f_postId");
-        FeedbackRequest fRequest = new FeedbackRequest(postId,skin.getPreferenceString("LoginId"), fListener);
+        Intent fIntent = getIntent();
+        postId = fIntent.getStringExtra("f_postId");
+        FeedbackRequest fRequest = new FeedbackRequest(postId, skin.getPreferenceString("LoginId"), fListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(fRequest);
 
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
     }
 }

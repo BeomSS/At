@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import java.util.Objects;
+
 public class BoardFragment extends Fragment {
     ImageButton text, music, picture;
     View view;
@@ -30,6 +32,7 @@ public class BoardFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), BoardActivity.class);
                 intent.putExtra("category",0);
                 startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
         picture.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +41,7 @@ public class BoardFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), BoardActivity.class);
                 intent.putExtra("category",1);
                 startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
         music.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +50,7 @@ public class BoardFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), BoardActivity.class);
                 intent.putExtra("category",2);
                 startActivity(intent);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
         return view;
