@@ -304,8 +304,6 @@ public class WriteFragment extends Fragment {
                         + boundary);
                 //여기서 설정한 boundary가 경계선이 된다.
 
-                conn.setRequestProperty("uploadedfile", fileName); //파일이름을 php로 보내준다.
-
                 //DataOutputStream 객체 생성하기.
                 dos = new DataOutputStream(conn.getOutputStream());
 

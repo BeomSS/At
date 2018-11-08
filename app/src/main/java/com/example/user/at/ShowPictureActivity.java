@@ -30,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.user.at.request.AddFeedbackRequest;
 import com.example.user.at.request.FeedbackLikingRequest;
+import com.example.user.at.request.PostLikingRequest;
 import com.example.user.at.request.PostRequest;
 
 import org.json.JSONObject;
@@ -40,7 +41,7 @@ import java.net.URL;
 
 public class ShowPictureActivity extends Activity implements Runnable {
     Skin skin;
-    int color;
+    int color,likeCount;
     ConstraintLayout loHeaderShowPicture;
     ImageView btnShowPictureBack, btnPictureFeedbackLike, postImageView, ivShowPictureLike, ivShowPictureBookmark, btnShowPictureDelete;
     EditText edtPictureWriteFeedback;
@@ -151,20 +152,43 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         });
 
+        //게시물 추천
         btnShowPictureLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int likeCount = Integer.parseInt(tvShowPictureLikeCount.getText().toString());
-                if (showPictureLiked) {
-                    ivShowPictureLike.setImageResource(R.drawable.ic_thumb_up_outline_40dp);
-                    showPictureLiked = false;
-                    likeCount--;
-                    tvShowPictureLikeCount.setText(String.valueOf(likeCount));
-                } else {
-                    ivShowPictureLike.setImageResource(R.drawable.ic_thumb_up_white_40dp);
-                    showPictureLiked = true;
-                    likeCount++;
-                    tvShowPictureLikeCount.setText(String.valueOf(likeCount));
+                likeCount = Integer.parseInt(tvShowPictureLikeCount.getText().toString());
+
+                if (showPictureLiked) {//이미 추천했을시
+                    Toast.makeText(ShowPictureActivity.this,"이미 추천하였습니다.",Toast.LENGTH_SHORT).show();
+                } else { //추천을 하지 않았을시
+                    Response.Listener postLikingListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("TAG", "JSONObj response=" + response);
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                if (jsonResponse.getBoolean("check")) {
+                                    if (jsonResponse.getBoolean("update") && jsonResponse.getBoolean("insert")) {
+                                        Toast.makeText(ShowPictureActivity.this, "추천하였습니다.", Toast.LENGTH_SHORT).show();
+                                        ivShowPictureLike.setImageResource(R.drawable.ic_thumb_up_white_40dp);
+                                        showPictureLiked = true;
+                                        likeCount++;
+                                        tvShowPictureLikeCount.setText(String.valueOf(likeCount));
+                                    } else {
+                                        Toast.makeText(ShowPictureActivity.this, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(ShowPictureActivity.this, "자신의 게시물은 추천하지 못합니다.", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (Exception e) {
+                                Log.d("feedbackDBerror", e.toString());
+                            }
+                        }
+                    };
+                    PostLikingRequest fLikingRequest = new PostLikingRequest(pIntent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), postLikingListener);
+                    RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
+                    queue.add(fLikingRequest);
                 }
             }
         });
@@ -181,6 +205,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
             @Override
             public void onClick(View v) {
                 if (pictureFeedbackLiked) {
+                    Toast.makeText(ShowPictureActivity.this, "이미 추천한 피드백입니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     Response.Listener feedbackLikingListener = new Response.Listener<String>() {
                         @Override
@@ -265,7 +290,6 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         btnPictureFeedbackLike.setVisibility(View.INVISIBLE);
                         tvBestFeedbackCount.setVisibility(View.INVISIBLE);
 
-
                     } else if (usingBestFeedback == 1) {
                         tvBestFeedbackId.setText(jsonResponse.getString("feedback_id"));
                         tvBestFeedbackName.setText(jsonResponse.getString("f_member_id"));
@@ -277,6 +301,10 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             btnPictureFeedbackLike.setImageResource(R.drawable.ic_thumb_up_color_30dp);
                             pictureFeedbackLiked = true;
                         }
+                    }
+                    if(jsonResponse.getString("post_liked") == "true") {
+                        ivShowPictureLike.setImageResource(R.drawable.ic_thumb_up_white_40dp);
+                        showPictureLiked = true;
                     }
                     if (category == 1) {
                         String strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");

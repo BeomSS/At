@@ -86,7 +86,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackViewHolder> {
                     queue.add(fLikingRequest);
 
                 } else {
-                    Toast.makeText(context, "이미 추천하였습니다.", Toast.LENGTH_SHORT);
+                    Toast.makeText(context, "이미 추천하였습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
