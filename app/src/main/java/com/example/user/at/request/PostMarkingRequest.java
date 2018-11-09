@@ -9,20 +9,20 @@ import com.example.user.at.LoginActivity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FeedbackRequest extends StringRequest {
-    final static private String URL = LoginActivity.ipAddress + ":800/At/SeeFeedback.php";
+public class PostMarkingRequest extends StringRequest {
+    final static private String URL = LoginActivity.ipAddress + ":800/At/AttentionPost.php";
     private Map<String, String> parameter;
 
-    public FeedbackRequest(String postId, String userId, Response.Listener<String> listener) {
+    public PostMarkingRequest(int type,String postID,String userID, Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
         parameter = new HashMap<>();
-        parameter.put("postId", postId);
-        parameter.put("userId",userId);
+        parameter.put("type",String.valueOf(type));
+        parameter.put("postID",postID);
+        parameter.put("userID",userID);
     }
 
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
         return parameter;
     }
-
 }

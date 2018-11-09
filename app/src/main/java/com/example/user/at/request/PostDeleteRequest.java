@@ -9,20 +9,20 @@ import com.example.user.at.LoginActivity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FeedbackRequest extends StringRequest {
-    final static private String URL = LoginActivity.ipAddress + ":800/At/SeeFeedback.php";
+public class PostDeleteRequest extends StringRequest {
+    final static private String URL = LoginActivity.ipAddress + ":800/At/PostDelete.php";
     private Map<String, String> parameter;
 
-    public FeedbackRequest(String postId, String userId, Response.Listener<String> listener) {
+    //하나만 삭제할때
+    public  PostDeleteRequest(String postId, String userId,  Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
         parameter = new HashMap<>();
-        parameter.put("postId", postId);
         parameter.put("userId",userId);
+        parameter.put("postId",postId);
     }
 
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
         return parameter;
     }
-
 }
