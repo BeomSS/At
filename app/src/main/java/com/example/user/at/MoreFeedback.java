@@ -3,6 +3,7 @@ package com.example.user.at;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,7 @@ public class MoreFeedback extends AppCompatActivity {
     String postId;
     String fId, fMemberId, time, fContent, recommend;
     Boolean feedbackLiked;
+    SwipeRefreshLayout swpFeedbackRefresh;
 
 
     @Override
@@ -41,7 +43,21 @@ public class MoreFeedback extends AppCompatActivity {
         rclFeedback = findViewById(R.id.rclFeedbackMore);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        swpFeedbackRefresh = findViewById(R.id.swpFeedbackRefresh);
 
+        printFeedbackList();
+
+
+        swpFeedbackRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                printFeedbackList();
+            }
+        });
+
+    }
+
+    void printFeedbackList() {
         Response.Listener fListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -68,6 +84,7 @@ public class MoreFeedback extends AppCompatActivity {
                     rclFeedback.setItemAnimator(new DefaultItemAnimator());
                     adapter = new FeedbackAdapter(items, MoreFeedback.this);
                     rclFeedback.setAdapter(adapter);
+                    swpFeedbackRefresh.setRefreshing(false);
 
                 } catch (Exception e) {
                     Log.d("dberror", e.toString());
@@ -80,7 +97,6 @@ public class MoreFeedback extends AppCompatActivity {
         FeedbackRequest fRequest = new FeedbackRequest(postId, skin.getPreferenceString("LoginId"), fListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(fRequest);
-
     }
 
     @Override

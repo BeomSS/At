@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,10 +42,12 @@ public class LetterMainActivity extends Activity {
     TextView btnLetterAllDelete;
     AppCompatSpinner spnLetterTitle;
     LetterAdapter letterAdapter;
+    SwipeRefreshLayout swpLetterRefresh;
     ArrayList<LetterItem> getitems;
     ArrayList<LetterItem> putitems;
-    String letterGetUserId,letterPutUserId,letterTitle,letterTime,letterId,letterContent;
-    int where=0; //전체삭제시 어느 쪽지함인지 분별하는 변수
+    String letterGetUserId, letterPutUserId, letterTitle, letterTime, letterId, letterContent;
+    int where = 0; //전체삭제시 어느 쪽지함인지 분별하는 변수
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,7 @@ public class LetterMainActivity extends Activity {
         btnWriteLetter = findViewById(R.id.btnWriteLetter);
         btnLetterAllDelete = findViewById(R.id.btnLetterAllDelete);
         spnLetterTitle = findViewById(R.id.spnLetterTitle);
+        swpLetterRefresh = findViewById(R.id.swpLetterRefresh);
 
         loLetterHeader.setBackgroundColor(color);
         btnWriteLetter.setBackgroundColor(color);
@@ -67,58 +71,7 @@ public class LetterMainActivity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnLetterTitle.setAdapter(adapter);
 
-        getitems = new ArrayList<>();
-        putitems = new ArrayList<>();
-
-        Response.Listener LetterListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("TAG", "JSONObj response=" + response);
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    JSONArray putLetterJson = jsonResponse.getJSONArray("putresult");
-                    JSONArray getLetterJson = jsonResponse.getJSONArray("getresult");
-
-                    //받은 쪽지 어레이리스트에 넣기
-                    for (int i = 0; i < getLetterJson.length(); i++) {
-                        JSONObject row = getLetterJson.getJSONObject(i);
-                        letterPutUserId=row.getString("g_send_id");
-                        letterGetUserId=row.getString("g_receive_id");
-                        letterTitle=row.getString("g_title");
-                        letterTime=row.getString("g_send_time");
-                        letterId=row.getString("g_message_id");
-                        letterContent=row.getString("g_content");
-                        getitems.add(new LetterItem(0,letterPutUserId,letterTitle,letterTime,letterId,letterContent));
-                    }
-                    //보낸 쪽지 어레이리스트에 넣기
-                    for (int i = 0; i < putLetterJson.length(); i++) {
-                        JSONObject row = putLetterJson.getJSONObject(i);
-                        letterPutUserId=row.getString("p_send_id");
-                        letterGetUserId=row.getString("p_receive_id");
-                        letterTitle=row.getString("p_title");
-                        letterTime=row.getString("p_send_time");
-                        letterId=row.getString("p_message_id");
-                        letterContent=row.getString("p_content");
-                        putitems.add(new LetterItem(1,letterGetUserId,letterTitle,letterTime,letterId,letterContent));
-                    }
-
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(LetterMainActivity.this);
-                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    rclLetter.setLayoutManager(layoutManager);
-                    rclLetter.setItemAnimator(new DefaultItemAnimator());
-                    letterAdapter = new LetterAdapter(LetterMainActivity.this, getitems);
-                    rclLetter.setAdapter(letterAdapter);
-
-                } catch (Exception e) {
-                    Log.d("dberror", e.toString());
-                }
-            }
-        };
-
-        LetterListRequest lRequest = new LetterListRequest(skin.getPreferenceString("LoginId"), LetterListener);
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(lRequest);
-
+        printLetterList();
 
         btnLetterBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,11 +91,11 @@ public class LetterMainActivity extends Activity {
                         Log.d("TAG", "JSONObj response=" + response);
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
-                            boolean success=jsonResponse.getBoolean("success");
-                            if(success){
+                            boolean success = jsonResponse.getBoolean("success");
+                            if (success) {
                                 Toast.makeText(LetterMainActivity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                 adapter.notifyDataSetChanged();
-                            }else{
+                            } else {
                                 Toast.makeText(LetterMainActivity.this, "쪽지 삭제에 실패하였습니다..", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
@@ -151,7 +104,7 @@ public class LetterMainActivity extends Activity {
                     }
                 };
 
-                LetterDeleteRequest dRequest = new LetterDeleteRequest(1, skin.getPreferenceString("LoginId"),where, LetterDeleteListener);
+                LetterDeleteRequest dRequest = new LetterDeleteRequest(1, skin.getPreferenceString("LoginId"), where, LetterDeleteListener);
                 RequestQueue queue = Volley.newRequestQueue(LetterMainActivity.this);
                 queue.add(dRequest);
             }
@@ -160,7 +113,7 @@ public class LetterMainActivity extends Activity {
         btnWriteLetter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LetterDialog dlg=new LetterDialog(LetterMainActivity.this,skin.getPreferenceString("LoginId"));
+                LetterDialog dlg = new LetterDialog(LetterMainActivity.this, skin.getPreferenceString("LoginId"));
                 dlg.show();
             }
         });
@@ -168,11 +121,11 @@ public class LetterMainActivity extends Activity {
         spnLetterTitle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(spnLetterTitle.getSelectedItem().toString()=="보낸 쪽지함"){
+                if (spnLetterTitle.getSelectedItem().toString().equals("보낸 쪽지함")) {
                     where = 1; //보낸쪽지함이면 1
                     letterAdapter = new LetterAdapter(LetterMainActivity.this, putitems);
                     rclLetter.setAdapter(letterAdapter);
-                }else{
+                } else {
                     where = 0; //받은쪽지함이면 0
                     letterAdapter = new LetterAdapter(LetterMainActivity.this, getitems);
                     rclLetter.setAdapter(letterAdapter);
@@ -184,6 +137,74 @@ public class LetterMainActivity extends Activity {
 
             }
         });
+
+        swpLetterRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                printLetterList();
+            }
+        });
+    }
+
+    void printLetterList() {
+        getitems = new ArrayList<>();
+        putitems = new ArrayList<>();
+        Response.Listener LetterListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG", "JSONObj response=" + response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray putLetterJson = jsonResponse.getJSONArray("putresult");
+                    JSONArray getLetterJson = jsonResponse.getJSONArray("getresult");
+
+                    //받은 쪽지 어레이리스트에 넣기
+                    for (int i = 0; i < getLetterJson.length(); i++) {
+                        JSONObject row = getLetterJson.getJSONObject(i);
+                        letterPutUserId = row.getString("g_send_id");
+                        letterGetUserId = row.getString("g_receive_id");
+                        letterTitle = row.getString("g_title");
+                        letterTime = row.getString("g_send_time");
+                        letterId = row.getString("g_message_id");
+                        letterContent = row.getString("g_content");
+                        getitems.add(new LetterItem(0, letterPutUserId, letterTitle, letterTime, letterId, letterContent));
+                    }
+                    //보낸 쪽지 어레이리스트에 넣기
+                    for (int i = 0; i < putLetterJson.length(); i++) {
+                        JSONObject row = putLetterJson.getJSONObject(i);
+                        letterPutUserId = row.getString("p_send_id");
+                        letterGetUserId = row.getString("p_receive_id");
+                        letterTitle = row.getString("p_title");
+                        letterTime = row.getString("p_send_time");
+                        letterId = row.getString("p_message_id");
+                        letterContent = row.getString("p_content");
+                        putitems.add(new LetterItem(1, letterGetUserId, letterTitle, letterTime, letterId, letterContent));
+                    }
+
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(LetterMainActivity.this);
+                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    rclLetter.setLayoutManager(layoutManager);
+                    rclLetter.setItemAnimator(new DefaultItemAnimator());
+                    if(spnLetterTitle.getSelectedItem().toString().equals("보낸 쪽지함")) {
+                        where = 1;
+                        letterAdapter = new LetterAdapter(LetterMainActivity.this, putitems);
+                    } else {
+                        where = 0;
+                        letterAdapter = new LetterAdapter(LetterMainActivity.this, getitems);
+                    }
+
+                    rclLetter.setAdapter(letterAdapter);
+                    swpLetterRefresh.setRefreshing(false);
+
+                } catch (Exception e) {
+                    Log.d("dberror", e.toString());
+                }
+            }
+        };
+
+        LetterListRequest lRequest = new LetterListRequest(skin.getPreferenceString("LoginId"), LetterListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(lRequest);
     }
 
     public class SpinnerAdapter extends ArrayAdapter<String> {
