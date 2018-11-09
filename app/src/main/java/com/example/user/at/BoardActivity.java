@@ -3,6 +3,7 @@ package com.example.user.at;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -27,11 +29,14 @@ import java.util.ArrayList;
 public class BoardActivity extends AppCompatActivity {
     Skin skin;
     int color;
+    TextView tvBoardTitle;
+    ImageView btnBoardBack;
+    ConstraintLayout loBoardHeader;
     RecyclerView boardRecycler;
     LinearLayoutManager layoutManager;
     ArrayList<MyInfoItem> items;
     MyInfoAdapter adapter;
-    String num, time, title, writer, feedback, recommend;
+    String num, time, title, writer, feedback, recommend, headerTitle;
     Intent intent;
     SwipeRefreshLayout swpBoardRefresh;
 
@@ -46,6 +51,35 @@ public class BoardActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         swpBoardRefresh = findViewById(R.id.swpBoardRefresh);
+        tvBoardTitle = findViewById(R.id.tvBoardTitle);
+        btnBoardBack = findViewById(R.id.btnBoardBack);
+        loBoardHeader = findViewById(R.id.loBoardHeader);
+
+        loBoardHeader.setBackgroundColor(color);
+
+        intent = getIntent();
+
+        switch (intent.getIntExtra("category", 0)) {
+            case 0:
+                headerTitle = "글 게시판";
+                break;
+            case 1:
+                headerTitle = "그림 게시판";
+                break;
+            case 2:
+                headerTitle = "음악 게시판";
+                break;
+        }
+
+        tvBoardTitle.setText(headerTitle);
+
+        btnBoardBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
+            }
+        });
 
         printBoardList();
 
@@ -135,7 +169,6 @@ public class BoardActivity extends AppCompatActivity {
             }
         };
 
-        intent = getIntent();
         BoardRequest bRequest = new BoardRequest(intent.getIntExtra("category", 0), bListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(bRequest);
