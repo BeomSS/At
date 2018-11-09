@@ -47,29 +47,36 @@
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rclLetter"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swpLetterRefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/colorBrightGrey"
+        app:layout_constraintBottom_toTopOf="@+id/btnWriteLetter"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/gdlLetterH1"
-        app:layout_constraintBottom_toTopOf="@+id/btnWriteLetter"/>
+        app:layout_constraintTop_toTopOf="@+id/gdlLetterH1">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rclLetter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBrightGrey" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <Button
         android:id="@+id/btnWriteLetter"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="편지쓰기"
-        android:textSize="20dp"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
         android:background="@color/colorMint"
-        app:layout_constraintTop_toTopOf="@+id/gdlLetterH2"
+        android:text="편지쓰기"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gdlLetterH2" />
 
     <android.support.constraint.Guideline
         android:id="@+id/gdlLetterH1"

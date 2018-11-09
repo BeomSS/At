@@ -3,6 +3,7 @@ package com.example.user.at;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,8 +31,9 @@ public class BoardActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     ArrayList<MyInfoItem> items;
     MyInfoAdapter adapter;
-    String num,time, title, writer, feedback, recommend;
+    String num, time, title, writer, feedback, recommend;
     Intent intent;
+    SwipeRefreshLayout swpBoardRefresh;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,44 +45,9 @@ public class BoardActivity extends AppCompatActivity {
         boardRecycler = findViewById(R.id.board_recycler);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        swpBoardRefresh = findViewById(R.id.swpBoardRefresh);
 
-        Response.Listener bListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("TAG", "JSONObj response=" + response);
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
-
-                    items = new ArrayList<>();
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject row = jsonArray.getJSONObject(i);
-                        num=row.getString("post_id");
-                        Log.d("post test2",num);
-                        time = row.getString("create_time");
-                        title = row.getString("post_title");
-                        writer = row.getString("member_id");
-                        feedback = row.getString("feedback_count");
-                        recommend = String.valueOf(row.getInt("recommend"));
-                        items.add(new MyInfoItem(0, num, null, time, title, writer, feedback, recommend));
-                    }
-
-                    boardRecycler.setLayoutManager(layoutManager);
-                    boardRecycler.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new MyInfoAdapter(items);
-                    boardRecycler.setAdapter(adapter);
-
-                } catch (Exception e) {
-                    Log.d("dberror", e.toString());
-                }
-            }
-        };
-
-        intent = getIntent();
-        BoardRequest bRequest = new BoardRequest(intent.getIntExtra("category",0), bListener);
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(bRequest);
+        printBoardList();
 
         final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -98,7 +65,7 @@ public class BoardActivity extends AppCompatActivity {
                     TextView wTextView = boardRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_writers);
                     TextView nTextView = boardRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_num);
                     cIntent.putExtra("putter", "게시판");
-                    cIntent.putExtra("category", intent.getIntExtra("category",0));
+                    cIntent.putExtra("category", intent.getIntExtra("category", 0));
                     cIntent.putExtra("writer", wTextView.getText().toString());
                     cIntent.putExtra("postid", nTextView.getText().toString());
                     Log.d("board put test", wTextView.getText().toString() + " || " + nTextView.getText().toString());
@@ -118,7 +85,62 @@ public class BoardActivity extends AppCompatActivity {
 
             }
         });
+
+        swpBoardRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                printBoardList();
+            }
+        });
+
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
+    }
+
+    void printBoardList() {
+        Response.Listener bListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG", "JSONObj response=" + response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
+
+                    items = new ArrayList<>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject row = jsonArray.getJSONObject(i);
+                        num = row.getString("post_id");
+                        Log.d("post test2", num);
+                        time = row.getString("create_time");
+                        title = row.getString("post_title");
+                        writer = row.getString("member_id");
+                        feedback = row.getString("feedback_count");
+                        recommend = String.valueOf(row.getInt("recommend"));
+                        items.add(new MyInfoItem(0, num, null, time, title, writer, feedback, recommend));
+                    }
+
+                    boardRecycler.setLayoutManager(layoutManager);
+                    boardRecycler.setItemAnimator(new DefaultItemAnimator());
+                    adapter = new MyInfoAdapter(items);
+                    boardRecycler.setAdapter(adapter);
+                    swpBoardRefresh.setRefreshing(false);   //이 문장 기술 안할 시, 새로고침 이미지가 끝없이 빙글빙글 돔
+                } catch (Exception e) {
+                    Log.d("dberror", e.toString());
+                }
+            }
+        };
+
+        intent = getIntent();
+        BoardRequest bRequest = new BoardRequest(intent.getIntExtra("category", 0), bListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(bRequest);
+    }
+
 /*
     public void processResponse(JSONArray response) {
         try {
@@ -136,10 +158,4 @@ public class BoardActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }*/
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
-    }
 }
