@@ -43,7 +43,8 @@ import java.util.Objects;
 
 public class MainFragment extends Fragment {
     View view;
-    TextView text1, text2, text3, content, picture1, picture2, picture3, music1, music2, music3, txvTextWriteId, txvImageWriteId, txvMusicWriteId;
+    TextView text1, text2, text3, content, picture1, picture2, picture3, music1, music2, music3, txvTextWriteId, txvImageWriteId,
+            txvMusicWriteId, tvBestMusicDescription, tvBestPictureDescription;
     Button textbtn, btnPicture, musicbtn, btnBestMusicPause, btnBestMusicPlay, btnBestMusicStop;
     ImageView imageView;
     ProgressBar pgbBestPictureLoading, pgbBestMusicLoading;
@@ -70,9 +71,11 @@ public class MainFragment extends Fragment {
         picture1 = view.findViewById(R.id.Picture1_1);
         picture2 = view.findViewById(R.id.Picture2_1);
         picture3 = view.findViewById(R.id.Picture3_1);
+        tvBestPictureDescription = view.findViewById(R.id.tvBestPictureDescription);
         music1 = view.findViewById(R.id.Music1_1);
         music2 = view.findViewById(R.id.Music2_1);
         music3 = view.findViewById(R.id.Music3_1);
+        tvBestMusicDescription = view.findViewById(R.id.tvBestMusicDescription);
         textbtn = view.findViewById(R.id.Textbtn);
         btnPicture = view.findViewById(R.id.btnPicture);
         musicbtn = view.findViewById(R.id.Musicbtn);
@@ -91,140 +94,142 @@ public class MainFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         String besturl = LoginActivity.ipAddress + ":800/At/SeeBest.php";
 
-        StringRequest bestRequest = new StringRequest(Request.Method.GET, besturl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("BEST_TAG", "JSONObj response=" + response);
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
+        StringRequest bestRequest = new StringRequest(Request.Method.GET, besturl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("BEST_TAG", "JSONObj response=" + response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
 
-                            if(jsonResponse.getString("w_post_id")!="null"){
-                                txvTextWriteId.setText(jsonResponse.getString("w_post_id"));
-                                text1.setText(jsonResponse.getString("w_post_title"));
-                                text2.setText(jsonResponse.getString("w_member_id"));
-                                text3.setText(jsonResponse.getString("w_recommend"));
-                            }else{
-                                text1.setText("추천을 받은 게시물이 없습니다.");
-                                text2.setText("");
-                                text3.setText("");
-                            }
-
-                            if(jsonResponse.getString("i_post_id") !="null"){
-                                txvImageWriteId.setText(jsonResponse.getString("i_post_id"));
-                                picture1.setText(jsonResponse.getString("i_post_title"));
-                                picture2.setText(jsonResponse.getString("i_member_id"));
-                                picture3.setText(jsonResponse.getString("i_recommend"));
-                            }else{
-                                picture1.setText("추천을 받은 게시물이 없습니다.");
-                                picture2.setText("");
-                                picture3.setText("");
-                            }
-
-                            if (jsonResponse.getString("m_post_id") != "null") {
-                                txvMusicWriteId.setText(jsonResponse.getString("m_post_id"));
-                                music1.setText(jsonResponse.getString("m_post_title"));
-                                music2.setText(jsonResponse.getString("m_member_id"));
-                                music3.setText(jsonResponse.getString("m_recommend"));
-                            }else{
-                                music1.setText("추천을 받은 게시물이 없습니다.");
-                                music2.setText("");
-                                music3.setText("");
-                            }
-
-                            imageURL = jsonResponse.getString("i_url");
-                            musicURL = jsonResponse.getString("m_url");
-
-                            content.setText(jsonResponse.getString("w_explain"));
-
-                            //베스트이미지 불러오기
-                            if (!jsonResponse.getString("i_url").equals("null")) {
-                                strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("i_url");
-                                url = new URL(strUrl);
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (url != null) {
-                                            try {
-                                                //이미지가 지멋대로 돌아가는 경우가 발생하므로 ExifInterface를 먼저 받아온다.
-                                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                                conn.connect();
-
-                                                InputStream iStream = conn.getInputStream();
-
-                                                ExifInterface ei = new ExifInterface(iStream);
-                                                int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-                                                iStream.close();
-                                                conn.disconnect();
-
-                                                //이미지를 받은 뒤 위에서 받은 회전값으로 수정을 해준 뒤 핸들러에 전달
-                                                conn = (HttpURLConnection) url.openConnection();
-                                                conn.connect();
-
-                                                iStream = conn.getInputStream();
-
-                                                bitmap = BitmapFactory.decodeStream(iStream);
-
-                                                switch (orientation) {
-                                                    case ExifInterface.ORIENTATION_ROTATE_90:
-                                                        bitmap = rotate(bitmap, 90);
-                                                        break;
-
-                                                    case ExifInterface.ORIENTATION_ROTATE_180:
-                                                        bitmap = rotate(bitmap, 180);
-                                                        break;
-
-                                                    case ExifInterface.ORIENTATION_ROTATE_270:
-                                                        bitmap = rotate(bitmap, 270);
-                                                        break;
-
-                                                    case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
-                                                        bitmap = flip(bitmap, true, false);
-                                                        break;
-
-                                                    case ExifInterface.ORIENTATION_FLIP_VERTICAL:
-                                                        bitmap = flip(bitmap, false, true);
-                                                        break;
-                                                }
-
-                                                // 핸들러에게 화면 갱신을 요청한다.
-                                                handler.sendEmptyMessage(0);
-
-                                                // 연결 종료
-                                                iStream.close();
-                                                conn.disconnect();
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        } else {
-                                            Toast.makeText(getActivity(), "이미지 불러오기 오류", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }).start();
-                            }else{
-                                pgbBestPictureLoading.setVisibility(View.GONE);
-                            }
-                            if (!jsonResponse.getString("m_url").equals("null")) {
-                                //베스트 음악 불러오기
-                                String strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("m_url");
-                                mediaPlayer = new MediaPlayer();
-                                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                                mediaPlayer.setDataSource(strUrl);
-                                mediaPlayer.prepare();
-                                btnBestMusicPause.setVisibility(View.VISIBLE);
-                                btnBestMusicPlay.setVisibility(View.VISIBLE);
-                                btnBestMusicStop.setVisibility(View.VISIBLE);
-                                pgbBestMusicLoading.setVisibility(View.GONE);
-                            }else{
-                                pgbBestMusicLoading.setVisibility(View.GONE);
-                            }
-
-                        } catch (Exception e) {
-                            Log.d("BestDBerror", e.toString());
-                        }
+                    if (jsonResponse.getString("w_post_id") != "null") {
+                        txvTextWriteId.setText(jsonResponse.getString("w_post_id"));
+                        text1.setText(jsonResponse.getString("w_post_title"));
+                        text2.setText(jsonResponse.getString("w_member_id"));
+                        text3.setText(jsonResponse.getString("w_recommend"));
+                        content.setText(jsonResponse.getString("w_explain"));
+                    } else {
+                        text1.setText("추천을 받은 게시물이 없습니다.");
+                        text2.setText("");
+                        text3.setText("");
                     }
-                }, new Response.ErrorListener() {
+
+                    if (jsonResponse.getString("i_post_id") != "null") {
+                        txvImageWriteId.setText(jsonResponse.getString("i_post_id"));
+                        picture1.setText(jsonResponse.getString("i_post_title"));
+                        picture2.setText(jsonResponse.getString("i_member_id"));
+                        picture3.setText(jsonResponse.getString("i_recommend"));
+                        tvBestPictureDescription.setText(jsonResponse.getString("i_explain"));
+                    } else {
+                        picture1.setText("추천을 받은 게시물이 없습니다.");
+                        picture2.setText("");
+                        picture3.setText("");
+                        tvBestPictureDescription.setText("");
+                    }
+
+                    if (jsonResponse.getString("m_post_id") != "null") {
+                        txvMusicWriteId.setText(jsonResponse.getString("m_post_id"));
+                        music1.setText(jsonResponse.getString("m_post_title"));
+                        music2.setText(jsonResponse.getString("m_member_id"));
+                        music3.setText(jsonResponse.getString("m_recommend"));
+                        tvBestMusicDescription.setText(jsonResponse.getString("m_explain"));
+                    } else {
+                        music1.setText("추천을 받은 게시물이 없습니다.");
+                        music2.setText("");
+                        music3.setText("");
+                        tvBestMusicDescription.setText("");
+                    }
+
+                    imageURL = jsonResponse.getString("i_url");
+                    musicURL = jsonResponse.getString("m_url");
+
+                    //베스트이미지 불러오기
+                    if (!jsonResponse.getString("i_url").equals("null")) {
+                        strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("i_url");
+                        url = new URL(strUrl);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (url != null) {
+                                    try {
+                                        //이미지가 지멋대로 돌아가는 경우가 발생하므로 ExifInterface를 먼저 받아온다.
+                                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                        conn.connect();
+
+                                        InputStream iStream = conn.getInputStream();
+
+                                        ExifInterface ei = new ExifInterface(iStream);
+                                        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+                                        iStream.close();
+                                        conn.disconnect();
+
+                                        //이미지를 받은 뒤 위에서 받은 회전값으로 수정을 해준 뒤 핸들러에 전달
+                                        conn = (HttpURLConnection) url.openConnection();
+                                        conn.connect();
+
+                                        iStream = conn.getInputStream();
+
+                                        bitmap = BitmapFactory.decodeStream(iStream);
+
+                                        switch (orientation) {
+                                            case ExifInterface.ORIENTATION_ROTATE_90:
+                                                bitmap = rotate(bitmap, 90);
+                                                break;
+
+                                            case ExifInterface.ORIENTATION_ROTATE_180:
+                                                bitmap = rotate(bitmap, 180);
+                                                break;
+
+                                            case ExifInterface.ORIENTATION_ROTATE_270:
+                                                bitmap = rotate(bitmap, 270);
+                                                break;
+
+                                            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                                                bitmap = flip(bitmap, true, false);
+                                                break;
+
+                                            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                                                bitmap = flip(bitmap, false, true);
+                                                break;
+                                        }
+
+                                        // 핸들러에게 화면 갱신을 요청한다.
+                                        handler.sendEmptyMessage(0);
+
+                                        // 연결 종료
+                                        iStream.close();
+                                        conn.disconnect();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    Toast.makeText(getActivity(), "이미지 불러오기 오류", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }).start();
+                    } else {
+                        pgbBestPictureLoading.setVisibility(View.GONE);
+                    }
+                    if (!jsonResponse.getString("m_url").equals("null")) {
+                        //베스트 음악 불러오기
+                        String strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("m_url");
+                        mediaPlayer = new MediaPlayer();
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        mediaPlayer.setDataSource(strUrl);
+                        mediaPlayer.prepare();
+                        btnBestMusicPause.setVisibility(View.VISIBLE);
+                        btnBestMusicPlay.setVisibility(View.VISIBLE);
+                        btnBestMusicStop.setVisibility(View.VISIBLE);
+                        pgbBestMusicLoading.setVisibility(View.GONE);
+                    } else {
+                        pgbBestMusicLoading.setVisibility(View.GONE);
+                    }
+
+                } catch (Exception e) {
+                    Log.d("BestDBerror", e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();

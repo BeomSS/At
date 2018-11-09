@@ -30,7 +30,9 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.user.at.request.AddFeedbackRequest;
 import com.example.user.at.request.FeedbackLikingRequest;
+import com.example.user.at.request.PostDeleteRequest;
 import com.example.user.at.request.PostLikingRequest;
+import com.example.user.at.request.PostMarkingRequest;
 import com.example.user.at.request.PostRequest;
 
 import org.json.JSONObject;
@@ -56,7 +58,6 @@ public class ShowPictureActivity extends Activity implements Runnable {
     Intent pIntent;
     int category, usingBestFeedback = 0;
     private MediaPlayer mediaPlayer;
-    Skin pId = new Skin(ShowPictureActivity.this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,15 +140,54 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         });
 
+        //관심작품 등록, 해제
         btnShowPictureBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (showPictureBookMarked) {
-                    ivShowPictureBookmark.setImageResource(R.drawable.ic_no_like_40dp);
-                    showPictureBookMarked = false;
-                } else {
-                    ivShowPictureBookmark.setImageResource(R.drawable.ic_like_white_40dp);
-                    showPictureBookMarked = true;
+                if (showPictureBookMarked) { //관심작품 해제시
+                    Response.Listener markingListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("TAG", "JSONObj response=" + response);
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                if (jsonResponse.getBoolean("success")) {
+                                    Toast.makeText(ShowPictureActivity.this, "관심작품을 해제하였습니다.", Toast.LENGTH_SHORT).show();
+                                    ivShowPictureBookmark.setImageResource(R.drawable.ic_no_like_40dp);
+                                    showPictureBookMarked = false;
+                                } else {
+                                    Toast.makeText(ShowPictureActivity.this, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                Log.d("markingDBerror", e.toString());
+                            }
+                        }
+                    };
+                    PostMarkingRequest postMarkingRequest = new PostMarkingRequest(0,pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), markingListener);
+                    RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
+                    queue.add(postMarkingRequest);
+                } else { //관심작품 등록시
+                    Response.Listener markingListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("TAG", "JSONObj response=" + response);
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                if (jsonResponse.getBoolean("success")) {
+                                    Toast.makeText(ShowPictureActivity.this, "관심작품으로 등록하였습니다.", Toast.LENGTH_SHORT).show();
+                                    ivShowPictureBookmark.setImageResource(R.drawable.ic_like_white_40dp);
+                                    showPictureBookMarked = true;
+                                } else {
+                                    Toast.makeText(ShowPictureActivity.this, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                Log.d("markingDBerror", e.toString());
+                            }
+                        }
+                    };
+                    PostMarkingRequest postMarkingRequest = new PostMarkingRequest(1,pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), markingListener);
+                    RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
+                    queue.add(postMarkingRequest);
                 }
             }
         });
@@ -186,17 +226,38 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             }
                         }
                     };
-                    PostLikingRequest fLikingRequest = new PostLikingRequest(pIntent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), postLikingListener);
+                    PostLikingRequest fLikingRequest = new PostLikingRequest(pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), postLikingListener);
                     RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                     queue.add(fLikingRequest);
                 }
             }
         });
 
+        //게시물 삭제 버튼
         btnShowPictureDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ShowPictureActivity.this, "게시물 삭제", Toast.LENGTH_SHORT).show();
+                Response.Listener PostDeleteListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("TAG", "JSONObj response=" + response);
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success=jsonResponse.getBoolean("success");
+                            if(success){
+                                Toast.makeText(MainActivity.context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }else{
+                                Toast.makeText(ShowPictureActivity.this, "게시물 삭제에 실패하였습니다..", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            Log.d("dberror", e.toString());
+                        }
+                    }
+                };
+                PostDeleteRequest dRequest = new PostDeleteRequest(pIntent.getStringExtra("postid"),skin.getPreferenceString("LoginId"), PostDeleteListener);
+                RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
+                queue.add(dRequest);
             }
         });
 
@@ -234,7 +295,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             }
                         }
                     };
-                    FeedbackLikingRequest fLikingRequest = new FeedbackLikingRequest(pIntent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), tvBestFeedbackId.getText().toString(), feedbackLikingListener);
+                    FeedbackLikingRequest fLikingRequest = new FeedbackLikingRequest(pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), tvBestFeedbackId.getText().toString(), feedbackLikingListener);
                     RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                     queue.add(fLikingRequest);
 
@@ -264,7 +325,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         }
                     }
                 };
-                AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pIntent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), edtPictureWriteFeedback.getText().toString(), feedbackListener);
+                AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), edtPictureWriteFeedback.getText().toString(), feedbackListener);
                 RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                 queue.add(feedbackRequest);
             }
@@ -284,6 +345,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                     tvShowPictureLikeCount.setText(jsonResponse.getString("recommend"));
                     explainTextView.setText(jsonResponse.getString("explain"));
                     usingBestFeedback = jsonResponse.getInt("f_use");
+
                     if (usingBestFeedback == 0) {
                         tvBestFeedbackName.setText("추천을 받은 피드백이 없습니다.");
                         tvBestFeedbackContent.setText("");
@@ -302,10 +364,23 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             pictureFeedbackLiked = true;
                         }
                     }
+                    //삭제버튼 활성화/비활성화
+                    if(!tvShowPictureWriter.getText().toString().equals(skin.getPreferenceString("LoginId"))){
+                        btnShowPictureDelete.setVisibility(View.INVISIBLE);
+                    }
+
+                    //게시물이 추천 받았었는지 체크
                     if(jsonResponse.getString("post_liked") == "true") {
                         ivShowPictureLike.setImageResource(R.drawable.ic_thumb_up_white_40dp);
                         showPictureLiked = true;
                     }
+
+                    //TODO 관심작품 등록 되어있는지 체크
+                    if(jsonResponse.getString("attention") == "true") {
+                        ivShowPictureBookmark.setImageResource(R.drawable.ic_like_white_40dp);
+                        showPictureBookMarked = true;
+                    }
+
                     if (category == 1) {
                         String strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
                         url = new URL(strUrl);
@@ -329,7 +404,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         };
 
-        PostRequest pRequest = new PostRequest(pIntent.getStringExtra("postid"), pId.getPreferenceString("LoginId"), pListener);
+        PostRequest pRequest = new PostRequest(pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), pListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(pRequest);
 
@@ -398,7 +473,6 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         bitmap = flip(bitmap, false, true);
                         break;
                 }
-
                 // 핸들러에게 화면 갱신을 요청한다.
                 handler.sendEmptyMessage(0);
 
