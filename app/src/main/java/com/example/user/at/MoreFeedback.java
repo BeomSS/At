@@ -3,12 +3,15 @@ package com.example.user.at;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,6 +26,8 @@ import java.util.ArrayList;
 public class MoreFeedback extends AppCompatActivity {
     Skin skin;
     int color;
+    ImageView btnFeedbackBack;
+    ConstraintLayout loFeedbackHeader;
     RecyclerView rclFeedback;
     LinearLayoutManager layoutManager;
     ArrayList<FeedbackItem> items;
@@ -44,9 +49,19 @@ public class MoreFeedback extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         swpFeedbackRefresh = findViewById(R.id.swpFeedbackRefresh);
+        btnFeedbackBack = findViewById(R.id.btnFeedbackBack);
+        loFeedbackHeader = findViewById(R.id.loFeedbackHeader);
 
+        loFeedbackHeader.setBackgroundColor(color);
         printFeedbackList();
 
+        btnFeedbackBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
+            }
+        });
 
         swpFeedbackRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

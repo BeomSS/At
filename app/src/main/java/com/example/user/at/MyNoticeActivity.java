@@ -2,12 +2,15 @@ package com.example.user.at;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,6 +31,9 @@ public class MyNoticeActivity extends AppCompatActivity {
     int color;
     View view;
 
+    TextView tvNoticeTitle;
+    ImageView btnNoticeBack;
+    ConstraintLayout loNoticeHeader;
     RecyclerView myInfoRecycler;
     LinearLayoutManager layoutManager;
     MyInfoAdapter adapter;
@@ -42,6 +48,21 @@ public class MyNoticeActivity extends AppCompatActivity {
         setContentView(R.layout.my_writing_post);
 
         myInfoRecycler = (RecyclerView) findViewById(R.id.my_info_recycler);
+        tvNoticeTitle = findViewById(R.id.tvMyWriteTitle);
+        btnNoticeBack = findViewById(R.id.btnMyWriteBack);
+        loNoticeHeader = findViewById(R.id.loMyWriteHeader);
+
+        tvNoticeTitle.setText("알림");
+        loNoticeHeader.setBackgroundColor(color);
+
+        btnNoticeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
+            }
+        });
+
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 

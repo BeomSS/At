@@ -3,9 +3,13 @@ package com.example.user.at;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -17,6 +21,9 @@ public class LikeActivity extends Activity {
     String[] testWriters = {"Tea", "Coffee", "Bean", "Tom", "behind"};
     String[] testfeedbacks = {"2", "3", "2", "1", "4"};
 
+    TextView tvLikeTitle;
+    ImageView btnLikeBack;
+    ConstraintLayout loLikeHeader;
     RecyclerView myInfoRecycler;
     LinearLayoutManager layoutManager;
     MyInfoAdapter adapter;
@@ -30,6 +37,21 @@ public class LikeActivity extends Activity {
         setContentView(R.layout.my_writing_post);
 
         myInfoRecycler = (RecyclerView) findViewById(R.id.my_info_recycler);
+        tvLikeTitle = findViewById(R.id.tvMyWriteTitle);
+        btnLikeBack = findViewById(R.id.btnMyWriteBack);
+        loLikeHeader = findViewById(R.id.loMyWriteHeader);
+
+        tvLikeTitle.setText("관심있는 작품");
+        loLikeHeader.setBackgroundColor(color);
+
+        btnLikeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
+            }
+        });
+
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
