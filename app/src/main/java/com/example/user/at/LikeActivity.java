@@ -1,26 +1,34 @@
 package com.example.user.at;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.user.at.request.MyLikeRequest;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class LikeActivity extends Activity {
     Skin skin;
     int color;
-    String[] testTimes = {"2018.04.30 14:20", "2018.04.28 14:20", "2018.04.27 14:20", "2018.04.01 14:20", "2018.04.01 14:20"};
-    String[] testTitles = {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbb", "cccc", "abcd", "555"};
-    String[] testWriters = {"Tea", "Coffee", "Bean", "Tom", "behind"};
-    String[] testfeedbacks = {"2", "3", "2", "1", "4"};
-
+    int numCategory;
     TextView tvLikeTitle;
     ImageView btnLikeBack;
     ConstraintLayout loLikeHeader;
@@ -28,6 +36,7 @@ public class LikeActivity extends Activity {
     LinearLayoutManager layoutManager;
     MyInfoAdapter adapter;
     ArrayList<MyInfoItem> items;
+    String postid, time, title, feedback, writer,category;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,16 +64,86 @@ public class LikeActivity extends Activity {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        items = new ArrayList();
-        for (int num = 0; num <= 4; num++) {
-            items.add(new MyInfoItem(testTimes[num], testTitles[num], testWriters[num], testfeedbacks[num]));
-        }
-        ;
+        Response.Listener likeListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG", "JSONObj response=" + response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
 
-        myInfoRecycler.setLayoutManager(layoutManager);
-        myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
-        adapter = new MyInfoAdapter(items);
-        myInfoRecycler.setAdapter(adapter);
+                    items = new ArrayList<>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject row = jsonArray.getJSONObject(i);
+                        postid = row.getString("post_id");
+                        time = row.getString("create_time");
+                        title = row.getString("post_title");
+                        writer = row.getString("member_id");
+                        category = row.getString("category");
+                        feedback = row.getString("feedback_count");
+                        items.add(new MyInfoItem(postid,time, title, writer, feedback, category));
+                    }
+
+                    myInfoRecycler.setLayoutManager(layoutManager);
+                    myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
+                    adapter = new MyInfoAdapter(items);
+                    myInfoRecycler.setAdapter(adapter);
+
+                } catch (Exception e) {
+                    Log.d("dberror", e.toString());
+                }
+            }
+        };
+
+        MyLikeRequest mlRequest = new MyLikeRequest(skin.getPreferenceString("LoginId"), likeListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(mlRequest);
+
+        final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+        });
+
+        myInfoRecycler.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                View child = myInfoRecycler.findChildViewUnder(e.getX(), e.getY());
+                if (child != null && gestureDetector.onTouchEvent(e)) {
+                    Intent cIntent = new Intent(LikeActivity.this, ShowPictureActivity.class);
+                    TextView cTextView = myInfoRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_category);
+                    TextView nTextView = myInfoRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_num);
+                    Log.d("내 게시물 보기", cTextView.getText().toString());
+                    cIntent.putExtra("putter", "게시판");
+                    String category=cTextView.getText().toString();
+                    if(category.equals("글 ")){
+                        numCategory=0;
+                    }else if(category.equals("그림 ")){
+                        numCategory=1;
+                    }else if(category.equals("음악 ")){
+                        numCategory=2;
+                    }
+                    cIntent.putExtra("category",numCategory);
+                    cIntent.putExtra("postid", nTextView.getText().toString());
+                    Log.d("board put test", String.valueOf(numCategory) + " || " + nTextView.getText().toString());
+                    startActivity(cIntent);
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+
     }
 
     @Override

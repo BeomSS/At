@@ -6,8 +6,18 @@ public class MyInfoItem {
     int flag = 0;
     public String num, category, times, titles, writers, feedbacks, recommends;
 
-    //리사이클러 테스트용 생성자
-    public MyInfoItem(String time, String title, String writer, String feed) {//내가 쓴 글
+    //관심작품
+    public MyInfoItem(String postId, String time, String title, String writer, String feed, String cate) {//내가 쓴 글
+        num=postId;
+        if (cate.equals("0")) {
+            category = "글 ";
+        } else if (cate.equals("1")) {
+            category = "그림 ";
+        } else if (cate.equals("2")) {
+            category = "음악 ";
+        } else {
+            category = cate;
+        }
         times = time;
         titles = "제목: " + title;
         writers = "작성자: " + writer;
