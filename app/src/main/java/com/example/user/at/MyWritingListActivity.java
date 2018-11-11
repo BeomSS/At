@@ -85,7 +85,7 @@ public class MyWritingListActivity extends AppCompatActivity {
                         title = row.getString("post_title");
                         category = row.getString("category");
                         writer = row.getString("member_id");
-                        feedback = "0";
+                        feedback = row.getString("feedback_count");
                         recommend = String.valueOf(row.getInt("recommend"));
                         items.add(new MyInfoItem(1, postid, category, time, title, writer, feedback, recommend));
                     }
@@ -101,9 +101,7 @@ public class MyWritingListActivity extends AppCompatActivity {
             }
         };
 
-        Skin pId=new Skin(MyWritingListActivity.this);
-
-        MyWritingRequest wRequest = new MyWritingRequest(pId.getPreferenceString("LoginId"), wListener);
+        MyWritingRequest wRequest = new MyWritingRequest(skin.getPreferenceString("LoginId"), wListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(wRequest);
 
