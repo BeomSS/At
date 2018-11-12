@@ -15,12 +15,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,17 +41,15 @@ import java.util.Objects;
 
 public class MainFragment extends Fragment {
     View view;
-    TextView text1, text2, text3, content, picture1, picture2, picture3, music1, music2, music3, txvTextWriteId, txvImageWriteId,
-            txvMusicWriteId, tvBestMusicDescription, tvBestPictureDescription;
-    Button textbtn, btnPicture, musicbtn, btnBestMusicPause, btnBestMusicPlay, btnBestMusicStop;
-    ImageView imageView;
+    TextView tvBestTextTitle, tvBestTextWriter, tvBestTextRecomCnt, tvBestTextContent, tvBestPictureTitle, tvBestPictureWriter, tvBestPictureRecomCnt, tvBestMusicTitle, tvBestMusicWriter, tvBestMusicRecomCnt, tvTextWriteId, tvPictureWriteId,
+            tvMusicWriteId, tvBestMusicContent, tvBestPictureContent;
+    ImageView imgBestPicture, btnGoBestTextBoard, btnGoBestPictureBoard, btnGoBestMusicBoard, btnBestMusicPause, btnBestMusicPlay, btnBestMusicRewind;
     ProgressBar pgbBestPictureLoading, pgbBestMusicLoading;
-    NestedScrollView scrollView1;
     String imageURL, musicURL, strUrl;
     URL url;
     Bitmap bitmap;
     private MediaPlayer mediaPlayer;
-    ConstraintLayout picturelayout;
+    ConstraintLayout loBestTextHeader, loBestPictureHeader, loBestMusicHeader;
 
     @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Nullable
@@ -61,37 +57,43 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        txvTextWriteId = view.findViewById(R.id.txvTextWriteId);
-        txvImageWriteId = view.findViewById(R.id.txvImageWriteId);
-        txvMusicWriteId = view.findViewById(R.id.txvMusicWriteId);
-        text1 = view.findViewById(R.id.Text1_1);
-        text2 = view.findViewById(R.id.Text2_1);
-        text3 = view.findViewById(R.id.Text3_1);
-        content = view.findViewById(R.id.Content);
-        picture1 = view.findViewById(R.id.Picture1_1);
-        picture2 = view.findViewById(R.id.Picture2_1);
-        picture3 = view.findViewById(R.id.Picture3_1);
-        tvBestPictureDescription = view.findViewById(R.id.tvBestPictureDescription);
-        music1 = view.findViewById(R.id.Music1_1);
-        music2 = view.findViewById(R.id.Music2_1);
-        music3 = view.findViewById(R.id.Music3_1);
-        tvBestMusicDescription = view.findViewById(R.id.tvBestMusicDescription);
-        textbtn = view.findViewById(R.id.Textbtn);
-        btnPicture = view.findViewById(R.id.btnPicture);
-        musicbtn = view.findViewById(R.id.Musicbtn);
+        tvTextWriteId = view.findViewById(R.id.tvTextWriteId);
+        tvPictureWriteId = view.findViewById(R.id.tvPictureWriteId);
+        tvMusicWriteId = view.findViewById(R.id.tvMusicWriteId);
+        tvBestTextTitle = view.findViewById(R.id.tvBestTextTitle);
+        tvBestTextWriter = view.findViewById(R.id.tvBestTextWriter);
+        tvBestTextRecomCnt = view.findViewById(R.id.tvBestTextRecomCnt);
+        tvBestTextContent = view.findViewById(R.id.tvBestTextContent);
+        tvBestPictureTitle = view.findViewById(R.id.tvBestPictureTitle);
+        tvBestPictureWriter = view.findViewById(R.id.tvBestPictureWriter);
+        tvBestPictureRecomCnt = view.findViewById(R.id.tvBestPictureRecomCnt);
+        tvBestPictureContent = view.findViewById(R.id.tvBestPictureContent);
+        tvBestMusicTitle = view.findViewById(R.id.tvBestMusicTitle);
+        tvBestMusicWriter = view.findViewById(R.id.tvBestMusicWriter);
+        tvBestMusicRecomCnt = view.findViewById(R.id.tvBestMusicRecomCnt);
+        tvBestMusicContent = view.findViewById(R.id.tvBestMusicContent);
+        btnGoBestTextBoard = view.findViewById(R.id.btnGoBestTextBoard);
+        btnGoBestPictureBoard = view.findViewById(R.id.btnGoBestPictureBoard);
+        btnGoBestMusicBoard = view.findViewById(R.id.btnGoBestMusicBoard);
         btnBestMusicPause = view.findViewById(R.id.btnBestMusicPause);
         btnBestMusicPlay = view.findViewById(R.id.btnBestMusicPlay);
-        btnBestMusicStop = view.findViewById(R.id.btnBestMusicStop);
-        imageView = view.findViewById(R.id.Picture4);
+        btnBestMusicRewind = view.findViewById(R.id.btnBestMusicRewind);
+        imgBestPicture = view.findViewById(R.id.imgBestPicture);
         pgbBestPictureLoading = view.findViewById(R.id.pgbBestPictureLoading);
         pgbBestMusicLoading = view.findViewById(R.id.pgbBestMusicLoading);
-        scrollView1 = view.findViewById(R.id.scrollView);
+        loBestTextHeader = view.findViewById(R.id.loBestTextHeader);
+        loBestPictureHeader = view.findViewById(R.id.loBestPictureHeader);
+        loBestMusicHeader = view.findViewById(R.id.loBestMusicHeader);
 
         btnBestMusicPause.setVisibility(View.INVISIBLE);
         btnBestMusicPlay.setVisibility(View.INVISIBLE);
-        btnBestMusicStop.setVisibility(View.INVISIBLE);
+        btnBestMusicRewind.setVisibility(View.INVISIBLE);
 
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        loBestTextHeader.setBackgroundColor(((MainActivity) MainActivity.context).color);
+        loBestPictureHeader.setBackgroundColor(((MainActivity) MainActivity.context).color);
+        loBestMusicHeader.setBackgroundColor(((MainActivity) MainActivity.context).color);
+
+        RequestQueue queue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()));
         String besturl = LoginActivity.ipAddress + ":800/At/SeeBest.php";
 
         StringRequest bestRequest = new StringRequest(Request.Method.GET, besturl, new Response.Listener<String>() {
@@ -102,41 +104,41 @@ public class MainFragment extends Fragment {
                     JSONObject jsonResponse = new JSONObject(response);
 
                     if (jsonResponse.getString("w_post_id") != "null") {
-                        txvTextWriteId.setText(jsonResponse.getString("w_post_id"));
-                        text1.setText(jsonResponse.getString("w_post_title"));
-                        text2.setText(jsonResponse.getString("w_member_id"));
-                        text3.setText(jsonResponse.getString("w_recommend"));
-                        content.setText(jsonResponse.getString("w_explain"));
+                        tvTextWriteId.setText(jsonResponse.getString("w_post_id"));
+                        tvBestTextTitle.setText(jsonResponse.getString("w_post_title"));
+                        tvBestTextWriter.setText(jsonResponse.getString("w_member_id"));
+                        tvBestTextRecomCnt.setText(jsonResponse.getString("w_recommend"));
+                        tvBestTextContent.setText(jsonResponse.getString("w_explain"));
                     } else {
-                        text1.setText("추천을 받은 게시물이 없습니다.");
-                        text2.setText("");
-                        text3.setText("");
+                        tvBestTextTitle.setText("추천을 받은 게시물이 없습니다.");
+                        tvBestTextWriter.setText("");
+                        tvBestTextRecomCnt.setText("");
                     }
 
                     if (jsonResponse.getString("i_post_id") != "null") {
-                        txvImageWriteId.setText(jsonResponse.getString("i_post_id"));
-                        picture1.setText(jsonResponse.getString("i_post_title"));
-                        picture2.setText(jsonResponse.getString("i_member_id"));
-                        picture3.setText(jsonResponse.getString("i_recommend"));
-                        tvBestPictureDescription.setText(jsonResponse.getString("i_explain"));
+                        tvPictureWriteId.setText(jsonResponse.getString("i_post_id"));
+                        tvBestPictureTitle.setText(jsonResponse.getString("i_post_title"));
+                        tvBestPictureWriter.setText(jsonResponse.getString("i_member_id"));
+                        tvBestPictureRecomCnt.setText(jsonResponse.getString("i_recommend"));
+                        tvBestPictureContent.setText(jsonResponse.getString("i_explain"));
                     } else {
-                        picture1.setText("추천을 받은 게시물이 없습니다.");
-                        picture2.setText("");
-                        picture3.setText("");
-                        tvBestPictureDescription.setText("");
+                        tvBestPictureTitle.setText("추천을 받은 게시물이 없습니다.");
+                        tvBestPictureWriter.setText("");
+                        tvBestPictureRecomCnt.setText("");
+                        tvBestPictureContent.setText("");
                     }
 
                     if (jsonResponse.getString("m_post_id") != "null") {
-                        txvMusicWriteId.setText(jsonResponse.getString("m_post_id"));
-                        music1.setText(jsonResponse.getString("m_post_title"));
-                        music2.setText(jsonResponse.getString("m_member_id"));
-                        music3.setText(jsonResponse.getString("m_recommend"));
-                        tvBestMusicDescription.setText(jsonResponse.getString("m_explain"));
+                        tvMusicWriteId.setText(jsonResponse.getString("m_post_id"));
+                        tvBestMusicTitle.setText(jsonResponse.getString("m_post_title"));
+                        tvBestMusicWriter.setText(jsonResponse.getString("m_member_id"));
+                        tvBestMusicRecomCnt.setText(jsonResponse.getString("m_recommend"));
+                        tvBestMusicContent.setText(jsonResponse.getString("m_explain"));
                     } else {
-                        music1.setText("추천을 받은 게시물이 없습니다.");
-                        music2.setText("");
-                        music3.setText("");
-                        tvBestMusicDescription.setText("");
+                        tvBestMusicTitle.setText("추천을 받은 게시물이 없습니다.");
+                        tvBestMusicWriter.setText("");
+                        tvBestMusicRecomCnt.setText("");
+                        tvBestMusicContent.setText("");
                     }
 
                     imageURL = jsonResponse.getString("i_url");
@@ -219,7 +221,7 @@ public class MainFragment extends Fragment {
                         mediaPlayer.prepare();
                         btnBestMusicPause.setVisibility(View.VISIBLE);
                         btnBestMusicPlay.setVisibility(View.VISIBLE);
-                        btnBestMusicStop.setVisibility(View.VISIBLE);
+                        btnBestMusicRewind.setVisibility(View.VISIBLE);
                         pgbBestMusicLoading.setVisibility(View.GONE);
                     } else {
                         pgbBestMusicLoading.setVisibility(View.GONE);
@@ -239,42 +241,42 @@ public class MainFragment extends Fragment {
         queue.add(bestRequest);
 
         //글 베스트 게시물 이동 버튼 클릭
-        textbtn.setOnClickListener(new View.OnClickListener() {
+        btnGoBestTextBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
                 cIntent.putExtra("putter", "게시판");
                 cIntent.putExtra("category", 0);
-                cIntent.putExtra("writer", text2.getText().toString());
-                cIntent.putExtra("postid", txvTextWriteId.getText().toString());
-                Log.d("board put test", text2.getText().toString() + " || " + txvTextWriteId.getText().toString());
+                cIntent.putExtra("writer", tvBestTextWriter.getText().toString());
+                cIntent.putExtra("postid", tvTextWriteId.getText().toString());
+                Log.d("board put test", tvBestTextWriter.getText().toString() + " || " + tvTextWriteId.getText().toString());
                 startActivity(cIntent);
                 Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
         //그림 베스트 게시물 이동 버튼 클릭
-        btnPicture.setOnClickListener(new View.OnClickListener() {
+        btnGoBestPictureBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
                 cIntent.putExtra("putter", "게시판");
                 cIntent.putExtra("category", 1);
-                cIntent.putExtra("writer", picture2.getText().toString());
-                cIntent.putExtra("postid", txvImageWriteId.getText().toString());
-                Log.d("board put test", text2.getText().toString() + " || " + txvTextWriteId.getText().toString());
+                cIntent.putExtra("writer", tvBestPictureWriter.getText().toString());
+                cIntent.putExtra("postid", tvPictureWriteId.getText().toString());
+                Log.d("board put test", tvBestTextWriter.getText().toString() + " || " + tvTextWriteId.getText().toString());
                 startActivity(cIntent);
                 Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
         //음악 베스트 게시물 이동 버튼 클릭
-        musicbtn.setOnClickListener(new View.OnClickListener() {
+        btnGoBestMusicBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
                 cIntent.putExtra("putter", "게시판");
                 cIntent.putExtra("category", 2);
-                cIntent.putExtra("writer", music2.getText().toString());
-                cIntent.putExtra("postid", txvMusicWriteId.getText().toString());
+                cIntent.putExtra("writer", tvBestMusicWriter.getText().toString());
+                cIntent.putExtra("postid", tvMusicWriteId.getText().toString());
                 startActivity(cIntent);
                 Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
@@ -297,7 +299,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-        btnBestMusicStop.setOnClickListener(new View.OnClickListener() {
+        btnBestMusicRewind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaPlayer.pause();
@@ -314,7 +316,7 @@ public class MainFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            imageView.setImageBitmap(bitmap);
+            imgBestPicture.setImageBitmap(bitmap);
             pgbBestPictureLoading.setVisibility(View.GONE);
         }
     };
