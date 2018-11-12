@@ -42,7 +42,7 @@ import java.util.Objects;
 public class MainFragment extends Fragment {
     View view;
     TextView tvBestTextTitle, tvBestTextWriter, tvBestTextRecomCnt, tvBestTextContent, tvBestPictureTitle, tvBestPictureWriter, tvBestPictureRecomCnt, tvBestMusicTitle, tvBestMusicWriter, tvBestMusicRecomCnt, tvTextWriteId, tvPictureWriteId,
-            tvMusicWriteId, tvBestMusicContent, tvBestPictureContent;
+            tvMusicWriteId, tvBestMusicContent, tvBestPictureContent, tvBestTextTime,tvBestPictureTime,tvBestMusicTime;
     ImageView imgBestPicture, btnGoBestTextBoard, btnGoBestPictureBoard, btnGoBestMusicBoard, btnBestMusicPause, btnBestMusicPlay, btnBestMusicRewind;
     ProgressBar pgbBestPictureLoading, pgbBestMusicLoading;
     String imageURL, musicURL, strUrl;
@@ -64,14 +64,17 @@ public class MainFragment extends Fragment {
         tvBestTextWriter = view.findViewById(R.id.tvBestTextWriter);
         tvBestTextRecomCnt = view.findViewById(R.id.tvBestTextRecomCnt);
         tvBestTextContent = view.findViewById(R.id.tvBestTextContent);
+        tvBestTextTime = view.findViewById(R.id.tvBestTextTime);
         tvBestPictureTitle = view.findViewById(R.id.tvBestPictureTitle);
         tvBestPictureWriter = view.findViewById(R.id.tvBestPictureWriter);
         tvBestPictureRecomCnt = view.findViewById(R.id.tvBestPictureRecomCnt);
         tvBestPictureContent = view.findViewById(R.id.tvBestPictureContent);
+        tvBestPictureTime = view.findViewById(R.id.tvBestPictureTime);
         tvBestMusicTitle = view.findViewById(R.id.tvBestMusicTitle);
         tvBestMusicWriter = view.findViewById(R.id.tvBestMusicWriter);
         tvBestMusicRecomCnt = view.findViewById(R.id.tvBestMusicRecomCnt);
         tvBestMusicContent = view.findViewById(R.id.tvBestMusicContent);
+        tvBestMusicTime = view.findViewById(R.id.tvBestMusicTime);
         btnGoBestTextBoard = view.findViewById(R.id.btnGoBestTextBoard);
         btnGoBestPictureBoard = view.findViewById(R.id.btnGoBestPictureBoard);
         btnGoBestMusicBoard = view.findViewById(R.id.btnGoBestMusicBoard);
@@ -109,6 +112,7 @@ public class MainFragment extends Fragment {
                         tvBestTextWriter.setText(jsonResponse.getString("w_member_id"));
                         tvBestTextRecomCnt.setText(jsonResponse.getString("w_recommend"));
                         tvBestTextContent.setText(jsonResponse.getString("w_explain"));
+                        tvBestTextTime.setText(jsonResponse.getString("w_create_time"));
                     } else {
                         tvBestTextTitle.setText("추천을 받은 게시물이 없습니다.");
                         tvBestTextWriter.setText("");
@@ -121,6 +125,7 @@ public class MainFragment extends Fragment {
                         tvBestPictureWriter.setText(jsonResponse.getString("i_member_id"));
                         tvBestPictureRecomCnt.setText(jsonResponse.getString("i_recommend"));
                         tvBestPictureContent.setText(jsonResponse.getString("i_explain"));
+                        tvBestPictureTime.setText(jsonResponse.getString("i_create_time"));
                     } else {
                         tvBestPictureTitle.setText("추천을 받은 게시물이 없습니다.");
                         tvBestPictureWriter.setText("");
@@ -134,6 +139,7 @@ public class MainFragment extends Fragment {
                         tvBestMusicWriter.setText(jsonResponse.getString("m_member_id"));
                         tvBestMusicRecomCnt.setText(jsonResponse.getString("m_recommend"));
                         tvBestMusicContent.setText(jsonResponse.getString("m_explain"));
+                        tvBestMusicTime.setText(jsonResponse.getString("m_create_time"));
                     } else {
                         tvBestMusicTitle.setText("추천을 받은 게시물이 없습니다.");
                         tvBestMusicWriter.setText("");
