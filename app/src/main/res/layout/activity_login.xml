@@ -32,6 +32,18 @@
         android:hint="@string/hint_password"
         android:inputType="textPassword" />
 
+    <CheckBox
+        android:id="@+id/autoCheckbox"
+        android:layout_width="@dimen/size_110dp"
+        android:layout_height="@dimen/size_30dp"
+        android:text="@string/str_auto_login"
+        android:gravity="center"
+        android:textSize="@dimen/text_16sp"
+        android:textColor="@color/colorAutoLogin"
+        android:layout_below="@id/passwordInput"
+        android:layout_marginTop="@dimen/margin_padding_20dp"
+        android:layout_centerHorizontal="true"/>
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="@dimen/size_105dp"

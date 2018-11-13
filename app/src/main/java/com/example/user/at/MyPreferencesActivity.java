@@ -6,8 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.user.at.request.PreferenceRequest;
 
 /**
  * Created by johan on 2018-06-05.
@@ -19,6 +24,9 @@ public class MyPreferencesActivity extends AppCompatActivity {
     Skin skin;
     int skinCode;
     CustomDialog dlg;
+    RadioGroup rgChan;
+    String userFavorite;
+    Boolean changeTF = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +39,27 @@ public class MyPreferencesActivity extends AppCompatActivity {
         btnSaveMyPreference = findViewById(R.id.btnSaveMyPreference);
         spnSkin = findViewById(R.id.spnSkin);
         spnSkin.setSelection(skinCode - 1);
+        rgChan = findViewById(R.id.rgChange);
+
+        rgChan.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+
+                if (checkedId == R.id.radioGul){
+                    userFavorite = Character.toString('0');
+                    changeTF = true;}
+
+                else if (checkedId == R.id.radioGrim){
+                    userFavorite = Character.toString('1');
+                    changeTF = true;}
+
+                else if (checkedId == R.id.radioMusic) {
+                    userFavorite = Character.toString('2');
+                    changeTF = true;
+                }
+            }
+        });
 
         btnSaveMyPreference.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +73,15 @@ public class MyPreferencesActivity extends AppCompatActivity {
                     }, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Response.Listener rListener = new Response.Listener<String>(){
+                                @Override
+                                public void onResponse(String response) {
+                                }
+                            };
+                            PreferenceRequest pRequest = new PreferenceRequest(skin.getPreferenceString("LoginId"),userFavorite, rListener);
+                            RequestQueue queue = Volley.newRequestQueue(MyPreferencesActivity.this);
+                            queue.add(pRequest);
+
                             skin.setPreference(skin.key, spnSkin.getSelectedItemPosition() + 1);
                             Intent intent = new Intent(MyPreferencesActivity.this, SplashActivity.class);
                             startActivity(intent);
@@ -54,7 +92,17 @@ public class MyPreferencesActivity extends AppCompatActivity {
                         }
                     });
                     dlg.show();
+
                 } else {
+                    Response.Listener rListener = new Response.Listener<String>(){
+                        @Override
+                        public void onResponse(String response) {
+                        }
+                    };
+                    PreferenceRequest pRequest = new PreferenceRequest(skin.getPreferenceString("LoginId"),userFavorite, rListener);
+                    RequestQueue queue = Volley.newRequestQueue(MyPreferencesActivity.this);
+                    queue.add(pRequest);
+
                     finish();
                     overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
                 }

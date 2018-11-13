@@ -90,6 +90,7 @@
     <string name="str_like_work_string">관심있는 작품</string>
     <string name="str_login_success_message">로그인에 성공했습니다</string>
     <string name="str_remind_id_message">계정을 다시 확인하세요</string>
+    <string name="str_auto_login">Auto Login</string>
 
     <!--hint string-->
     <string name="hint_id">ID</string>

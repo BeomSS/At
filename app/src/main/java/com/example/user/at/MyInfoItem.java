@@ -65,8 +65,6 @@ public class MyInfoItem {
                     titles = title;
                 } else if (cate.equals("2")) {//피드백 써줬을 때
                     titles = title;
-                } else if (cate.equals("3")) {//베스트 올라갔을 때
-                    titles = title;
                 }
                 break;
         }

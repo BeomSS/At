@@ -85,7 +85,6 @@ public class MyNoticeActivity extends AppCompatActivity {
                         noticeTime = row.getString("notice_time");
                         noticeDirect = row.getString("notice_direct");
                         items.add(new MyInfoItem(3, noticeId, noticeValue, noticeTime, noticeMessage, noticeUserId, noticeDirect, null));
-                        //(int fl, String idnum, String cate, String time, String title, String writer, String feed, String recommend)
                     }
 
                     myInfoRecycler.setLayoutManager(layoutManager);
