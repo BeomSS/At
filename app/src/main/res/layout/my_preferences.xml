@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:clickable="true"
+    android:background="@color/colorWhite"
+    android:focusable="true"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
+        android:layout_marginTop="@dimen/margin_padding_30dp"
         android:text="관심 분야 변경"
         android:textColor="@color/colorBlack"
         android:textSize="20dp"
@@ -19,8 +19,8 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
+        android:layout_marginTop="@dimen/margin_padding_15dp"
         android:text="글 화면"
         android:textSize="16dp"
         android:textStyle="bold" />
@@ -28,7 +28,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
         android:layout_marginTop="6dp"
         android:text="그림 화면"
         android:textSize="16dp"
@@ -37,8 +37,8 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
+        android:layout_marginTop="@dimen/margin_padding_6dp"
         android:text="음악 화면"
         android:textSize="16dp"
         android:textStyle="bold" />
@@ -46,19 +46,19 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
+        android:layout_marginTop="@dimen/margin_padding_20dp"
+        android:layout_marginEnd="@dimen/margin_padding_20dp"
+        android:layout_marginBottom="@dimen/margin_padding_20dp"
         android:background="#A7ABB1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
+        android:layout_marginBottom="@dimen/margin_padding_30dp"
         android:text="배너 색상 변경"
-        android:textColor="#000000"
+        android:textColor="@color/colorBlack"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -66,20 +66,20 @@
         android:id="@+id/spnSkin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
         android:entries="@array/color" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom|right">
+        android:gravity="bottom|end">
 
         <Button
             android:id="@+id/btnSaveMyPreference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="@dimen/margin_padding_10dp"
+            android:layout_marginBottom="@dimen/margin_padding_10dp"
             android:text="저장"
             android:textSize="15dp" />
     </LinearLayout>

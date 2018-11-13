@@ -1,9 +1,29 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">10dp</dimen>
-    <dimen name="nav_header_vertical_spacing">8dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="nav_header_text">20dp</dimen>
-    <dimen name="toolBar_title_text">20dp</dimen>
+    <!--margin/padding-->
+    <dimen name="margin_padding_0dp">0dp</dimen>
+    <dimen name="margin_padding_1dp">1dp</dimen>
+    <dimen name="margin_padding_2dp">2dp</dimen>
+    <dimen name="margin_padding_3dp">3dp</dimen>
+    <dimen name="margin_padding_5dp">5dp</dimen>
+    <dimen name="margin_padding_6dp">6dp</dimen>
+    <dimen name="margin_padding_7dp">7dp</dimen>
+    <dimen name="margin_padding_8dp">8dp</dimen>
+    <dimen name="margin_padding_10dp">10dp</dimen>
+    <dimen name="margin_padding_15dp">15dp</dimen>
+    <dimen name="margin_padding_17dp">17dp</dimen>
+    <dimen name="margin_padding_20dp">20dp</dimen>
+    <dimen name="margin_padding_30dp">30dp</dimen>
+    <dimen name="margin_padding_55dp">55dp</dimen>
+    <dimen name="margin_padding_60dp">60dp</dimen>
+    <dimen name="margin_padding_75dp">75dp</dimen>
+    <dimen name="margin_padding_120dp">120dp</dimen>
+    <dimen name="margin_padding_310dp">310dp</dimen>
+    <dimen name="margin_padding_320dp">320dp</dimen>
+    <dimen name="margin_padding_365dp">365dp</dimen>
+    <dimen name="margin_padding_375dp">375dp</dimen>
+    <dimen name="margin_padding_430dp">430dp</dimen>
+
+    <!--elevation-->
+    <dimen name="elevation_10dp">10dp</dimen>
 </resources>
