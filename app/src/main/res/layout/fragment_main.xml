@@ -6,474 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true">
-    <!--
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/Textlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/line1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="26dp"
-            tools:layout_editor_absoluteY="0dp">
-
-            <TextView
-                android:id="@+id/txvTextWriteId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:visibility="invisible"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/Text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:text="글"
-                android:textSize="30dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/Textbtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="15dp"
-                android:text=">"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/Text"
-                app:layout_constraintBottom_toBottomOf="@+id/Text"/>
-
-            <TextView
-                android:id="@+id/Text1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:text="제목 : "
-                android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/Text2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/Text1.1"
-                app:layout_constraintTop_toBottomOf="@+id/Text" />
-
-            <TextView
-                android:id="@+id/Text1.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="로딩중..."
-                android:textSize="20dp"
-                app:layout_constraintLeft_toRightOf="@+id/Text1"
-                app:layout_constraintTop_toBottomOf="@+id/Text" />
-
-            <TextView
-                android:id="@+id/Text2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
-                android:text="작성자 : "
-                android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/Content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/Text2.1"
-                app:layout_constraintTop_toBottomOf="@+id/Text1" />
-
-            <TextView
-                android:id="@+id/Text2.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="로딩중..."
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/Text2"
-                app:layout_constraintLeft_toRightOf="@+id/Text2"
-                app:layout_constraintTop_toTopOf="@+id/Text2" />
-
-            <TextView
-                android:id="@+id/Text3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="추천수 : "
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/Text2"
-                app:layout_constraintRight_toLeftOf="@+id/Text3.1"
-                app:layout_constraintTop_toTopOf="@+id/Text2" />
-
-            <TextView
-                android:id="@+id/Text3.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:text="로딩중..."
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/Text2"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/Text2" />
-
-            <TextView
-                android:id="@+id/Content"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="로딩중..."
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Text2" />
-
-        </android.support.constraint.ConstraintLayout>
-
-        <View
-            android:id="@+id/line1"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="30dp"
-            android:background="#948b8b"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Textlayout" />
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/picturelayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/line2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line1">
-
-            <TextView
-                android:id="@+id/txvImageWriteId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:visibility="invisible"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/Picture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:text="그림"
-                android:textSize="30dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btnPicture"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="15dp"
-                android:text=">"
-                app:layout_constraintTop_toTopOf="@+id/Picture"
-                app:layout_constraintBottom_toBottomOf="@+id/Picture"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-            <TextView
-                android:id="@+id/Picture1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:text="제목 : "
-                android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/Picture2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/Picture1.1"
-                app:layout_constraintTop_toBottomOf="@+id/Picture" />
-
-            <TextView
-                android:id="@+id/Picture1.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="로딩중..."
-                android:textSize="20dp"
-                app:layout_constraintLeft_toRightOf="@+id/Picture1"
-                app:layout_constraintTop_toBottomOf="@+id/Picture" />
-
-            <TextView
-                android:id="@+id/Picture2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
-                android:text="작성자 : "
-                android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/tvBestPictureDescription"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/Picture2.1"
-                app:layout_constraintTop_toBottomOf="@+id/Picture1" />
-
-            <TextView
-                android:id="@+id/Picture2.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="로딩중..."
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/Picture2"
-                app:layout_constraintLeft_toRightOf="@+id/Picture2"
-                app:layout_constraintTop_toTopOf="@+id/Picture2" />
-
-            <TextView
-                android:id="@+id/Picture3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="추천수 : "
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/Picture2"
-                app:layout_constraintRight_toLeftOf="@+id/Picture3.1"
-                app:layout_constraintTop_toTopOf="@+id/Picture2" />
-
-            <TextView
-                android:id="@+id/Picture3.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:text="로딩중..."
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/Picture2"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/Picture2" />
-
-            <TextView
-                android:id="@+id/tvBestPictureDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="로딩중..."
-                android:textSize="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/Picture2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-            <ImageView
-                android:id="@+id/Picture4"
-                android:layout_width="0dp"
-                android:layout_height="280dp"
-                android:layout_margin="15dp"
-                android:adjustViewBounds="true"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBestPictureDescription" />
-
-            <ProgressBar
-                android:id="@+id/pgbBestPictureLoading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/Picture4"
-                app:layout_constraintLeft_toLeftOf="@+id/Picture4"
-                app:layout_constraintRight_toRightOf="@+id/Picture4"
-                app:layout_constraintTop_toTopOf="@+id/Picture4" />
-        </android.support.constraint.ConstraintLayout>
-
-        <View
-            android:id="@+id/line2"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="30dp"
-            android:background="#948b8b"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/picturelayout" />
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/Musiclayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line2"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="26dp"
-            tools:layout_editor_absoluteY="0dp">
-
-            <TextView
-                android:id="@+id/txvMusicWriteId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:visibility="invisible"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/Music"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:text="음악"
-                android:textSize="30dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/Musicbtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="15dp"
-                android:text=">"
-                app:layout_constraintTop_toTopOf="@+id/Music"
-                app:layout_constraintBottom_toBottomOf="@+id/Music"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-            <TextView
-                android:id="@+id/Music1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
-                android:text="제목 : "
-                android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/Music2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/Music1.1"
-                app:layout_constraintTop_toBottomOf="@+id/Music" />
-
-            <TextView
-                android:id="@+id/Music1.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="로딩중..."
-                android:textSize="20dp"
-                app:layout_constraintLeft_toRightOf="@+id/Music1"
-                app:layout_constraintTop_toBottomOf="@+id/Music" />
-
-            <TextView
-                android:id="@+id/Music2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
-                android:text="작성자 : "
-                android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/tvBestMusicDescription"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/Music2.1"
-                app:layout_constraintTop_toBottomOf="@+id/Music1" />
-
-            <TextView
-                android:id="@+id/Music2.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="로딩중..."
-                android:textSize="20dp"
-                app:layout_constraintTop_toTopOf="@+id/Music2"
-                app:layout_constraintLeft_toRightOf="@+id/Music2"
-                app:layout_constraintBottom_toBottomOf="@+id/Music2"/>
-
-            <TextView
-                android:id="@+id/Music3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="추천수 : "
-                android:textSize="20dp"
-                app:layout_constraintTop_toTopOf="@+id/Music2"
-                app:layout_constraintRight_toLeftOf="@+id/Music3.1"
-                app:layout_constraintBottom_toBottomOf="@+id/Music2"/>
-
-            <TextView
-                android:id="@+id/Music3.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:text="로딩중..."
-                android:textSize="20dp"
-                app:layout_constraintTop_toTopOf="@+id/Music2"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="@+id/Music2"/>
-
-            <TextView
-                android:id="@+id/tvBestMusicDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="로딩중..."
-                android:textSize="20dp"
-                android:layout_margin="15dp"
-                app:layout_constraintTop_toBottomOf="@+id/Music2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-            <Button
-                android:id="@+id/btnBestMusicPause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:text="일시정지"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/btnBestMusicPlay"
-                app:layout_constraintTop_toBottomOf="@+id/tvBestMusicDescription" />
-
-            <Button
-                android:id="@+id/btnBestMusicPlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:text="재생"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/btnBestMusicPause"
-                app:layout_constraintRight_toLeftOf="@+id/btnBestMusicStop"
-                app:layout_constraintTop_toBottomOf="@+id/Music2" />
-
-            <Button
-                android:id="@+id/btnBestMusicStop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:text="정지"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/btnBestMusicPlay"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Music2" />
-
-            <ProgressBar
-                android:id="@+id/pgbBestMusicLoading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/btnBestMusicPlay"
-                app:layout_constraintLeft_toLeftOf="@+id/btnBestMusicPlay"
-                app:layout_constraintRight_toRightOf="@+id/btnBestMusicPlay"
-                app:layout_constraintTop_toTopOf="@+id/btnBestMusicPlay" />
-
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.constraint.ConstraintLayout>
-    -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#dddddd">
+        android:background="#dddddd"
+        android:orientation="vertical">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/loBestText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:background="@color/colorWhite">
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/loBestTextHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="#6b6bd3"
+                android:background="@color/colorMint"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -482,37 +33,37 @@
                     android:id="@+id/tvBestTextTitleLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" 글 - "
-                    android:textSize="20dp"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
                     android:layout_marginStart="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:text=" 글 - "
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/tvBestTextTitle"/>
+                    app:layout_constraintRight_toLeftOf="@+id/tvBestTextTitle"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvBestTextTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="제목 로딩중..."
-                    android:textStyle="bold"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/colorWhite"
                     android:textSize="20dp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/tvBestTextTitleLabel" />
+                    app:layout_constraintLeft_toRightOf="@+id/tvBestTextTitleLabel"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/btnGoBestTextBoard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chevron_right_white_50dp"
                     android:layout_margin="5dp"
+                    android:src="@drawable/ic_chevron_right_white_50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
 
@@ -520,85 +71,85 @@
                 android:id="@+id/tvTextWriteId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tvBestTextWriter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="글쓴이 로딩중..."
-                android:textSize="13sp"
-                android:textColor="#000000"
                 android:layout_margin="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/loBestTextHeader"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                android:text="글쓴이 로딩중..."
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loBestTextHeader" />
 
             <TextView
                 android:id="@+id/tvBestTextTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="게시 시간 로딩중..."
-                android:textSize="13sp"
-                android:textColor="#000000"
                 android:layout_marginEnd="10dp"
-                app:layout_constraintTop_toTopOf="@+id/tvBestTextWriter"
+                android:text="게시 시간 로딩중..."
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBestTextWriter"
-                app:layout_constraintRight_toRightOf="parent"/>
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvBestTextWriter" />
 
             <TextView
                 android:id="@+id/tvBestTextRecom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="추천수 : "
-                android:textSize="13sp"
-                android:textColor="#000000"
                 android:layout_marginStart="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvBestTextWriter"
+                android:text="추천수 : "
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvBestTextContent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/tvBestTextContent"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvBestTextWriter" />
 
             <TextView
                 android:id="@+id/tvBestTextRecomCnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="로딩중..."
+                android:textColor="@color/colorBlack"
                 android:textSize="13sp"
-                android:textColor="#000000"
-                app:layout_constraintTop_toTopOf="@+id/tvBestTextRecom"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBestTextRecom"
-                app:layout_constraintLeft_toRightOf="@+id/tvBestTextRecom"/>
+                app:layout_constraintLeft_toRightOf="@+id/tvBestTextRecom"
+                app:layout_constraintTop_toTopOf="@+id/tvBestTextRecom" />
 
             <TextView
                 android:id="@+id/tvBestTextContent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="내용 로딩중..."
-                android:textSize="18sp"
-                android:textColor="#000000"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
+                android:text="내용 로딩중..."
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBestTextRecom"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvBestTextRecom" />
 
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/loBestPicture"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorWhite">
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/loBestPictureHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="#6b6bd3"
+                android:background="@color/colorMint"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -607,37 +158,37 @@
                     android:id="@+id/tvBestPictureTitleLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="그림 - "
-                    android:textSize="20dp"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
                     android:layout_marginStart="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="그림 - "
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/tvBestPictureTitle"/>
+                    app:layout_constraintRight_toLeftOf="@+id/tvBestPictureTitle"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvBestPictureTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="제목 로딩중..."
-                    android:textStyle="bold"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/colorWhite"
                     android:textSize="20dp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/tvBestPictureTitleLabel" />
+                    app:layout_constraintLeft_toRightOf="@+id/tvBestPictureTitleLabel"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/btnGoBestPictureBoard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chevron_right_white_50dp"
                     android:layout_margin="5dp"
+                    android:src="@drawable/ic_chevron_right_white_50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
 
@@ -645,102 +196,102 @@
                 android:id="@+id/tvPictureWriteId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tvBestPictureWriter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="글쓴이 로딩중..."
-                android:textSize="13sp"
-                android:textColor="#000000"
                 android:layout_margin="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/loBestPictureHeader"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                android:text="글쓴이 로딩중..."
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loBestPictureHeader" />
 
             <TextView
                 android:id="@+id/tvBestPictureTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="게시 시간 로딩중..."
-                android:textSize="13sp"
-                android:textColor="#000000"
                 android:layout_marginEnd="10dp"
-                app:layout_constraintTop_toTopOf="@+id/tvBestPictureWriter"
+                android:text="게시 시간 로딩중..."
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBestPictureWriter"
-                app:layout_constraintRight_toRightOf="parent"/>
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvBestPictureWriter" />
 
             <TextView
                 android:id="@+id/tvBestPictureRecom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="추천수 : "
-                android:textSize="13sp"
-                android:textColor="#000000"
                 android:layout_marginStart="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvBestPictureWriter"
+                android:text="추천수 : "
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvBestPictureContent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/tvBestPictureContent"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvBestPictureWriter" />
 
             <TextView
                 android:id="@+id/tvBestPictureRecomCnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="로딩중..."
+                android:textColor="@color/colorBlack"
                 android:textSize="13sp"
-                android:textColor="#000000"
-                app:layout_constraintTop_toTopOf="@+id/tvBestPictureRecom"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBestPictureRecom"
-                app:layout_constraintLeft_toRightOf="@+id/tvBestPictureRecom"/>
+                app:layout_constraintLeft_toRightOf="@+id/tvBestPictureRecom"
+                app:layout_constraintTop_toTopOf="@+id/tvBestPictureRecom" />
 
             <TextView
                 android:id="@+id/tvBestPictureContent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="내용 로딩중..."
-                android:textSize="18sp"
-                android:textColor="#000000"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:text="내용 로딩중..."
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBestPictureRecom"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvBestPictureRecom" />
 
             <ImageView
                 android:id="@+id/imgBestPicture"
                 android:layout_width="0dp"
                 android:layout_height="300dp"
                 android:layout_margin="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBestPictureContent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvBestPictureContent" />
 
             <ProgressBar
                 android:id="@+id/pgbBestPictureLoading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/imgBestPicture"
+                app:layout_constraintBottom_toBottomOf="@+id/imgBestPicture"
                 app:layout_constraintLeft_toLeftOf="@+id/imgBestPicture"
                 app:layout_constraintRight_toRightOf="@+id/imgBestPicture"
-                app:layout_constraintBottom_toBottomOf="@+id/imgBestPicture"/>
+                app:layout_constraintTop_toTopOf="@+id/imgBestPicture" />
 
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/loBestMusic"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorWhite">
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/loBestMusicHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="#6b6bd3"
+                android:background="@color/colorMint"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -749,37 +300,37 @@
                     android:id="@+id/tvBestMusicTitleLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="음악 - "
-                    android:textSize="20dp"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
                     android:layout_marginStart="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="음악 - "
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/tvBestMusicTitle"/>
+                    app:layout_constraintRight_toLeftOf="@+id/tvBestMusicTitle"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvBestMusicTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="제목 로딩중..."
-                    android:textStyle="bold"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/colorWhite"
                     android:textSize="20dp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/tvBestMusicTitleLabel" />
+                    app:layout_constraintLeft_toRightOf="@+id/tvBestMusicTitleLabel"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/btnGoBestMusicBoard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chevron_right_white_50dp"
                     android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_chevron_right_white_50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
 
@@ -787,107 +338,107 @@
                 android:id="@+id/tvMusicWriteId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tvBestMusicWriter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="글쓴이 로딩중..."
-                android:textSize="13sp"
-                android:textColor="#000000"
                 android:layout_margin="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/loBestMusicHeader"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                android:text="글쓴이 로딩중..."
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loBestMusicHeader" />
 
             <TextView
                 android:id="@+id/tvBestMusicTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="게시 시간 로딩중..."
-                android:textSize="13sp"
-                android:textColor="#000000"
                 android:layout_marginEnd="10dp"
-                app:layout_constraintTop_toTopOf="@+id/tvBestMusicWriter"
+                android:text="게시 시간 로딩중..."
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBestMusicWriter"
-                app:layout_constraintRight_toRightOf="parent"/>
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvBestMusicWriter" />
 
             <TextView
                 android:id="@+id/tvBestMusicRecom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="추천수 : "
-                android:textSize="13sp"
-                android:textColor="#000000"
                 android:layout_marginStart="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvBestMusicWriter"
+                android:text="추천수 : "
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvBestMusicContent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/tvBestMusicContent"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvBestMusicWriter" />
 
             <TextView
                 android:id="@+id/tvBestMusicRecomCnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="로딩중..."
+                android:textColor="@color/colorBlack"
                 android:textSize="13sp"
-                android:textColor="#000000"
-                app:layout_constraintTop_toTopOf="@+id/tvBestMusicRecom"
                 app:layout_constraintBottom_toBottomOf="@+id/tvBestMusicRecom"
-                app:layout_constraintLeft_toRightOf="@+id/tvBestMusicRecom"/>
+                app:layout_constraintLeft_toRightOf="@+id/tvBestMusicRecom"
+                app:layout_constraintTop_toTopOf="@+id/tvBestMusicRecom" />
 
             <TextView
                 android:id="@+id/tvBestMusicContent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="내용 로딩중..."
-                android:textSize="18sp"
-                android:textColor="#000000"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:text="내용 로딩중..."
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBestMusicRecom"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvBestMusicRecom" />
 
             <ImageView
                 android:id="@+id/btnBestMusicPlay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_play_arrow_black_24dp"
                 android:layout_margin="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvBestMusicContent"
+                android:src="@drawable/ic_play_arrow_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/btnBestMusicPause"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvBestMusicContent" />
 
             <ImageView
                 android:id="@+id/btnBestMusicPause"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_pause_black_24dp"
-                app:layout_constraintTop_toTopOf="@+id/btnBestMusicPlay"
                 app:layout_constraintBottom_toBottomOf="@+id/btnBestMusicPlay"
                 app:layout_constraintLeft_toRightOf="@+id/btnBestMusicPlay"
-                app:layout_constraintRight_toLeftOf="@+id/btnBestMusicRewind"/>
+                app:layout_constraintRight_toLeftOf="@+id/btnBestMusicRewind"
+                app:layout_constraintTop_toTopOf="@+id/btnBestMusicPlay" />
 
             <ImageView
                 android:id="@+id/btnBestMusicRewind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_fast_rewind_black_24dp"
                 android:layout_margin="10dp"
-                app:layout_constraintTop_toTopOf="@+id/btnBestMusicPlay"
+                android:src="@drawable/ic_fast_rewind_black_24dp"
                 app:layout_constraintBottom_toBottomOf="@+id/btnBestMusicPlay"
-                app:layout_constraintLeft_toRightOf="@+id/btnBestMusicPause" />
+                app:layout_constraintLeft_toRightOf="@+id/btnBestMusicPause"
+                app:layout_constraintTop_toTopOf="@+id/btnBestMusicPlay" />
 
             <ProgressBar
                 android:id="@+id/pgbBestMusicLoading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/btnBestMusicPlay"
+                app:layout_constraintBottom_toBottomOf="@+id/btnBestMusicPlay"
                 app:layout_constraintLeft_toLeftOf="@+id/btnBestMusicPlay"
                 app:layout_constraintRight_toRightOf="@+id/btnBestMusicRewind"
-                app:layout_constraintBottom_toBottomOf="@+id/btnBestMusicPlay"/>
+                app:layout_constraintTop_toTopOf="@+id/btnBestMusicPlay" />
 
         </android.support.constraint.ConstraintLayout>
 

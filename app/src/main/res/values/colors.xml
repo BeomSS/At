@@ -17,4 +17,10 @@
     <color name="colorDarkBlue">#000059</color>
     <color name="colorBrightBlue">#9b9bff</color>
     <color name="colorBrightGrey">#c1c1c1</color>
+    <color name="colorCloudy">#cccccc</color>
+    <color name="colorBrightCloudy">#dddddd</color>
+    <color name="colorSimilarWhite">#eaeaea</color>
+    <color name="colorB">#0000ff</color>
+    <color name="colorPurple">#ff00ff</color>
+    <color name="colorSimilarRed">#ff3333</color>
 </resources>

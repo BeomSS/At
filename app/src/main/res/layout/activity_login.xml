@@ -8,7 +8,7 @@
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="@dimen/margin_padding_120dp"
         android:src="@drawable/at_logo2" />
 
     <EditText
@@ -16,7 +16,7 @@
         android:layout_width="270dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="310dp"
+        android:layout_marginTop="@dimen/margin_padding_310dp"
         android:gravity="center"
         android:hint="ID"
         android:inputType="text" />
@@ -27,19 +27,17 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="365dp"
+        android:layout_marginTop="@dimen/margin_padding_365dp"
         android:gravity="center"
         android:hint="Password"
         android:inputType="textPassword" />
 
     <Button
         android:id="@+id/loginButton"
-
         android:layout_width="105dp"
         android:layout_height="40dp"
         android:layout_below="@id/passwordInput"
-
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="@dimen/margin_padding_60dp"
         android:layout_toStartOf="@+id/signupButton"
         android:background="@drawable/loginbutton"
         android:shadowColor="#A8A8A8"
@@ -52,14 +50,12 @@
 
     <Button
         android:id="@+id/signupButton"
-
         android:layout_width="105dp"
         android:layout_height="40dp"
         android:layout_alignEnd="@id/passwordInput"
-
         android:layout_alignTop="@+id/loginButton"
-        android:layout_marginLeft="17dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="@dimen/margin_padding_17dp"
+        android:layout_marginEnd="@dimen/margin_padding_20dp"
         android:background="@drawable/loginbutton"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"

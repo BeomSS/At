@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:text=" 님 환영합니다"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/nav_header_text"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@id/tvMenuUserName"
             app:layout_constraintLeft_toRightOf="@id/tvMenuUserName" />
 

@@ -1,115 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite">
+
     <TextView
         android:id="@+id/txvReceiver"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="@dimen/margin_padding_10dp"
+        android:layout_marginTop="@dimen/margin_padding_20dp"
+        android:text="수신인"
+        android:textColor="@color/colorBlack"
         app:layout_constraintBottom_toTopOf="@id/linearReceive"
-        android:textColor="#000000"
-        android:text="수신인"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
         android:id="@+id/linearReceive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/txvReceiver"
-        app:layout_constraintLeft_toLeftOf="parent">
+        android:layout_marginStart="@dimen/margin_padding_5dp"
+        android:layout_marginTop="@dimen/margin_padding_10dp"
+        android:layout_marginEnd="@dimen/margin_padding_5dp"
+        android:layout_marginBottom="@dimen/margin_padding_10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txvReceiver">
 
         <EditText
-            android:layout_weight="4"
             android:id="@+id/edtReceiverId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:hint="수신자의 아이디를 적어주세요"/>
+            android:layout_marginTop="@dimen/margin_padding_3dp"
+            android:layout_weight="4"
+            android:hint="수신자의 아이디를 적어주세요" />
+
         <Button
-            android:layout_marginTop="1dp"
-            android:layout_weight="1"
             android:id="@+id/btnCheckReceiverId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="조회"/>
+            android:layout_marginTop="@dimen/margin_padding_1dp"
+            android:layout_weight="1"
+            android:text="조회" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/txvMessageTitle"
-        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/linearReceive"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/edtMessageTitle"
+        android:layout_margin="@dimen/margin_padding_10dp"
         android:text="제목"
-        android:textColor="#000000"/>
+        android:textColor="@color/colorBlack"
+        app:layout_constraintBottom_toTopOf="@id/edtMessageTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearReceive" />
 
     <EditText
         android:id="@+id/edtMessageTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txvMessageTitle"
-        app:layout_constraintBottom_toTopOf="@id/txvMessageContent"
+        android:layout_marginStart="@dimen/margin_padding_5dp"
+        android:layout_marginEnd="@dimen/margin_padding_5dp"
+        android:hint="제목을 적어주세요"
         android:maxLength="50"
-        android:hint="제목을 적어주세요"/>
+        app:layout_constraintBottom_toTopOf="@id/txvMessageContent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txvMessageTitle" />
 
     <TextView
         android:id="@+id/txvMessageContent"
-        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/edtMessageTitle"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/edtMessageContent"
+        android:layout_margin="@dimen/margin_padding_10dp"
         android:text="보내려는 내용"
-        android:textColor="#000000"/>
+        android:textColor="@color/colorBlack"
+        app:layout_constraintBottom_toTopOf="@id/edtMessageContent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtMessageTitle" />
 
     <EditText
         android:id="@+id/edtMessageContent"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txvMessageContent"
+        android:layout_marginStart="@dimen/margin_padding_5dp"
+        android:layout_marginTop="@dimen/margin_padding_10dp"
+        android:layout_marginEnd="@dimen/margin_padding_5dp"
+        android:layout_marginBottom="@dimen/margin_padding_5dp"
+        android:hint="500자 이내"
         android:maxLength="500"
-        android:hint="500자 이내"/>
+        android:gravity="start"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txvMessageContent" />
 
     <Button
         android:id="@+id/btnLetterDlgSend"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="보내기"
+        android:layout_margin="@dimen/margin_padding_10dp"
         android:enabled="false"
-        app:layout_constraintTop_toBottomOf="@id/edtMessageContent"
-        app:layout_constraintRight_toLeftOf="@id/btnLetterDlgCancel"/>
+        android:text="보내기"
+        app:layout_constraintRight_toLeftOf="@id/btnLetterDlgCancel"
+        app:layout_constraintTop_toBottomOf="@id/edtMessageContent" />
 
     <Button
         android:id="@+id/btnLetterDlgCancel"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/margin_padding_10dp"
         android:text="취소"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtMessageContent"/>
-
-
+        app:layout_constraintTop_toBottomOf="@id/edtMessageContent" />
 
 </android.support.constraint.ConstraintLayout>

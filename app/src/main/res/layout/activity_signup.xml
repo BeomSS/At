@@ -1,76 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/logo2"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:id="@+id/logo2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp"
-        android:src="@drawable/at_logo2"
-        />
+        android:layout_marginTop="@dimen/margin_padding_75dp"
+        android:src="@drawable/at_logo2" />
 
     <TextView
         android:layout_width="270dp"
         android:layout_height="50dp"
-        android:layout_alignBottom="@id/idSignup"
         android:layout_alignStart="@id/idSignup"
+        android:layout_alignBottom="@id/idSignup"
+        android:layout_marginBottom="@dimen/margin_padding_60dp"
+        android:gravity="center"
         android:text="Create Account"
         android:textAllCaps="false"
-        android:textSize="30dp"
-        android:gravity="center"
-        android:layout_marginBottom="60dp"/>
+        android:textSize="30dp" />
 
     <EditText
+        android:id="@+id/idSignup"
         android:layout_width="180dp"
         android:layout_height="50dp"
-        android:id="@+id/idSignup"
-        android:layout_alignBottom="@+id/psSignup"
         android:layout_alignStart="@id/psSignup"
-        android:hint="ID"
-        android:layout_marginBottom="55dp"/>
+        android:layout_alignBottom="@+id/psSignup"
+        android:layout_marginBottom="@dimen/margin_padding_55dp"
+        android:hint="ID" />
 
     <Button
-        android:text="CHECK"
-        android:textColor="#00E1FA"
-        android:textSize="14sp"
+        android:id="@+id/validateButton"
         android:layout_width="60dp"
         android:layout_height="35dp"
-        android:id="@+id/validateButton"
-        android:layout_toRightOf="@id/idSignup"
         android:layout_alignBottom="@id/psSignup"
-        android:layout_marginBottom="60dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
+        android:layout_marginBottom="@dimen/margin_padding_60dp"
+        android:layout_toEndOf="@id/idSignup"
         android:background="@drawable/loginbutton"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        />
+        android:text="CHECK"
+        android:textColor="#00E1FA"
+        android:textSize="14sp" />
 
     <EditText
-        android:inputType="textPassword"
-        android:maxLength="15"
         android:id="@+id/psSignup"
         android:layout_width="270dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="320dp"
-        android:hint="Password" />
+        android:layout_marginTop="@dimen/margin_padding_320dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:maxLength="15" />
 
     <EditText
-        android:inputType="textPassword"
         android:id="@+id/psConfirm"
         android:layout_width="270dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="375dp"
-        android:hint="Password Confirm" />
+        android:layout_marginTop="@dimen/margin_padding_375dp"
+        android:hint="Password Confirm"
+        android:inputType="textPassword" />
 
     <Spinner
         android:id="@+id/favSpinner"
@@ -78,27 +75,24 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="430dp">
+        android:layout_marginTop="@dimen/margin_padding_430dp">
 
     </Spinner>
 
     <Button
         android:id="@+id/registerButton"
-
-        android:text="Register"
-        android:textColor="#00E1FA"
-        android:textSize="20sp"
-
         android:layout_width="270dp"
         android:layout_height="40dp"
+        android:layout_below="@id/favSpinner"
+        android:layout_alignEnd="@id/psConfirm"
+        android:layout_marginTop="@dimen/margin_padding_30dp"
         android:background="@drawable/loginbutton"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:layout_marginTop="30dp"
-        android:layout_below="@id/favSpinner"
-        android:layout_alignEnd="@id/psConfirm"
-        />
+        android:text="Register"
+        android:textColor="#00E1FA"
+        android:textSize="20sp" />
 
 </RelativeLayout>
