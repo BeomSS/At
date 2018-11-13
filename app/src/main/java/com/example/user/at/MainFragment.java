@@ -33,6 +33,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -42,7 +43,7 @@ import java.util.Objects;
 public class MainFragment extends Fragment {
     View view;
     TextView tvBestTextTitle, tvBestTextWriter, tvBestTextRecomCnt, tvBestTextContent, tvBestPictureTitle, tvBestPictureWriter, tvBestPictureRecomCnt, tvBestMusicTitle, tvBestMusicWriter, tvBestMusicRecomCnt, tvTextWriteId, tvPictureWriteId,
-            tvMusicWriteId, tvBestMusicContent, tvBestPictureContent, tvBestTextTime,tvBestPictureTime,tvBestMusicTime;
+            tvMusicWriteId, tvBestMusicContent, tvBestPictureContent, tvBestTextTime, tvBestPictureTime, tvBestMusicTime, tvBestTextRecom, tvBestPictureRecom, tvBestMusicRecom;
     ImageView imgBestPicture, btnGoBestTextBoard, btnGoBestPictureBoard, btnGoBestMusicBoard, btnBestMusicPause, btnBestMusicPlay, btnBestMusicRewind;
     ProgressBar pgbBestPictureLoading, pgbBestMusicLoading;
     String imageURL, musicURL, strUrl;
@@ -50,6 +51,7 @@ public class MainFragment extends Fragment {
     Bitmap bitmap;
     private MediaPlayer mediaPlayer;
     ConstraintLayout loBestTextHeader, loBestPictureHeader, loBestMusicHeader;
+    Boolean musicCont = false;
 
     @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Nullable
@@ -65,16 +67,19 @@ public class MainFragment extends Fragment {
         tvBestTextRecomCnt = view.findViewById(R.id.tvBestTextRecomCnt);
         tvBestTextContent = view.findViewById(R.id.tvBestTextContent);
         tvBestTextTime = view.findViewById(R.id.tvBestTextTime);
+        tvBestTextRecom = view.findViewById(R.id.tvBestTextRecom);
         tvBestPictureTitle = view.findViewById(R.id.tvBestPictureTitle);
         tvBestPictureWriter = view.findViewById(R.id.tvBestPictureWriter);
         tvBestPictureRecomCnt = view.findViewById(R.id.tvBestPictureRecomCnt);
         tvBestPictureContent = view.findViewById(R.id.tvBestPictureContent);
         tvBestPictureTime = view.findViewById(R.id.tvBestPictureTime);
+        tvBestPictureRecom = view.findViewById(R.id.tvBestPictureRecom);
         tvBestMusicTitle = view.findViewById(R.id.tvBestMusicTitle);
         tvBestMusicWriter = view.findViewById(R.id.tvBestMusicWriter);
         tvBestMusicRecomCnt = view.findViewById(R.id.tvBestMusicRecomCnt);
         tvBestMusicContent = view.findViewById(R.id.tvBestMusicContent);
         tvBestMusicTime = view.findViewById(R.id.tvBestMusicTime);
+        tvBestMusicRecom = view.findViewById(R.id.tvBestMusicRecom);
         btnGoBestTextBoard = view.findViewById(R.id.btnGoBestTextBoard);
         btnGoBestPictureBoard = view.findViewById(R.id.btnGoBestPictureBoard);
         btnGoBestMusicBoard = view.findViewById(R.id.btnGoBestMusicBoard);
@@ -117,6 +122,9 @@ public class MainFragment extends Fragment {
                         tvBestTextTitle.setText("추천을 받은 게시물이 없습니다.");
                         tvBestTextWriter.setText("");
                         tvBestTextRecomCnt.setText("");
+                        tvBestTextTime.setText("");
+                        tvBestTextRecom.setText("");
+                        btnGoBestTextBoard.setVisibility(View.INVISIBLE);
                     }
 
                     if (jsonResponse.getString("i_post_id") != "null") {
@@ -131,6 +139,10 @@ public class MainFragment extends Fragment {
                         tvBestPictureWriter.setText("");
                         tvBestPictureRecomCnt.setText("");
                         tvBestPictureContent.setText("");
+                        tvBestPictureTime.setText("");
+                        tvBestPictureRecom.setText("");
+                        btnGoBestPictureBoard.setVisibility(View.INVISIBLE);
+
                     }
 
                     if (jsonResponse.getString("m_post_id") != "null") {
@@ -145,6 +157,9 @@ public class MainFragment extends Fragment {
                         tvBestMusicWriter.setText("");
                         tvBestMusicRecomCnt.setText("");
                         tvBestMusicContent.setText("");
+                        tvBestMusicTime.setText("");
+                        tvBestMusicRecom.setText("");
+                        btnGoBestMusicBoard.setVisibility(View.INVISIBLE);
                     }
 
                     imageURL = jsonResponse.getString("i_url");
@@ -220,11 +235,7 @@ public class MainFragment extends Fragment {
                     }
                     if (!jsonResponse.getString("m_url").equals("null")) {
                         //베스트 음악 불러오기
-                        String strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("m_url");
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        mediaPlayer.setDataSource(strUrl);
-                        mediaPlayer.prepare();
+                        strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("m_url");
                         btnBestMusicPause.setVisibility(View.VISIBLE);
                         btnBestMusicPlay.setVisibility(View.VISIBLE);
                         btnBestMusicRewind.setVisibility(View.VISIBLE);
@@ -288,12 +299,16 @@ public class MainFragment extends Fragment {
             }
         });
 
-        //베스트 음악 버튼 클릭시 이벤트
+        //베스트 음악 play 버튼 클릭시 이벤트
         btnBestMusicPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mediaPlayer.isPlaying()) {
-                    mediaPlayer.start();
+                if (musicCont) {//음악 prepare 했을시
+                    if (!mediaPlayer.isPlaying()) {
+                        mediaPlayer.start();
+                    }
+                } else {//기본값 false
+                    musicStart();//음악 prepare
                 }
             }
         });
@@ -364,5 +379,44 @@ public class MainFragment extends Fragment {
             mediaPlayer.seekTo(0);
         }
         super.onStop();
+    }
+
+    private void musicStart() {//음악 재생 메소드
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            btnBestMusicPlay.setEnabled(false);
+                            btnBestMusicPause.setEnabled(false);
+                            btnBestMusicRewind.setEnabled(false);
+                        }
+                    });
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer.setDataSource(strUrl);
+                    mediaPlayer.prepareAsync();
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mediaPlayer) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    btnBestMusicPlay.setEnabled(true);
+                                    btnBestMusicPause.setEnabled(true);
+                                    btnBestMusicRewind.setEnabled(true);
+                                }
+                            });
+                            mediaPlayer.start();
+                            musicCont = true;
+                        }
+                    });
+                } catch (IOException io) {
+                    io.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

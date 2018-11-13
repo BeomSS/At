@@ -28,4 +28,5 @@
     <color name="colorAlpha">#00000000</color>
     <color name="colorMenuLine">#57ffffff</color>
     <color name="colorSimilarGrey">#A7ABB1</color>
+    <color name="colorAutoLogin">#696969</color>
 </resources>

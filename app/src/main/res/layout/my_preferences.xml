@@ -16,32 +16,40 @@
         android:textSize="@dimen/text_20dp"
         android:textStyle="bold" />
 
-    <CheckBox
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_20dp"
-        android:layout_marginTop="@dimen/margin_padding_15dp"
-        android:text="@string/str_text"
-        android:textSize="@dimen/text_16dp"
-        android:textStyle="bold" />
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/rgChange">
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_20dp"
-        android:layout_marginTop="@dimen/margin_padding_6dp"
-        android:text="@string/str_picture"
-        android:textSize="@dimen/text_16dp"
-        android:textStyle="bold" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="글 화면"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:id="@+id/radioGul"/>
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_20dp"
-        android:layout_marginTop="@dimen/margin_padding_6dp"
-        android:text="@string/str_music"
-        android:textSize="@dimen/text_16dp"
-        android:textStyle="bold" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="그림 화면"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:id="@+id/radioGrim"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="음악 화면"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:id="@+id/radioMusic"/>
+
+    </RadioGroup>
 
     <View
         android:layout_width="match_parent"

@@ -31,6 +31,7 @@ public class SignUpActivity extends Activity {
     String userID;
     String userPassword;
     String userFavorite;
+    String userPsconfirm;
     AlertDialog dialog;
     boolean validate = false;
     EditText idSignupEdt;
@@ -46,7 +47,6 @@ public class SignUpActivity extends Activity {
         color = skin.skinSetting();
         setContentView(R.layout.activity_signup);
         class CustomFilter implements InputFilter {
-            final int ENGLISH_NUMBER = 100;
             int value = 0;
 
             public CustomFilter(int value) {
@@ -55,7 +55,7 @@ public class SignUpActivity extends Activity {
 
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                if (value == ENGLISH_NUMBER) {
+                if (value == 100) {
                     Pattern ps = Pattern.compile("^[a-zA-Z0-9]+$");
                     if (!ps.matcher(source).matches()) {
                         return "";
@@ -140,6 +140,7 @@ public class SignUpActivity extends Activity {
                 userID = idSignupEdt.getText().toString();
                 userPassword = psSignupEdt.getText().toString();
                 userFavorite = spinner.getSelectedItem().toString();
+                userPsconfirm = psConfirmEdt.getText().toString();
 
                 if (!validate)
 
@@ -159,6 +160,12 @@ public class SignUpActivity extends Activity {
                             .setNegativeButton("확인", null)
                             .create();
                     dialog.show();
+                    return;
+                }
+
+                if (!userPsconfirm.equals(userPassword))
+                {
+                    Toast.makeText(SignUpActivity.this, "비밀번호를 일치시켜주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

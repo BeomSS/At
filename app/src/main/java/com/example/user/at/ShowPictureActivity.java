@@ -37,13 +37,14 @@ import com.example.user.at.request.PostRequest;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ShowPictureActivity extends Activity implements Runnable {
     Skin skin;
-    int color,likeCount;
+    int color, likeCount;
     ConstraintLayout loHeaderShowPicture;
     ImageView btnShowPictureBack, btnPictureFeedbackLike, postImageView, ivShowPictureLike, ivShowPictureBookmark, btnShowPictureDelete;
     EditText edtPictureWriteFeedback;
@@ -52,12 +53,13 @@ public class ShowPictureActivity extends Activity implements Runnable {
     Button btnPictureWriteFeedback, btnPictureMoreFeedBack;
     LinearLayout btnShowPictureBookmark, btnShowPictureLike;
     ProgressBar pgbShowPictureLoading;
-    Boolean showPictureBookMarked, pictureFeedbackLiked, showPictureLiked;
+    Boolean showPictureBookMarked, pictureFeedbackLiked, showPictureLiked, musicCont = false;
     Bitmap bitmap;
     URL url = null;
     Intent pIntent;
     int category, usingBestFeedback = 0;
     private MediaPlayer mediaPlayer;
+    String strUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,8 +83,12 @@ public class ShowPictureActivity extends Activity implements Runnable {
             musicStartBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!mediaPlayer.isPlaying()) {
-                        mediaPlayer.start();
+                    if (musicCont) {//음악 prepare 했을시
+                        if (!mediaPlayer.isPlaying()) {
+                            mediaPlayer.start();
+                        }
+                    } else {//기본값 false
+                        musicStart();//음악 prepare
                     }
                 }
             });
@@ -163,7 +169,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             }
                         }
                     };
-                    PostMarkingRequest postMarkingRequest = new PostMarkingRequest(0,pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), markingListener);
+                    PostMarkingRequest postMarkingRequest = new PostMarkingRequest(0, pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), markingListener);
                     RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                     queue.add(postMarkingRequest);
                 } else { //관심작품 등록시
@@ -185,7 +191,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             }
                         }
                     };
-                    PostMarkingRequest postMarkingRequest = new PostMarkingRequest(1,pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), markingListener);
+                    PostMarkingRequest postMarkingRequest = new PostMarkingRequest(1, pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), markingListener);
                     RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                     queue.add(postMarkingRequest);
                 }
@@ -199,7 +205,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                 likeCount = Integer.parseInt(tvShowPictureLikeCount.getText().toString());
 
                 if (showPictureLiked) {//이미 추천했을시
-                    Toast.makeText(ShowPictureActivity.this,"이미 추천하였습니다.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShowPictureActivity.this, "이미 추천하였습니다.", Toast.LENGTH_SHORT).show();
                 } else { //추천을 하지 않았을시
                     Response.Listener postLikingListener = new Response.Listener<String>() {
                         @Override
@@ -243,11 +249,11 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         Log.d("TAG", "JSONObj response=" + response);
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
-                            boolean success=jsonResponse.getBoolean("success");
-                            if(success){
+                            boolean success = jsonResponse.getBoolean("success");
+                            if (success) {
                                 Toast.makeText(MainActivity.context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                 finish();
-                            }else{
+                            } else {
                                 Toast.makeText(ShowPictureActivity.this, "게시물 삭제에 실패하였습니다..", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
@@ -255,7 +261,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         }
                     }
                 };
-                PostDeleteRequest dRequest = new PostDeleteRequest(pIntent.getStringExtra("postid"),skin.getPreferenceString("LoginId"), PostDeleteListener);
+                PostDeleteRequest dRequest = new PostDeleteRequest(pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), PostDeleteListener);
                 RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                 queue.add(dRequest);
             }
@@ -365,33 +371,32 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         }
                     }
                     //삭제버튼 활성화/비활성화
-                    if(!tvShowPictureWriter.getText().toString().equals(skin.getPreferenceString("LoginId"))){
+                    if (!tvShowPictureWriter.getText().toString().equals(skin.getPreferenceString("LoginId"))) {
                         btnShowPictureDelete.setVisibility(View.INVISIBLE);
                     }
 
                     //게시물이 추천 받았었는지 체크
-                    if(jsonResponse.getString("post_liked") == "true") {
+                    if (jsonResponse.getString("post_liked") == "true") {
                         ivShowPictureLike.setImageResource(R.drawable.ic_thumb_up_white_40dp);
                         showPictureLiked = true;
                     }
 
-                    //TODO 관심작품 등록 되어있는지 체크
-                    if(jsonResponse.getString("attention") == "true") {
+                    //관심작품 등록 되어있는지 체크
+                    if (jsonResponse.getString("attention") == "true") {
                         ivShowPictureBookmark.setImageResource(R.drawable.ic_like_white_40dp);
                         showPictureBookMarked = true;
                     }
 
-                    if (category == 1) {
-                        String strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
+                    if (category == 1) {//그림 받아오기
+
+                        strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
                         url = new URL(strUrl);
                         Thread imgThread = new Thread(ShowPictureActivity.this);
                         imgThread.start();
-                    } else if (category == 2) {
-                        String strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        mediaPlayer.setDataSource(strUrl);
-                        mediaPlayer.prepare();
+
+                    } else if (category == 2) {//음악 받아오기
+
+                        strUrl = LoginActivity.ipAddress + ":800/uploads/" + jsonResponse.getString("url");
                         pgbShowPictureLoading.setVisibility(View.GONE);
                         musicStartBtn.setVisibility(View.VISIBLE);
                         musicStopBtn.setVisibility(View.VISIBLE);
@@ -516,5 +521,44 @@ public class ShowPictureActivity extends Activity implements Runnable {
         Matrix matrix = new Matrix();
         matrix.preScale(horizontal ? -1 : 1, vertical ? -1 : 1);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    private void musicStart() {//음악 재생 메소드
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            musicStartBtn.setEnabled(false);
+                            musicStopBtn.setEnabled(false);
+                            musicResetBtn.setEnabled(false);
+                        }
+                    });
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer.setDataSource(strUrl);
+                    mediaPlayer.prepareAsync();
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mediaPlayer) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    musicStartBtn.setEnabled(true);
+                                    musicStopBtn.setEnabled(true);
+                                    musicResetBtn.setEnabled(true);
+                                }
+                            });
+                            mediaPlayer.start();
+                            musicCont = true;
+                        }
+                    });
+                } catch (IOException io) {
+                    io.printStackTrace();
+                }
+            }
+        }).start();
     }
 }
