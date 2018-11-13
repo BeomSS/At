@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/show_Main"
-        android:title="베스트"
+        android:title="@string/str_menu_best"
         android:icon="@drawable/ic_logo_home"/>
     <item
         android:id="@+id/show_board"
-        android:title="게시판보기"
+        android:title="@string/str_menu_board"
         android:icon="@drawable/ic_library_books_black_24dp"/>
     <item
         android:id="@+id/write_board"
-        android:title="글쓰기"
+        android:title="@string/str_menu_write"
         android:icon="@drawable/ic_edit_black_24dp"/>
     <item
         android:id="@+id/show_menu"
-        android:title="메뉴"
+        android:title="@string/str_menu_menu"
         android:icon="@drawable/ic_dehaze_black_24dp"/>
 </menu>

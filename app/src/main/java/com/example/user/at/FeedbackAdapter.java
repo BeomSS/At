@@ -59,22 +59,22 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackViewHolder> {
                     final Response.Listener feedbackLikingListener = new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Log.d("TAG", "JSONObj response=" + response);
+                            Log.d("TAG", context.getResources().getString(R.string.log_json_response) + response);
                             try {
                                 JSONObject jsonResponse = new JSONObject(response);
                                 if (jsonResponse.getBoolean("check")) {
                                     if (jsonResponse.getBoolean("update") && jsonResponse.getBoolean("insert")) {
-                                        Toast.makeText(context, "추천하였습니다.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, context.getResources().getString(R.string.str_thumb_up_message), Toast.LENGTH_SHORT).show();
                                         int recommend = Integer.parseInt(items.get(position).likes);
                                         recommend++;
                                         holder.vhLike.setText(String.valueOf(recommend));
                                         holder.vhImage.setImageResource(R.drawable.ic_thumb_up_color_30dp);
                                         likeArray.set(position, true);
                                     } else {
-                                        Toast.makeText(context, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, context.getResources().getString(R.string.str_error_massage), Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(context, "자신의 피드백은 추천하지 못합니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, context.getResources().getString(R.string.str_self_thumb_up_message), Toast.LENGTH_SHORT).show();
                                 }
                             } catch (Exception e) {
                                 Log.d("feedbackDBerror", e.toString());
@@ -86,7 +86,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackViewHolder> {
                     queue.add(fLikingRequest);
 
                 } else {
-                    Toast.makeText(context, "이미 추천하였습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.str_double_thumb_up_message), Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -8,8 +8,8 @@
 
     <ImageButton
         android:id="@+id/text"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_0dp"
         android:src="@drawable/writing"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -18,8 +18,8 @@
 
     <ImageButton
         android:id="@+id/picture"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_0dp"
         android:src="@drawable/picture"
         app:layout_constraintTop_toBottomOf="@+id/text"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -28,8 +28,8 @@
 
     <ImageButton
         android:id="@+id/music"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_0dp"
         android:src="@drawable/music"
         app:layout_constraintTop_toBottomOf="@+id/picture"
         app:layout_constraintLeft_toLeftOf="parent"

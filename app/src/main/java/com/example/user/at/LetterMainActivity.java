@@ -66,7 +66,7 @@ public class LetterMainActivity extends Activity {
         loLetterHeader.setBackgroundColor(color);
         btnWriteLetter.setBackgroundColor(color);
 
-        String letterTitleList[] = {"받은 쪽지함", "보낸 쪽지함"};
+        String letterTitleList[] = {getResources().getString(R.string.str_receive_letter), getResources().getString(R.string.str_send_letter)};
         final SpinnerAdapter adapter = new SpinnerAdapter(LetterMainActivity.this, android.R.layout.simple_spinner_item, letterTitleList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnLetterTitle.setAdapter(adapter);
@@ -88,15 +88,15 @@ public class LetterMainActivity extends Activity {
                 Response.Listener LetterDeleteListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("TAG", "JSONObj response=" + response);
+                        Log.d("TAG", getResources().getString(R.string.log_json_response) + response);
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
-                                Toast.makeText(LetterMainActivity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LetterMainActivity.this, getResources().getString(R.string.str_delete_message), Toast.LENGTH_SHORT).show();
                                 adapter.notifyDataSetChanged();
                             } else {
-                                Toast.makeText(LetterMainActivity.this, "쪽지 삭제에 실패하였습니다..", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LetterMainActivity.this, getResources().getString(R.string.str_delete_fail_message), Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             Log.d("dberror", e.toString());
@@ -121,7 +121,7 @@ public class LetterMainActivity extends Activity {
         spnLetterTitle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (spnLetterTitle.getSelectedItem().toString().equals("보낸 쪽지함")) {
+                if (spnLetterTitle.getSelectedItem().toString().equals(getResources().getString(R.string.str_send_letter))) {
                     where = 1; //보낸쪽지함이면 1
                     letterAdapter = new LetterAdapter(LetterMainActivity.this, putitems);
                     rclLetter.setAdapter(letterAdapter);
@@ -152,7 +152,7 @@ public class LetterMainActivity extends Activity {
         Response.Listener LetterListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("TAG", "JSONObj response=" + response);
+                Log.d("TAG", getResources().getString(R.string.log_json_response) + response);
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     JSONArray putLetterJson = jsonResponse.getJSONArray("putresult");
@@ -185,7 +185,7 @@ public class LetterMainActivity extends Activity {
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     rclLetter.setLayoutManager(layoutManager);
                     rclLetter.setItemAnimator(new DefaultItemAnimator());
-                    if(spnLetterTitle.getSelectedItem().toString().equals("보낸 쪽지함")) {
+                    if(spnLetterTitle.getSelectedItem().toString().equals(getResources().getString(R.string.str_send_letter))) {
                         where = 1;
                         letterAdapter = new LetterAdapter(LetterMainActivity.this, putitems);
                     } else {

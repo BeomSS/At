@@ -7,8 +7,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/loHeaderShowPicture"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_0dp"
         android:background="@color/colorMint"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/gdlShowPictureH1"
@@ -31,9 +31,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_padding_10dp"
-            android:text="음악 게시물"
+            android:text="@string/str_music_board"
             android:textColor="@color/colorWhite"
-            android:textSize="20dp"
+            android:textSize="@dimen/text_20dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/btnShowPictureBack"
@@ -51,8 +51,8 @@
     </android.support.constraint.ConstraintLayout>
 
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_0dp"
         app:layout_constraintBottom_toBottomOf="@+id/gdlShowPictureH5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -64,12 +64,12 @@
 
             <TextView
                 android:id="@+id/tvShowPictureTitle"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_10dp"
-                android:text="제목 로딩중..."
+                android:text="@string/str_title_loading"
                 android:textColor="@color/colorBlack"
-                android:textSize="20dp"
+                android:textSize="@dimen/text_20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tvShowPictureWriter"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -78,13 +78,13 @@
 
             <TextView
                 android:id="@+id/tvShowPictureWriter"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_10dp"
                 android:layout_marginEnd="@dimen/margin_padding_10dp"
-                android:text="작성자 로딩중..."
+                android:text="@string/str_writer_loading"
                 android:textColor="@color/colorBlack"
-                android:textSize="13dp"
+                android:textSize="@dimen/text_13dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/tvShowPictureTime"
                 app:layout_constraintTop_toBottomOf="@+id/tvShowPictureTitle" />
@@ -94,31 +94,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_padding_10dp"
-                android:text="시간 로딩중..."
+                android:text="@string/str_time_loading"
                 android:textColor="@color/colorBlack"
-                android:textSize="13dp"
+                android:textSize="@dimen/text_13dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvShowPictureWriter"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvShowPictureWriter" />
 
             <TextView
                 android:id="@+id/tvShowPictureContent"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_10dp"
                 android:layout_marginTop="@dimen/margin_padding_5dp"
                 android:layout_marginEnd="@dimen/margin_padding_10dp"
                 android:gravity="start"
-                android:text="내용 로딩중..."
+                android:text="@string/str_content_loading"
                 android:textColor="@color/colorBlack"
-                android:textSize="18sp"
+                android:textSize="@dimen/text_18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvShowPictureWriter" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/tvShowMusicLayout"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_padding_20dp"
                 android:layout_marginBottom="@dimen/margin_padding_10dp"
@@ -175,7 +175,7 @@
             <LinearLayout
                 android:id="@+id/btnShowPictureLike"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/size_0dp"
                 android:layout_marginStart="@dimen/margin_padding_10dp"
                 android:background="@color/colorMint"
                 android:gravity="center_vertical"
@@ -200,9 +200,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_padding_10dp"
-                    android:text="00"
+                    android:text="@string/str_count_zero"
                     android:textColor="@color/colorWhite"
-                    android:textSize="30dp" />
+                    android:textSize="@dimen/text_30dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -232,14 +232,14 @@
                     android:id="@+id/tvShowPictureBookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="즐겨찾기"
+                    android:text="@string/str_bookmark"
                     android:textColor="@color/colorWhite"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/text_20dp" />
             </LinearLayout>
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/loPictureWriteFeedbackSpace"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_10dp"
                 android:layout_marginTop="@dimen/margin_padding_10dp"
@@ -255,10 +255,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@color/colorWhite"
-                    android:hint="피드백을 남겨 주세요"
+                    android:hint="@string/hint_plz_feedback"
                     android:padding="@dimen/margin_padding_5dp"
                     android:textColor="@color/colorBlack"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/text_18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="@id/gdlPictureFeedbackSpaceV1"
@@ -266,12 +266,12 @@
 
                 <Button
                     android:id="@+id/btnPictureWriteFeedback"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_width="@dimen/size_0dp"
+                    android:layout_height="@dimen/size_0dp"
                     android:background="@color/colorMint"
-                    android:text="입력"
+                    android:text="@string/str_input"
                     android:textColor="@color/colorWhite"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/text_20dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="@id/gdlPictureFeedbackSpaceV1"
@@ -288,7 +288,7 @@
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/loPictureFeedbackSpace"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_padding_10dp"
                 android:background="@drawable/background_black_outline"
@@ -302,9 +302,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_padding_5dp"
                     android:layout_marginTop="@dimen/margin_padding_5dp"
-                    android:text="아이디 로딩중..."
+                    android:text="@string/str_id_loading"
                     android:textColor="@color/colorBlack"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/text_18dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -313,7 +313,6 @@
                     android:id="@+id/tvPictureFeedbackId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
                     android:visibility="invisible"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -321,7 +320,7 @@
 
                 <ScrollView
                     android:id="@+id/sclPictureFeedbackContent"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/size_0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/btnPictureFeedbackLike"
@@ -334,9 +333,9 @@
                         android:layout_marginStart="@dimen/margin_padding_5dp"
                         android:layout_marginTop="@dimen/margin_padding_5dp"
                         android:layout_marginBottom="@dimen/margin_padding_5dp"
-                        android:text="피드백 로딩중..."
+                        android:text="@string/str_feedback_loading"
                         android:textColor="@color/colorBlack"
-                        android:textSize="18dp" />
+                        android:textSize="@dimen/text_18dp" />
 
                 </ScrollView>
 
@@ -356,7 +355,7 @@
                     android:id="@+id/tvPictureFeedbackLikeCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="00"
+                    android:text="@string/str_count_zero"
                     android:textColor="@color/colorBlack"
                     app:layout_constraintLeft_toLeftOf="@id/btnPictureFeedbackLike"
                     app:layout_constraintRight_toRightOf="@id/btnPictureFeedbackLike"
@@ -370,14 +369,14 @@
 
     <Button
         android:id="@+id/btnPictureMoreFeedback"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_0dp"
         android:layout_marginTop="@dimen/margin_padding_10dp"
         android:background="@color/colorMint"
         android:elevation="@dimen/elevation_10dp"
-        android:text="댓글 더 보기"
+        android:text="@string/str_more_feedback"
         android:textColor="@color/colorWhite"
-        android:textSize="20dp"
+        android:textSize="@dimen/text_20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

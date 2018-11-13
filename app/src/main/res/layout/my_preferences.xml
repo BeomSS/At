@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_20dp"
         android:layout_marginTop="@dimen/margin_padding_30dp"
-        android:text="관심 분야 변경"
+        android:text="@string/str_change_category"
         android:textColor="@color/colorBlack"
-        android:textSize="20dp"
+        android:textSize="@dimen/text_20dp"
         android:textStyle="bold" />
 
     <CheckBox
@@ -21,17 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_20dp"
         android:layout_marginTop="@dimen/margin_padding_15dp"
-        android:text="글 화면"
-        android:textSize="16dp"
-        android:textStyle="bold" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_20dp"
-        android:layout_marginTop="6dp"
-        android:text="그림 화면"
-        android:textSize="16dp"
+        android:text="@string/str_text"
+        android:textSize="@dimen/text_16dp"
         android:textStyle="bold" />
 
     <CheckBox
@@ -39,27 +30,36 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_20dp"
         android:layout_marginTop="@dimen/margin_padding_6dp"
-        android:text="음악 화면"
-        android:textSize="16dp"
+        android:text="@string/str_picture"
+        android:textSize="@dimen/text_16dp"
+        android:textStyle="bold" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
+        android:layout_marginTop="@dimen/margin_padding_6dp"
+        android:text="@string/str_music"
+        android:textSize="@dimen/text_16dp"
         android:textStyle="bold" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="@dimen/size_2dp"
         android:layout_marginStart="@dimen/margin_padding_20dp"
         android:layout_marginTop="@dimen/margin_padding_20dp"
         android:layout_marginEnd="@dimen/margin_padding_20dp"
         android:layout_marginBottom="@dimen/margin_padding_20dp"
-        android:background="#A7ABB1" />
+        android:background="@color/colorSimilarGrey" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_20dp"
         android:layout_marginBottom="@dimen/margin_padding_30dp"
-        android:text="배너 색상 변경"
+        android:text="@string/str_change_banner_color"
         android:textColor="@color/colorBlack"
-        android:textSize="20dp"
+        android:textSize="@dimen/text_20dp"
         android:textStyle="bold" />
 
     <Spinner
@@ -80,13 +80,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_padding_10dp"
             android:layout_marginBottom="@dimen/margin_padding_10dp"
-            android:text="저장"
-            android:textSize="15dp" />
+            android:text="@string/str_save"
+            android:textSize="@dimen/text_15dp" />
     </LinearLayout>
 
 </LinearLayout>
-
-
-
-
-

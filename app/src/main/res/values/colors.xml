@@ -23,4 +23,9 @@
     <color name="colorB">#0000ff</color>
     <color name="colorPurple">#ff00ff</color>
     <color name="colorSimilarRed">#ff3333</color>
+    <color name="colorShadow">#a8a8a8</color>
+    <color name="colorLogin">#00E1FA</color>
+    <color name="colorAlpha">#00000000</color>
+    <color name="colorMenuLine">#57ffffff</color>
+    <color name="colorSimilarGrey">#A7ABB1</color>
 </resources>

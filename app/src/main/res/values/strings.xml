@@ -1,11 +1,108 @@
 <resources>
     <string name="app_name">At</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_settings">Settings</string>
-
-
     <string name="ip_address">http://58.122.51.208</string>
+
+    <!--string-->
+    <string name="str_delete_all">전체삭제</string>
+    <string name="str_write_letter">편지쓰기</string>
+    <string name="str_login">Login</string>
+    <string name="str_sign_up">Sign up</string>
+    <string name="str_more_feedback">피드백 더보기</string>
+    <string name="str_receiver">수신인</string>
+    <string name="str_check_id">조회</string>
+    <string name="str_title">제목</string>
+    <string name="str_content_label">보내려는 내용</string>
+    <string name="str_send">보내기</string>
+    <string name="str_cancel">취소</string>
+    <string name="str_music_board">음악 게시물</string>
+    <string name="str_picture_board">그림 게시물</string>
+    <string name="str_text_board">글 게시물</string>
+    <string name="str_title_loading">제목 로딩중..</string>
+    <string name="str_writer_loading">작성자 로딩중..</string>
+    <string name="str_time_loading">시간 로딩중..</string>
+    <string name="str_content_loading">내용 로딩중..</string>
+    <string name="str_count_zero">00</string>
+    <string name="str_bookmark">즐겨찾기</string>
+    <string name="str_input">입력</string>
+    <string name="str_id_loading">아이디 로딩중..</string>
+    <string name="str_feedback_loading">피드백 로딩중..</string>
+    <string name="str_create_account">Create Account</string>
+    <string name="str_check">CHECK</string>
+    <string name="str_register">Register</string>
+    <string name="str_confirm">확인</string>
+    <string name="str_never_see">다시보지않기</string>
+    <string name="str_dismiss">닫기</string>
+    <string name="str_text_dash">\t글 -\t</string>
+    <string name="str_picture_dash">그림 -\t</string>
+    <string name="str_music_dash">음악 -\t</string>
+    <string name="str_thumb_up_label">추천수 :\t</string>
+    <string name="str_loading">로딩중..</string>
+    <string name="str_user_name">UserName</string>
+    <string name="str_welcome_message">\t님 환영합니다</string>
+    <string name="str_notification">알림</string>
+    <string name="str_like_work">관심작품</string>
+    <string name="str_my_write">내가쓴글</string>
+    <string name="str_my_feedback">내피드백</string>
+    <string name="str_letter">쪽지</string>
+    <string name="str_help">이용안내</string>
+    <string name="str_logout">로그아웃</string>
+    <string name="str_category">\t\t카테고리\t\t</string>
+    <string name="str_title_gap">제 목</string>
+    <string name="str_content_gap">내 용</string>
+    <string name="str_upload_file">\t\t파일첨부\t\t</string>
+    <string name="str_warning_text_upload">글게시판에서는 파일첨부가 불가능합니다</string>
+    <string name="str_upload_board">글올리기</string>
+    <string name="str_test">test</string>
+    <string name="str_single_zero">0</string>
+    <string name="str_test_id">TestID</string>
+    <string name="str_test_title">Test Title</string>
+    <string name="str_test_date">2018.11.39</string>
+    <string name="str_change_category">관심 분야 변경</string>
+    <string name="str_text">글</string>
+    <string name="str_picture">그림</string>
+    <string name="str_music">음악</string>
+    <string name="str_change_banner_color">배너 색상 변경</string>
+    <string name="str_save">저장</string>
+    <string name="str_menu_best">베스트</string>
+    <string name="str_menu_board">게시판보기</string>
+    <string name="str_menu_write">글쓰기</string>
+    <string name="str_menu_menu">메뉴</string>
+    <string name="str_back_press_message">\'뒤로\'버튼을 한 번 더\n누르시면 종료됩니다.</string>
+    <string name="str_board_text">글 게시판</string>
+    <string name="str_board_picture">그림 게시판</string>
+    <string name="str_board_music">음악 게시판</string>
+    <string name="str_board">게시판</string>
+    <string name="str_thumb_up_message">추천하였습니다</string>
+    <string name="str_error_massage">오류가 발생하였습니다</string>
+    <string name="str_self_thumb_up_message">자신의 피드백은 추천하지 못합니다</string>
+    <string name="str_double_thumb_up_message">이미 추천하였습니다</string>
+    <string name="str_delete_message">삭제되었습니다</string>
+    <string name="str_delete_fail_message">쪽지 삭제에 실패하였습니다..</string>
+    <string name="str_writer_label">작성자 :\t</string>
+    <string name="str_not_found_id_message">해당하는 아이디는 존재하지 않습니다</string>
+    <string name="str_edit">수정</string>
+    <string name="str_overlap_id_message">존재하는 아이디 입니다</string>
+    <string name="str_send_success_message">쪽지가 전송되었습니다</string>
+    <string name="str_send_fail_message">쪽지 전송에 실패하였습니다</string>
+    <string name="str_receive_letter">받은 쪽지함</string>
+    <string name="str_send_letter">보낸 쪽지함</string>
+    <string name="str_like_work_string">관심있는 작품</string>
+    <string name="str_login_success_message">로그인에 성공했습니다</string>
+    <string name="str_remind_id_message">계정을 다시 확인하세요</string>
+
+    <!--hint string-->
+    <string name="hint_id">ID</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_plz_receiver_id">수신자의 아이디를 적어주세요</string>
+    <string name="hint_plz_title">제목을 적어주세요</string>
+    <string name="hint_less_than_500">500자 이내</string>
+    <string name="hint_plz_feedback">피드백을 남겨 주세요</string>
+    <string name="hint_password_confirm">Password Confirm</string>
+    <string name="hint_plz_choice_category">카테고리를 선택해주세요</string>
+    <string name="hint_plz_content">내용을 적어주세요</string>
+
+    <!--log string-->
+    <string name="log_json_response">JSONObj response=</string>
+
 </resources>

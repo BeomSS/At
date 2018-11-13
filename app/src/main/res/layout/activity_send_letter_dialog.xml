@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_10dp"
         android:layout_marginTop="@dimen/margin_padding_20dp"
-        android:text="수신인"
+        android:text="@string/str_receiver"
         android:textColor="@color/colorBlack"
         app:layout_constraintBottom_toTopOf="@id/linearReceive"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -30,19 +30,19 @@
 
         <EditText
             android:id="@+id/edtReceiverId"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/size_0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_3dp"
             android:layout_weight="4"
-            android:hint="수신자의 아이디를 적어주세요" />
+            android:hint="@string/hint_plz_receiver_id" />
 
         <Button
             android:id="@+id/btnCheckReceiverId"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/size_0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_padding_1dp"
             android:layout_weight="1"
-            android:text="조회" />
+            android:text="@string/str_check_id" />
 
     </LinearLayout>
 
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_padding_10dp"
-        android:text="제목"
+        android:text="@string/str_title"
         android:textColor="@color/colorBlack"
         app:layout_constraintBottom_toTopOf="@id/edtMessageTitle"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_5dp"
         android:layout_marginEnd="@dimen/margin_padding_5dp"
-        android:hint="제목을 적어주세요"
+        android:hint="@string/hint_plz_title"
         android:maxLength="50"
         app:layout_constraintBottom_toTopOf="@id/txvMessageContent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -74,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_padding_10dp"
-        android:text="보내려는 내용"
+        android:text="@string/str_content_label"
         android:textColor="@color/colorBlack"
         app:layout_constraintBottom_toTopOf="@id/edtMessageContent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -83,12 +83,12 @@
     <EditText
         android:id="@+id/edtMessageContent"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/size_200dp"
         android:layout_marginStart="@dimen/margin_padding_5dp"
         android:layout_marginTop="@dimen/margin_padding_10dp"
         android:layout_marginEnd="@dimen/margin_padding_5dp"
         android:layout_marginBottom="@dimen/margin_padding_5dp"
-        android:hint="500자 이내"
+        android:hint="@string/hint_less_than_500"
         android:maxLength="500"
         android:gravity="start"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -96,20 +96,20 @@
 
     <Button
         android:id="@+id/btnLetterDlgSend"
-        android:layout_width="80dp"
+        android:layout_width="@dimen/size_80dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_padding_10dp"
         android:enabled="false"
-        android:text="보내기"
+        android:text="@string/str_send"
         app:layout_constraintRight_toLeftOf="@id/btnLetterDlgCancel"
         app:layout_constraintTop_toBottomOf="@id/edtMessageContent" />
 
     <Button
         android:id="@+id/btnLetterDlgCancel"
-        android:layout_width="80dp"
+        android:layout_width="@dimen/size_80dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_padding_10dp"
-        android:text="취소"
+        android:text="@string/str_cancel"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtMessageContent" />
 
