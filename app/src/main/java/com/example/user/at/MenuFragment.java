@@ -111,6 +111,7 @@ public class MenuFragment extends Fragment {
                 }, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        skin.setPreference(false);
                         intent = new Intent(getActivity(), SplashActivity.class);
                         startActivityInMenu();
                         dlg.dismiss();

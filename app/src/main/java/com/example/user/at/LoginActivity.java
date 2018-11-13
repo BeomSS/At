@@ -13,6 +13,7 @@ import android.text.Spanned;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class LoginActivity extends Activity {
     String userID, userPassword;
     Intent lintent;
     BackPressCloseHandler backPressCloseHandler;
+    CheckBox autoLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,18 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         skin = new Skin(this);
         color = skin.skinSetting();
+
+        //자동 로그인일시
+        if (skin.getPreferenceBoolean()) {
+            lintent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(lintent);
+            overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
+            finish();
+        }
+
         setContentView(R.layout.activity_login);
         backPressCloseHandler = new BackPressCloseHandler(this);
+        autoLogin=findViewById(R.id.autoCheckbox);
 
         //권한 묻기
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -95,17 +107,18 @@ public class LoginActivity extends Activity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
-
                                 //쉐어드프리퍼런스에 아이디 저장
-                                Skin pId = new Skin(LoginActivity.this);
-                                pId.setPreference("LoginId", userID);
+                                skin.setPreference("LoginId", userID);
+                                if(autoLogin.isChecked()){
+                                    skin.setPreference(true);
+                                }
 
                                 Toast.makeText(LoginActivity.this, getResources().getString(R.string.str_login_success_message), Toast.LENGTH_SHORT).show();
                                 lintent = new Intent(LoginActivity.this, MainActivity.class);
-                                lintent.putExtra("userID", userID);
                                 startActivity(lintent);
                                 overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
                                 finish();
+
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                 dialog = builder.setMessage(getResources().getString(R.string.str_remind_id_message))
@@ -153,6 +166,7 @@ public class LoginActivity extends Activity {
             dialog = null;
         }
     }
+
     @Override
     public void onBackPressed() {
         backPressCloseHandler.onBackPressed();
