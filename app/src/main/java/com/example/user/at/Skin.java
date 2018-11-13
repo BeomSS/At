@@ -49,6 +49,13 @@ public class Skin {
         editor.apply();
     }
 
+    public void setPreference(Boolean value){
+        SharedPreferences pref = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("auto_login", value);
+        editor.apply();
+    }
+
     public int getPreferenceInt(String key) {
         SharedPreferences pref = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
         return pref.getInt(key, 1);
@@ -57,6 +64,11 @@ public class Skin {
     public String getPreferenceString(String key) {
         SharedPreferences pref = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
         return pref.getString(key,"!@#");
+    }
+
+    public Boolean getPreferenceBoolean() {
+        SharedPreferences pref = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
+        return pref.getBoolean("auto_login",false);
     }
 
     public int getSkinCode() {
