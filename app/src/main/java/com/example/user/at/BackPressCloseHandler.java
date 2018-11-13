@@ -30,7 +30,7 @@ public class BackPressCloseHandler {
     }
 
     public void showGuide() {
-        toast = Toast.makeText(activity, "\'뒤로\'버튼을 한 번 더 \n누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+        toast = Toast.makeText(activity, activity.getResources().getString(R.string.str_back_press_message), Toast.LENGTH_SHORT);
         toast.show();
     }
 }

@@ -24,7 +24,6 @@ import com.example.user.at.request.LoginRequest;
 
 import org.json.JSONObject;
 
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends Activity {
@@ -101,7 +100,7 @@ public class LoginActivity extends Activity {
                                 Skin pId = new Skin(LoginActivity.this);
                                 pId.setPreference("LoginId", userID);
 
-                                Toast.makeText(LoginActivity.this, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, getResources().getString(R.string.str_login_success_message), Toast.LENGTH_SHORT).show();
                                 lintent = new Intent(LoginActivity.this, MainActivity.class);
                                 lintent.putExtra("userID", userID);
                                 startActivity(lintent);
@@ -109,7 +108,7 @@ public class LoginActivity extends Activity {
                                 finish();
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                dialog = builder.setMessage("계정을 다시 확인하세요")
+                                dialog = builder.setMessage(getResources().getString(R.string.str_remind_id_message))
                                         .setNegativeButton("다시시도", null)
                                         .create();
                                 dialog.show();

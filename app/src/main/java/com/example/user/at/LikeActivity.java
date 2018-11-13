@@ -50,7 +50,7 @@ public class LikeActivity extends Activity {
         btnLikeBack = findViewById(R.id.btnMyWriteBack);
         loLikeHeader = findViewById(R.id.loMyWriteHeader);
 
-        tvLikeTitle.setText("관심있는 작품");
+        tvLikeTitle.setText(getResources().getString(R.string.str_like_work_string));
         loLikeHeader.setBackgroundColor(color);
 
         btnLikeBack.setOnClickListener(new View.OnClickListener() {

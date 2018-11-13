@@ -51,7 +51,7 @@ public class LetterDialog extends Dialog{
                 Response.Listener vListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("TAG", "JSONObj response=" + response);
+                        Log.d("TAG", cont.getResources().getString(R.string.log_json_response) + response);
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
@@ -59,14 +59,14 @@ public class LetterDialog extends Dialog{
                                 //아이디가 없을 경우
                                 sendPossible=false;
                                 btnLetterDlgSend.setEnabled(false);
-                                Toast.makeText(cont,"해당하는 아이디는 존재하지 않습니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(cont,cont.getResources().getString(R.string.str_not_found_id_message),Toast.LENGTH_SHORT).show();
                             } else {
                                 //아이디가 있을경우
                                 edtReceiverId.setEnabled(false);
-                                btnCheckReceiverId.setText("수정");
+                                btnCheckReceiverId.setText(cont.getResources().getString(R.string.str_edit));
                                 sendPossible=true;
                                 btnLetterDlgSend.setEnabled(true);
-                                Toast.makeText(cont,"존재하는 아이디 입니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(cont,cont.getResources().getString(R.string.str_overlap_id_message),Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             Log.d("check log", e.toString());
@@ -75,14 +75,14 @@ public class LetterDialog extends Dialog{
                 };
 
                 //아이디 조회하기 전에 누르는 경우와 조회한 뒤에 누르는 경우
-                if(sendPossible==false) {
+                if(!sendPossible) {
                     ValidateRequest validateRequest = new ValidateRequest(edtReceiverId.getText().toString(), vListener);
                     RequestQueue queue = Volley.newRequestQueue(cont);
                     queue.add(validateRequest);
                 }else{
                     edtReceiverId.setEnabled(true);
                     sendPossible=false;
-                    btnCheckReceiverId.setText("조회");
+                    btnCheckReceiverId.setText(cont.getResources().getString(R.string.str_check_id));
                     btnLetterDlgSend.setEnabled(false);
                 }
 
@@ -104,17 +104,17 @@ public class LetterDialog extends Dialog{
                 Response.Listener sListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("TAG", "JSONObj response=" + response);
+                        Log.d("TAG", cont.getResources().getString(R.string.log_json_response) + response);
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
                                 //성공시
-                                Toast.makeText(cont,"쪽지가 전송되었습니다.",Toast.LENGTH_LONG).show();
+                                Toast.makeText(cont,cont.getResources().getString(R.string.str_send_success_message),Toast.LENGTH_LONG).show();
                                 dismiss();
                             } else {
                                 //실패시
-                                Toast.makeText(cont,"쪽지 전송에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(cont,cont.getResources().getString(R.string.str_send_fail_message),Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             Log.d("send log", e.toString());

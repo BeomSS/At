@@ -5,63 +5,63 @@
 
     <ImageView
         android:id="@+id/logo1"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="@dimen/size_130dp"
+        android:layout_height="@dimen/size_130dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_padding_120dp"
         android:src="@drawable/at_logo2" />
 
     <EditText
         android:id="@+id/idInput"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/size_270dp"
+        android:layout_height="@dimen/size_50dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_padding_310dp"
         android:gravity="center"
-        android:hint="ID"
+        android:hint="@string/hint_id"
         android:inputType="text" />
 
     <EditText
         android:id="@+id/passwordInput"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/size_270dp"
+        android:layout_height="@dimen/size_50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_padding_365dp"
         android:gravity="center"
-        android:hint="Password"
+        android:hint="@string/hint_password"
         android:inputType="textPassword" />
 
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="105dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/size_105dp"
+        android:layout_height="@dimen/size_40dp"
         android:layout_below="@id/passwordInput"
         android:layout_marginTop="@dimen/margin_padding_60dp"
         android:layout_toStartOf="@+id/signupButton"
         android:background="@drawable/loginbutton"
-        android:shadowColor="#A8A8A8"
+        android:shadowColor="@color/colorShadow"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Login"
-        android:textColor="#00E1FA"
-        android:textSize="20sp" />
+        android:text="@string/str_login"
+        android:textColor="@color/colorLogin"
+        android:textSize="@dimen/text_20sp"/>
 
     <Button
         android:id="@+id/signupButton"
-        android:layout_width="105dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/size_105dp"
+        android:layout_height="@dimen/size_40dp"
         android:layout_alignEnd="@id/passwordInput"
         android:layout_alignTop="@+id/loginButton"
         android:layout_marginStart="@dimen/margin_padding_17dp"
         android:layout_marginEnd="@dimen/margin_padding_20dp"
         android:background="@drawable/loginbutton"
-        android:shadowColor="#A8A8A8"
+        android:shadowColor="@color/colorShadow"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Sign up"
-        android:textColor="#00E1FA"
-        android:textSize="20sp" />
+        android:text="@string/str_sign_up"
+        android:textColor="@color/colorLogin"
+        android:textSize="@dimen/text_20sp" />
 </RelativeLayout>

@@ -65,16 +65,16 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterViewHolder> {
                 Response.Listener LetterDeleteListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("TAG", "JSONObj response=" + response);
+                        Log.d("TAG", context.getResources().getString(R.string.log_json_response) + response);
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success=jsonResponse.getBoolean("success");
                             if(success){
-                                Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, context.getResources().getString(R.string.str_delete_message), Toast.LENGTH_SHORT).show();
                                 items.remove(position);
                                 notifyDataSetChanged();
                             }else{
-                                Toast.makeText(context, "쪽지 삭제에 실패하였습니다..", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, context.getResources().getString(R.string.str_delete_fail_message), Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (Exception e) {
@@ -93,9 +93,9 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterViewHolder> {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("작성자: "+items.get(position).getSentUser());
+                builder.setTitle(context.getResources().getString(R.string.str_writer_label)+items.get(position).getSentUser());
                 builder.setMessage(items.get(position).getLetterContent());
-                builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(context.getResources().getString(R.string.str_confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 

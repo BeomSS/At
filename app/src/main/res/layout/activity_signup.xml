@@ -5,74 +5,74 @@
 
     <ImageView
         android:id="@+id/logo2"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="@dimen/size_90dp"
+        android:layout_height="@dimen/size_90dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_padding_75dp"
         android:src="@drawable/at_logo2" />
 
     <TextView
-        android:layout_width="270dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/size_270dp"
+        android:layout_height="@dimen/size_50dp"
         android:layout_alignStart="@id/idSignup"
         android:layout_alignBottom="@id/idSignup"
         android:layout_marginBottom="@dimen/margin_padding_60dp"
         android:gravity="center"
-        android:text="Create Account"
+        android:text="@string/str_create_account"
         android:textAllCaps="false"
-        android:textSize="30dp" />
+        android:textSize="@dimen/text_30dp" />
 
     <EditText
         android:id="@+id/idSignup"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/size_180dp"
+        android:layout_height="@dimen/size_50dp"
         android:layout_alignStart="@id/psSignup"
         android:layout_alignBottom="@+id/psSignup"
         android:layout_marginBottom="@dimen/margin_padding_55dp"
-        android:hint="ID" />
+        android:hint="@string/hint_id" />
 
     <Button
         android:id="@+id/validateButton"
-        android:layout_width="60dp"
-        android:layout_height="35dp"
+        android:layout_width="@dimen/size_60dp"
+        android:layout_height="@dimen/size_35dp"
         android:layout_alignBottom="@id/psSignup"
         android:layout_marginStart="@dimen/margin_padding_20dp"
         android:layout_marginBottom="@dimen/margin_padding_60dp"
         android:layout_toEndOf="@id/idSignup"
         android:background="@drawable/loginbutton"
-        android:shadowColor="#A8A8A8"
+        android:shadowColor="@color/colorShadow"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="CHECK"
-        android:textColor="#00E1FA"
-        android:textSize="14sp" />
+        android:text="@string/str_check"
+        android:textColor="@color/colorLogin"
+        android:textSize="@dimen/text_14sp" />
 
     <EditText
         android:id="@+id/psSignup"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/size_270dp"
+        android:layout_height="@dimen/size_50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_padding_320dp"
-        android:hint="Password"
+        android:hint="@string/hint_password"
         android:inputType="textPassword"
         android:maxLength="15" />
 
     <EditText
         android:id="@+id/psConfirm"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/size_270dp"
+        android:layout_height="@dimen/size_50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_padding_375dp"
-        android:hint="Password Confirm"
+        android:hint="@string/hint_password_confirm"
         android:inputType="textPassword" />
 
     <Spinner
         android:id="@+id/favSpinner"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/size_270dp"
+        android:layout_height="@dimen/size_50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_padding_430dp">
@@ -81,18 +81,18 @@
 
     <Button
         android:id="@+id/registerButton"
-        android:layout_width="270dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/size_270dp"
+        android:layout_height="@dimen/size_40dp"
         android:layout_below="@id/favSpinner"
         android:layout_alignEnd="@id/psConfirm"
         android:layout_marginTop="@dimen/margin_padding_30dp"
         android:background="@drawable/loginbutton"
-        android:shadowColor="#A8A8A8"
+        android:shadowColor="@color/colorShadow"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Register"
-        android:textColor="#00E1FA"
-        android:textSize="20sp" />
+        android:text="@string/str_register"
+        android:textColor="@color/colorLogin"
+        android:textSize="@dimen/text_20sp" />
 
 </RelativeLayout>

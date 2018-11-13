@@ -61,13 +61,13 @@ public class BoardActivity extends AppCompatActivity {
 
         switch (intent.getIntExtra("category", 0)) {
             case 0:
-                headerTitle = "글 게시판";
+                headerTitle = getResources().getString(R.string.str_board_text);
                 break;
             case 1:
-                headerTitle = "그림 게시판";
+                headerTitle = getResources().getString(R.string.str_board_picture);
                 break;
             case 2:
-                headerTitle = "음악 게시판";
+                headerTitle = getResources().getString(R.string.str_board_music);
                 break;
         }
 
@@ -98,7 +98,7 @@ public class BoardActivity extends AppCompatActivity {
                     Intent cIntent = new Intent(BoardActivity.this, ShowPictureActivity.class);
                     TextView wTextView = boardRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_writers);
                     TextView nTextView = boardRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_num);
-                    cIntent.putExtra("putter", "게시판");
+                    cIntent.putExtra("putter", getResources().getString(R.string.str_board));
                     cIntent.putExtra("category", intent.getIntExtra("category", 0));
                     cIntent.putExtra("writer", wTextView.getText().toString());
                     cIntent.putExtra("postid", nTextView.getText().toString());
@@ -139,7 +139,7 @@ public class BoardActivity extends AppCompatActivity {
         Response.Listener bListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("TAG", "JSONObj response=" + response);
+                Log.d("TAG", getResources().getString(R.string.log_json_response) + response);
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     JSONArray jsonArray = jsonResponse.getJSONArray("sign");

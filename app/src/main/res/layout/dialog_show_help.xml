@@ -8,8 +8,8 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpHelpViewer"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
+        android:layout_width="@dimen/size_300dp"
+        android:layout_height="@dimen/size_400dp"
         android:layout_margin="@dimen/margin_padding_10dp"
         android:background="@drawable/help_view_pager_background"
         android:elevation="@dimen/elevation_10dp"
@@ -20,8 +20,8 @@
 
     <com.pm10.library.CircleIndicator
         android:id="@+id/indicatorHelpViewer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_0dp"
         android:layout_marginBottom="@dimen/margin_padding_10dp"
         app:layout_constraintBottom_toTopOf="@id/loDlgHelpButtonSpace"
         app:layout_constraintLeft_toLeftOf="@id/vpHelpViewer"
@@ -30,7 +30,7 @@
 
     <LinearLayout
         android:id="@+id/loDlgHelpButtonSpace"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/size_0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,10 +45,9 @@
             android:layout_margin="@dimen/margin_padding_10dp"
             android:layout_weight="1"
             android:background="@color/colorGrey"
-            android:text="다시보지않기"
+            android:text="@string/str_never_see"
             android:textColor="@color/colorWhite"
-            android:textSize="20dp"
-            tools:ignore="SpUsage" />
+            android:textSize="@dimen/text_20dp" />
 
         <Button
             android:id="@+id/btnHelpClose"
@@ -57,9 +56,8 @@
             android:layout_margin="@dimen/margin_padding_10dp"
             android:layout_weight="1"
             android:background="@color/colorBrightCloudy"
-            android:text="닫기"
+            android:text="@string/str_dismiss"
             android:textColor="@color/colorBlack"
-            android:textSize="20dp"
-            tools:ignore="SpUsage" />
+            android:textSize="@dimen/text_20dp" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
