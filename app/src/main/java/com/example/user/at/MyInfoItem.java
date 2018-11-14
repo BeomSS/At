@@ -59,11 +59,11 @@ public class MyInfoItem {
                 break;
             case 3: //알림
                 times = time;
-                if (cate.equals("0")) {//쪽지받았을 때
+                if (cate.equals("1")) {//쪽지받았을 때
                     titles = title;
-                } else if (cate.equals("1")) {//추천받았을 때
+                } else if (cate.equals("2")) {//추천받았을 때
                     titles = title;
-                } else if (cate.equals("2")) {//피드백 써줬을 때
+                } else if (cate.equals("3")) {//피드백 써줬을 때
                     titles = title;
                 }
                 break;

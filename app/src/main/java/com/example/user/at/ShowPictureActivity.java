@@ -232,7 +232,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             }
                         }
                     };
-                    PostLikingRequest fLikingRequest = new PostLikingRequest(pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), postLikingListener);
+                    PostLikingRequest fLikingRequest = new PostLikingRequest(pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"),titleTextView.getText().toString(), postLikingListener);
                     RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                     queue.add(fLikingRequest);
                 }
@@ -331,7 +331,8 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         }
                     }
                 };
-                AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), edtPictureWriteFeedback.getText().toString(), feedbackListener);
+                AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"),
+                        edtPictureWriteFeedback.getText().toString(),tvShowPictureWriter.getText().toString(),titleTextView.getText().toString(), feedbackListener);
                 RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
                 queue.add(feedbackRequest);
             }

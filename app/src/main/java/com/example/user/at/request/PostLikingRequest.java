@@ -13,11 +13,12 @@ public class PostLikingRequest extends StringRequest {
     final static private String URL = LoginActivity.ipAddress + ":800/At/PostLiking.php";
     private Map<String, String> parameter;
 
-    public PostLikingRequest(String postId, String userId, Response.Listener<String> listener) {
+    public PostLikingRequest(String postId, String userId,String postTitle, Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
         parameter = new HashMap<>();
         parameter.put("postId", postId);
         parameter.put("userId", userId);
+        parameter.put("postTitle", postTitle);
     }
 
     @Override
