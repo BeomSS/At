@@ -27,6 +27,10 @@ public class MyInfoAdapter extends RecyclerView.Adapter<MyInfoViewHolder> {
     public void onBindViewHolder(@NonNull MyInfoViewHolder holder, final int position) {
         holder.vhNum.setText(items.get(position).num);
         holder.vhCategory.setText(items.get(position).category);
+        String noticeFilter=holder.vhCategory.getText().toString();
+        if(noticeFilter.equals("1")||noticeFilter.equals("2")||noticeFilter.equals("3")){
+            holder.vhCategory.setVisibility(View.INVISIBLE);
+        }
         holder.vhTime.setText(items.get(position).times);
         holder.vhTitle.setText(items.get(position).titles);
         holder.vhWriter.setText(items.get(position).writers);
