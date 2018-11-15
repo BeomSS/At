@@ -14,6 +14,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,15 +51,27 @@ public class MainFragment extends Fragment {
     URL url;
     Bitmap bitmap;
     private MediaPlayer mediaPlayer;
-    ConstraintLayout loBestTextHeader, loBestPictureHeader, loBestMusicHeader;
+    ConstraintLayout parentConstraint,IoBestText, IoBestPicture, IoBestMusic, loBestTextHeader, loBestPictureHeader, loBestMusicHeader;
     Boolean musicCont = false;
+    ConstraintSet constSet = new ConstraintSet();
+    int interest;
+    Skin skin;
+    RequestQueue queue;
+
 
     @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_main, container, false);
+        skin = new Skin(getActivity());
+        Intent gIntent= getActivity().getIntent();
+        interest=gIntent.getIntExtra("interest",0);
 
+        parentConstraint=view.findViewById(R.id.parentConstraint);
+        IoBestText = view.findViewById(R.id.loBestText);
+        IoBestPicture = view.findViewById(R.id.IoBestPicture);
+        IoBestMusic = view.findViewById(R.id.IoBestMusic);
         tvTextWriteId = view.findViewById(R.id.tvTextWriteId);
         tvPictureWriteId = view.findViewById(R.id.tvPictureWriteId);
         tvMusicWriteId = view.findViewById(R.id.tvMusicWriteId);
@@ -101,7 +114,24 @@ public class MainFragment extends Fragment {
         loBestPictureHeader.setBackgroundColor(((MainActivity) MainActivity.context).color);
         loBestMusicHeader.setBackgroundColor(((MainActivity) MainActivity.context).color);
 
-        RequestQueue queue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()));
+        switch (interest){
+            case 1:
+                constSet.clone(parentConstraint);
+                constSet.connect(IoBestPicture.getId(),ConstraintSet.TOP,parentConstraint.getId(),ConstraintSet.TOP);
+                constSet.connect(IoBestText.getId(),ConstraintSet.TOP,IoBestPicture.getId(),ConstraintSet.BOTTOM);
+                constSet.connect(IoBestMusic.getId(),ConstraintSet.TOP,IoBestText.getId(),ConstraintSet.BOTTOM);
+                constSet.applyTo(parentConstraint);
+                break;
+            case 2:
+                constSet.clone(parentConstraint);
+                constSet.connect(IoBestMusic.getId(),ConstraintSet.TOP,parentConstraint.getId(),ConstraintSet.TOP);
+                constSet.connect(IoBestText.getId(),ConstraintSet.TOP,IoBestMusic.getId(),ConstraintSet.BOTTOM);
+                constSet.connect(IoBestPicture.getId(),ConstraintSet.TOP,IoBestText.getId(),ConstraintSet.BOTTOM);
+                constSet.applyTo(parentConstraint);
+                break;
+        }
+
+        queue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()));
         String besturl = LoginActivity.ipAddress + ":800/At/SeeBest.php";
 
         StringRequest bestRequest = new StringRequest(Request.Method.GET, besturl, new Response.Listener<String>() {

@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:focusable="true">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/parentConstraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBrightCloudy"
@@ -18,7 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_padding_5dp"
-            android:background="@color/colorWhite">
+            android:background="@color/colorWhite"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent">
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/loBestTextHeader"
@@ -104,7 +107,7 @@
                 android:text="@string/str_thumb_up_label"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_13sp"
-                app:layout_constraintBottom_toTopOf="@+id/tvBestTextContent"
+                app:layout_constraintBottom_toTopOf="@+id/sclBestText"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvBestTextWriter" />
 
@@ -119,31 +122,39 @@
                 app:layout_constraintLeft_toRightOf="@+id/tvBestTextRecom"
                 app:layout_constraintTop_toTopOf="@+id/tvBestTextRecom" />
 
-            <TextView
-                android:id="@+id/tvBestTextContent"
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/sclBestText"
                 android:layout_width="@dimen/size_0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_350dp"
                 android:layout_marginStart="@dimen/margin_padding_10dp"
                 android:layout_marginTop="@dimen/margin_padding_15dp"
                 android:layout_marginEnd="@dimen/margin_padding_10dp"
                 android:layout_marginBottom="@dimen/margin_padding_10dp"
-                android:text="@string/str_content_loading"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBestTextRecom" />
+                app:layout_constraintTop_toBottomOf="@+id/tvBestTextRecom">
+                <TextView
+                    android:id="@+id/tvBestTextContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_content_loading"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_18sp" />
+            </android.support.v4.widget.NestedScrollView>
+
 
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/loBestPicture"
+            android:id="@+id/IoBestPicture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_padding_5dp"
             android:layout_marginTop="@dimen/margin_padding_10dp"
-            android:background="@color/colorWhite">
+            android:background="@color/colorWhite"
+            app:layout_constraintTop_toBottomOf="@id/loBestText"
+            app:layout_constraintLeft_toLeftOf="parent">
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/loBestPictureHeader"
@@ -280,12 +291,14 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/loBestMusic"
+            android:id="@+id/IoBestMusic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_padding_5dp"
             android:layout_marginTop="@dimen/margin_padding_10dp"
-            android:background="@color/colorWhite">
+            android:background="@color/colorWhite"
+            app:layout_constraintTop_toBottomOf="@id/IoBestPicture"
+            app:layout_constraintLeft_toLeftOf="parent">
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/loBestMusicHeader"
@@ -442,6 +455,6 @@
 
         </android.support.constraint.ConstraintLayout>
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.v4.widget.NestedScrollView>
