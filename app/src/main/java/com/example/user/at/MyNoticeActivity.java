@@ -1,5 +1,6 @@
 package com.example.user.at;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -8,6 +9,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.user.at.request.NoticeCategoryRequest;
 import com.example.user.at.request.NoticeRequest;
 
 import org.json.JSONArray;
@@ -38,7 +42,12 @@ public class MyNoticeActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     MyInfoAdapter adapter;
     ArrayList<MyInfoItem> items;
-    String noticeId, noticeValue, noticeUserId, noticeMessage, noticeTime, noticeDirect;
+    int noticeCategory;
+    String noticeId, noticeValue, noticeUserId, noticeMessage, noticeTime, noticeDirect, url;
+    Intent nIntent;
+    TextView nTextView;
+    RequestQueue queue;
+    NoticeCategoryRequest ncRequest;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +75,7 @@ public class MyNoticeActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
+        //알림 목록 서버에서 받아오기
         Response.Listener nListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -98,14 +108,82 @@ public class MyNoticeActivity extends AppCompatActivity {
             }
         };
 
-        Skin pId=new Skin(MyNoticeActivity.this);
-        pId.getPreferenceString("LoginId");
+        skin.getPreferenceString("LoginId");
 
-        NoticeRequest nRequest = new NoticeRequest(pId.getPreferenceString("LoginId"), nListener);
-        RequestQueue queue = Volley.newRequestQueue(this);
+        NoticeRequest nRequest = new NoticeRequest(skin.getPreferenceString("LoginId"), nListener);
+        queue = Volley.newRequestQueue(this);
         queue.add(nRequest);
-    }
 
+        final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+        });
+
+        //알림 목록 클릭이벤트
+        myInfoRecycler.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+                //카테고리를 받아오는 리스너
+                Response.Listener noticeCategoryListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("noticeCategoryListener TAG", "JSONObj response=" + response);
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            noticeCategory = jsonResponse.getInt("category");
+                            Log.d("noticeClickError", String.valueOf(noticeCategory));
+                        } catch (Exception e) {
+                            Log.d("noticeClickError", e.toString());
+                        }
+                    }
+                };
+
+                View child = myInfoRecycler.findChildViewUnder(e.getX(), e.getY());
+                if (child != null && gestureDetector.onTouchEvent(e)) {
+                    TextView cTextView = myInfoRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_category);
+                    int noticeValue = Integer.parseInt(cTextView.getText().toString());
+                    switch (noticeValue) {
+                        case 1://쪽지로 이동
+                            nIntent = new Intent(MyNoticeActivity.this, LetterMainActivity.class);
+                            startActivity(nIntent);
+                            break;
+                        case 2://해당 게시물로 이동
+                            nIntent = new Intent(MyNoticeActivity.this, ShowPictureActivity.class);
+                            nTextView = myInfoRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_num);
+
+                            ncRequest = new NoticeCategoryRequest(nTextView.getText().toString(), noticeCategoryListener);
+                            queue = Volley.newRequestQueue(MyNoticeActivity.this);
+                            queue.add(ncRequest);
+
+                            nIntent.putExtra("category", noticeCategory);
+                            nIntent.putExtra("postid", nTextView.getText().toString());
+                            startActivity(nIntent);
+                            break;
+                        case 3://해당 게시물로 이동
+                            nIntent = new Intent(MyNoticeActivity.this, ShowPictureActivity.class);
+                            nTextView = myInfoRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_num);
+
+                            ncRequest = new NoticeCategoryRequest(nTextView.getText().toString(), noticeCategoryListener);
+                            queue = Volley.newRequestQueue(MyNoticeActivity.this);
+                            queue.add(ncRequest);
+
+                            nIntent.putExtra("category", noticeCategory);
+                            nIntent.putExtra("postid", nTextView.getText().toString());
+                            startActivity(nIntent);
+                            break;
+                    }
+                }
+                return false;
+            }
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) { }
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) { }
+        });
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();

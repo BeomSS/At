@@ -58,7 +58,9 @@ public class MyInfoItem {
                 recommends = "추천수(" + recommend + ")";
                 break;
             case 3: //알림
+                num = feed;
                 times = time;
+                category=cate;
                 if (cate.equals("1")) {//쪽지받았을 때
                     titles = title;
                 } else if (cate.equals("2")) {//추천받았을 때
