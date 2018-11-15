@@ -64,5 +64,6 @@
     <dimen name="size_230dp">230dp</dimen>
     <dimen name="size_270dp">270dp</dimen>
     <dimen name="size_300dp">300dp</dimen>
+    <dimen name="size_350dp">350dp</dimen>
     <dimen name="size_400dp">400dp</dimen>
 </resources>

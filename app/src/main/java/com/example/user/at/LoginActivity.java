@@ -5,11 +5,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.user.at.request.GetInterest;
 import com.example.user.at.request.LoginRequest;
 
 import org.json.JSONObject;
@@ -28,6 +31,21 @@ import org.json.JSONObject;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends Activity {
+
+    //관심분야 받는 리스너
+    Response.Listener getInterestListener = new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            Log.d("TAG", "JSONObj response=" + response);
+            try {
+                JSONObject jsonResponse = new JSONObject(response);
+                interest = jsonResponse.getInt("interest");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
     Skin skin;
     int color;
     public static String ipAddress;
@@ -37,7 +55,9 @@ public class LoginActivity extends Activity {
     Intent lintent;
     BackPressCloseHandler backPressCloseHandler;
     CheckBox autoLogin;
-
+    RequestQueue queue;
+    int interest=5;
+    Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ipAddress = getString(R.string.ip_address);
@@ -48,11 +68,17 @@ public class LoginActivity extends Activity {
         //자동 로그인일시
         if (skin.getPreferenceBoolean()) {
             lintent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(lintent);
-            overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
-            finish();
-        }
 
+            GetInterest getInterestRequest = new GetInterest(skin.getPreferenceString("LoginId"),getInterestListener);
+            queue = Volley.newRequestQueue(LoginActivity.this);
+            queue.add(getInterestRequest);
+            handler.postDelayed(new Runnable() {
+                public void run() { lintent.putExtra("interest",interest);
+                    startActivity(lintent);
+                    overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
+                    finish();}
+            }, 1000);
+        }
         setContentView(R.layout.activity_login);
         backPressCloseHandler = new BackPressCloseHandler(this);
         autoLogin=findViewById(R.id.autoCheckbox);
@@ -112,12 +138,19 @@ public class LoginActivity extends Activity {
                                 if(autoLogin.isChecked()){
                                     skin.setPreference(true);
                                 }
-
                                 Toast.makeText(LoginActivity.this, getResources().getString(R.string.str_login_success_message), Toast.LENGTH_SHORT).show();
                                 lintent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(lintent);
-                                overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
-                                finish();
+
+                                GetInterest getInterestRequest = new GetInterest(skin.getPreferenceString("LoginId"),getInterestListener);
+                                queue = Volley.newRequestQueue(LoginActivity.this);
+                                queue.add(getInterestRequest);
+                                handler.postDelayed(new Runnable() {
+                                    public void run() {
+                                        lintent.putExtra("interest",interest);
+                                        startActivity(lintent);
+                                        overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
+                                        finish();}
+                                }, 1000);
 
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
