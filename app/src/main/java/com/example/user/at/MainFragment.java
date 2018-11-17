@@ -51,7 +51,7 @@ public class MainFragment extends Fragment {
     URL url;
     Bitmap bitmap;
     private MediaPlayer mediaPlayer;
-    ConstraintLayout parentConstraint,IoBestText, IoBestPicture, IoBestMusic, loBestTextHeader, loBestPictureHeader, loBestMusicHeader;
+    ConstraintLayout parentConstraint, IoBestText, IoBestPicture, IoBestMusic, loBestTextHeader, loBestPictureHeader, loBestMusicHeader;
     Boolean musicCont = false;
     ConstraintSet constSet = new ConstraintSet();
     int interest;
@@ -65,10 +65,10 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_main, container, false);
         skin = new Skin(getActivity());
-        Intent gIntent= getActivity().getIntent();
-        interest=gIntent.getIntExtra("interest",0);
+        Intent gIntent = getActivity().getIntent();
+        interest = gIntent.getIntExtra("interest", 0);
 
-        parentConstraint=view.findViewById(R.id.parentConstraint);
+        parentConstraint = view.findViewById(R.id.parentConstraint);
         IoBestText = view.findViewById(R.id.loBestText);
         IoBestPicture = view.findViewById(R.id.IoBestPicture);
         IoBestMusic = view.findViewById(R.id.IoBestMusic);
@@ -114,19 +114,19 @@ public class MainFragment extends Fragment {
         loBestPictureHeader.setBackgroundColor(((MainActivity) MainActivity.context).color);
         loBestMusicHeader.setBackgroundColor(((MainActivity) MainActivity.context).color);
 
-        switch (interest){
+        switch (interest) {
             case 1:
                 constSet.clone(parentConstraint);
-                constSet.connect(IoBestPicture.getId(),ConstraintSet.TOP,parentConstraint.getId(),ConstraintSet.TOP);
-                constSet.connect(IoBestText.getId(),ConstraintSet.TOP,IoBestPicture.getId(),ConstraintSet.BOTTOM);
-                constSet.connect(IoBestMusic.getId(),ConstraintSet.TOP,IoBestText.getId(),ConstraintSet.BOTTOM);
+                constSet.connect(IoBestPicture.getId(), ConstraintSet.TOP, parentConstraint.getId(), ConstraintSet.TOP);
+                constSet.connect(IoBestText.getId(), ConstraintSet.TOP, IoBestPicture.getId(), ConstraintSet.BOTTOM);
+                constSet.connect(IoBestMusic.getId(), ConstraintSet.TOP, IoBestText.getId(), ConstraintSet.BOTTOM);
                 constSet.applyTo(parentConstraint);
                 break;
             case 2:
                 constSet.clone(parentConstraint);
-                constSet.connect(IoBestMusic.getId(),ConstraintSet.TOP,parentConstraint.getId(),ConstraintSet.TOP);
-                constSet.connect(IoBestText.getId(),ConstraintSet.TOP,IoBestMusic.getId(),ConstraintSet.BOTTOM);
-                constSet.connect(IoBestPicture.getId(),ConstraintSet.TOP,IoBestText.getId(),ConstraintSet.BOTTOM);
+                constSet.connect(IoBestMusic.getId(), ConstraintSet.TOP, parentConstraint.getId(), ConstraintSet.TOP);
+                constSet.connect(IoBestText.getId(), ConstraintSet.TOP, IoBestMusic.getId(), ConstraintSet.BOTTOM);
+                constSet.connect(IoBestPicture.getId(), ConstraintSet.TOP, IoBestText.getId(), ConstraintSet.BOTTOM);
                 constSet.applyTo(parentConstraint);
                 break;
         }
@@ -346,15 +346,19 @@ public class MainFragment extends Fragment {
         btnBestMusicPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayer.pause();
+                if (musicCont) {
+                    mediaPlayer.pause();
+                }
             }
         });
 
         btnBestMusicRewind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayer.pause();
-                mediaPlayer.seekTo(0);
+                if (musicCont) {
+                    mediaPlayer.pause();
+                    mediaPlayer.seekTo(0);
+                }
             }
         });
 

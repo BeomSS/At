@@ -95,14 +95,18 @@ public class ShowPictureActivity extends Activity implements Runnable {
             musicStopBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mediaPlayer.pause();
+                    if(musicCont) {
+                        mediaPlayer.pause();
+                    }
                 }
             });
             musicResetBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mediaPlayer.pause();
-                    mediaPlayer.seekTo(0);
+                    if(musicCont) {
+                        mediaPlayer.pause();
+                        mediaPlayer.seekTo(0);
+                    }
                 }
             });
         }
@@ -507,6 +511,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                 mediaPlayer.reset();
                 mediaPlayer.release();
                 mediaPlayer = null;
+                musicCont=false;
             }
         }
         super.onStop();
