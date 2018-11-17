@@ -31,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.user.at.request.GetInterest;
 
 import org.json.JSONObject;
 
@@ -65,8 +66,6 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_main, container, false);
         skin = new Skin(getActivity());
-        Intent gIntent = getActivity().getIntent();
-        interest = gIntent.getIntExtra("interest", 0);
 
         parentConstraint = view.findViewById(R.id.parentConstraint);
         IoBestText = view.findViewById(R.id.loBestText);
@@ -114,22 +113,39 @@ public class MainFragment extends Fragment {
         loBestPictureHeader.setBackgroundColor(((MainActivity) MainActivity.context).color);
         loBestMusicHeader.setBackgroundColor(((MainActivity) MainActivity.context).color);
 
-        switch (interest) {
-            case 1:
-                constSet.clone(parentConstraint);
-                constSet.connect(IoBestPicture.getId(), ConstraintSet.TOP, parentConstraint.getId(), ConstraintSet.TOP);
-                constSet.connect(IoBestText.getId(), ConstraintSet.TOP, IoBestPicture.getId(), ConstraintSet.BOTTOM);
-                constSet.connect(IoBestMusic.getId(), ConstraintSet.TOP, IoBestText.getId(), ConstraintSet.BOTTOM);
-                constSet.applyTo(parentConstraint);
-                break;
-            case 2:
-                constSet.clone(parentConstraint);
-                constSet.connect(IoBestMusic.getId(), ConstraintSet.TOP, parentConstraint.getId(), ConstraintSet.TOP);
-                constSet.connect(IoBestText.getId(), ConstraintSet.TOP, IoBestMusic.getId(), ConstraintSet.BOTTOM);
-                constSet.connect(IoBestPicture.getId(), ConstraintSet.TOP, IoBestText.getId(), ConstraintSet.BOTTOM);
-                constSet.applyTo(parentConstraint);
-                break;
-        }
+        //베스트 순서를 관심분야에 맞게 고치기
+        Response.Listener getInterestListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG", "JSONObj response=" + response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    interest = jsonResponse.getInt("interest");
+                    switch (interest) {
+                        case 1:
+                            constSet.clone(parentConstraint);
+                            constSet.connect(IoBestPicture.getId(), ConstraintSet.TOP, parentConstraint.getId(), ConstraintSet.TOP);
+                            constSet.connect(IoBestText.getId(), ConstraintSet.TOP, IoBestPicture.getId(), ConstraintSet.BOTTOM);
+                            constSet.connect(IoBestMusic.getId(), ConstraintSet.TOP, IoBestText.getId(), ConstraintSet.BOTTOM);
+                            constSet.applyTo(parentConstraint);
+                            break;
+                        case 2:
+                            constSet.clone(parentConstraint);
+                            constSet.connect(IoBestMusic.getId(), ConstraintSet.TOP, parentConstraint.getId(), ConstraintSet.TOP);
+                            constSet.connect(IoBestText.getId(), ConstraintSet.TOP, IoBestMusic.getId(), ConstraintSet.BOTTOM);
+                            constSet.connect(IoBestPicture.getId(), ConstraintSet.TOP, IoBestText.getId(), ConstraintSet.BOTTOM);
+                            constSet.applyTo(parentConstraint);
+                            break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        GetInterest getInterestRequest = new GetInterest(skin.getPreferenceString("LoginId"),getInterestListener);
+        queue = Volley.newRequestQueue(getActivity());
+        queue.add(getInterestRequest);
 
         queue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()));
         String besturl = LoginActivity.ipAddress + ":800/At/SeeBest.php";

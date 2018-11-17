@@ -4,15 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.user.at.request.PreferenceRequest;
+
+import org.json.JSONObject;
 
 /**
  * Created by johan on 2018-06-05.
@@ -76,6 +80,16 @@ public class MyPreferencesActivity extends AppCompatActivity {
                             Response.Listener rListener = new Response.Listener<String>(){
                                 @Override
                                 public void onResponse(String response) {
+                                    Log.d("preperenceJson",response);
+                                    try {
+                                        JSONObject jsonResponse = new JSONObject(response);
+                                        boolean success = jsonResponse.getBoolean("success");
+                                        if(success){
+                                            Toast.makeText(MyPreferencesActivity.this,"저장되었습니다.",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
                                 }
                             };
                             PreferenceRequest pRequest = new PreferenceRequest(skin.getPreferenceString("LoginId"),userFavorite, rListener);
