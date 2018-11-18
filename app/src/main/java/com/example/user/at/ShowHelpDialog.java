@@ -43,9 +43,13 @@ public class ShowHelpDialog extends Dialog {
         Button btnRight = findViewById(R.id.btnHelpClose);
 
         ArrayList<Integer> arrayList = new ArrayList<Integer>();
-        arrayList.add(R.drawable.help_ban);
-        arrayList.add(R.drawable.help_sliding);
-        arrayList.add(R.drawable.help_write);
+        arrayList.add(R.drawable.help1);
+        arrayList.add(R.drawable.help2);
+        arrayList.add(R.drawable.help3);
+        arrayList.add(R.drawable.help4);
+        arrayList.add(R.drawable.help5);
+        arrayList.add(R.drawable.help6);
+        arrayList.add(R.drawable.help7);
         ViewPager viewPager = (ViewPager) findViewById(R.id.vpHelpViewer);
         HelpInfoViewPagerAdapter adapter = new HelpInfoViewPagerAdapter(getLayoutInflater(), arrayList);
         viewPager.setAdapter(adapter);
