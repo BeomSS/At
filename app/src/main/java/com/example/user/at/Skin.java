@@ -3,6 +3,7 @@ package com.example.user.at;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.content.ContextCompat;
 
 public class Skin {
     public final String preference = "com.example.user.at.preference";
@@ -20,15 +21,19 @@ public class Skin {
         switch (skinCode) {
             case 1:
                 context.setTheme(R.style.AppThemeVer1);
-                color = context.getResources().getColor(R.color.colorMint);
+                color = ContextCompat.getColor(context, R.color.colorMint);
                 break;
             case 2:
                 context.setTheme(R.style.AppThemeVer2);
-                color = context.getResources().getColor(R.color.colorBlue);
+                color = ContextCompat.getColor(context, R.color.colorBlue);
                 break;
             case 3:
                 context.setTheme(R.style.AppThemeVer3);
-                color = context.getResources().getColor(R.color.colorDark);
+                color = ContextCompat.getColor(context, R.color.colorDark);
+                break;
+            case 4:
+                context.setTheme(R.style.AppThemeVer4);
+                color = ContextCompat.getColor(context, R.color.colorPink);
                 break;
         }
         return color;

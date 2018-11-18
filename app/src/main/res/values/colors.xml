@@ -29,4 +29,7 @@
     <color name="colorMenuLine">#57ffffff</color>
     <color name="colorSimilarGrey">#A7ABB1</color>
     <color name="colorAutoLogin">#696969</color>
+    <color name="colorPink">#f49dab</color>
+    <color name="colorPinkAlpha">#90f5a0ae</color>
+    <color name="colorBrightPink">#f1d5da</color>
 </resources>

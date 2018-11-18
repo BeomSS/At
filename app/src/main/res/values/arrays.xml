@@ -4,6 +4,7 @@
         <item>민트</item>
         <item>파랑</item>
         <item>검정</item>
+        <item>핑크</item>
     </string-array>
     <string-array name="letter">
         <item>받은쪽지함</item>
