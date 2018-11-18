@@ -170,6 +170,7 @@ public class MainFragment extends Fragment {
                         tvBestTextRecomCnt.setText("");
                         tvBestTextTime.setText("");
                         tvBestTextRecom.setText("");
+                        tvBestTextContent.setText("");
                         btnGoBestTextBoard.setVisibility(View.INVISIBLE);
                     }
 
