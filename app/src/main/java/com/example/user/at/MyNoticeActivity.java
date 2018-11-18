@@ -135,6 +135,9 @@ public class MyNoticeActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             noticeCategory = jsonResponse.getInt("category");
                             Log.d("noticeClickError", String.valueOf(noticeCategory));
+                            nIntent.putExtra("category", noticeCategory);
+                            nIntent.putExtra("postid", nTextView.getText().toString());
+                            startActivity(nIntent);
                         } catch (Exception e) {
                             Log.d("noticeClickError", e.toString());
                         }
@@ -158,9 +161,6 @@ public class MyNoticeActivity extends AppCompatActivity {
                             queue = Volley.newRequestQueue(MyNoticeActivity.this);
                             queue.add(ncRequest);
 
-                            nIntent.putExtra("category", noticeCategory);
-                            nIntent.putExtra("postid", nTextView.getText().toString());
-                            startActivity(nIntent);
                             break;
                         case 3://해당 게시물로 이동
                             nIntent = new Intent(MyNoticeActivity.this, ShowPictureActivity.class);
@@ -169,10 +169,6 @@ public class MyNoticeActivity extends AppCompatActivity {
                             ncRequest = new NoticeCategoryRequest(nTextView.getText().toString(), noticeCategoryListener);
                             queue = Volley.newRequestQueue(MyNoticeActivity.this);
                             queue.add(ncRequest);
-
-                            nIntent.putExtra("category", noticeCategory);
-                            nIntent.putExtra("postid", nTextView.getText().toString());
-                            startActivity(nIntent);
                             break;
                     }
                 }
