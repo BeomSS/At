@@ -68,43 +68,6 @@ public class MyWritingListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        Response.Listener wListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("TAG", "JSONObj response=" + response);
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
-
-                    items = new ArrayList<>();
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject row = jsonArray.getJSONObject(i);
-                        postid = row.getString("post_id");
-                        time = row.getString("create_time");
-                        title = row.getString("post_title");
-                        category = row.getString("category");
-                        writer = row.getString("member_id");
-                        feedback = row.getString("feedback_count");
-                        recommend = String.valueOf(row.getInt("recommend"));
-                        items.add(new MyInfoItem(1, postid, category, time, title, writer, feedback, recommend));
-                    }
-
-                    myInfoRecycler.setLayoutManager(layoutManager);
-                    myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new MyInfoAdapter(items);
-                    myInfoRecycler.setAdapter(adapter);
-
-                } catch (Exception e) {
-                    Log.d("dberror", e.toString());
-                }
-            }
-        };
-
-        MyWritingRequest wRequest = new MyWritingRequest(skin.getPreferenceString("LoginId"), wListener);
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(wRequest);
-
         final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
@@ -155,4 +118,44 @@ public class MyWritingListActivity extends AppCompatActivity {
         super.onBackPressed();
         overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyWritingRequest wRequest = new MyWritingRequest(skin.getPreferenceString("LoginId"), wListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(wRequest);
+    }
+    Response.Listener wListener = new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            Log.d("TAG", "JSONObj response=" + response);
+            try {
+                JSONObject jsonResponse = new JSONObject(response);
+                JSONArray jsonArray = jsonResponse.getJSONArray("sign");
+
+                items = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject row = jsonArray.getJSONObject(i);
+                    postid = row.getString("post_id");
+                    time = row.getString("create_time");
+                    title = row.getString("post_title");
+                    category = row.getString("category");
+                    writer = row.getString("member_id");
+                    feedback = row.getString("feedback_count");
+                    recommend = String.valueOf(row.getInt("recommend"));
+                    items.add(new MyInfoItem(1, postid, category, time, title, writer, feedback, recommend));
+                }
+
+                myInfoRecycler.setLayoutManager(layoutManager);
+                myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
+                adapter = new MyInfoAdapter(items);
+                myInfoRecycler.setAdapter(adapter);
+
+            } catch (Exception e) {
+                Log.d("dberror", e.toString());
+            }
+        }
+    };
 }

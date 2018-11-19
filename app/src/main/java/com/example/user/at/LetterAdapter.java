@@ -50,13 +50,13 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterViewHolder> {
             holder.btnLetterRclReply.setVisibility(View.INVISIBLE);
         }
 
+        //TODO
         holder.btnLetterRclReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LetterDialog dlg=new LetterDialog(context,skin.getPreferenceString("LoginId"),items.get(position).getSentUser());
-                dlg.show();
             }
         });
+
         //리스트 선택 삭제시
         holder.btnLetterRclDelete.setOnClickListener(new View.OnClickListener() {
             @Override

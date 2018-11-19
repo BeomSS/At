@@ -42,6 +42,38 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
     ArrayList<MyInfoItem> items;
     String feedbackid, postid, memberid, fcontent, time, frecommend;
 
+    Response.Listener fListener = new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            Log.d("TAG", "JSONObj response=" + response);
+            try {
+                JSONObject jsonResponse = new JSONObject(response);
+                JSONArray jsonArray = jsonResponse.getJSONArray("sign");
+
+                items = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject row = jsonArray.getJSONObject(i);
+                    feedbackid = row.getString("feedback_id");
+                    postid = row.getString("post_id");
+                    memberid = row.getString("member_id");
+                    fcontent = row.getString("f_content");
+                    time = row.getString("create_time");
+                    frecommend = row.getString("f_recommend");
+                    items.add(new MyInfoItem(2, postid, null, time, fcontent, null, null, frecommend));
+                }
+
+                myInfoRecycler.setLayoutManager(layoutManager);
+                myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
+                adapter = new MyInfoAdapter(items);
+                myInfoRecycler.setAdapter(adapter);
+
+            } catch (Exception e) {
+                Log.d("dberror", e.toString());
+            }
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,41 +100,8 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        Response.Listener fListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("TAG", "JSONObj response=" + response);
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
-
-                    items = new ArrayList<>();
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject row = jsonArray.getJSONObject(i);
-                        feedbackid = row.getString("feedback_id");
-                        postid = row.getString("post_id");
-                        memberid = row.getString("member_id");
-                        fcontent = row.getString("f_content");
-                        time = row.getString("create_time");
-                        frecommend = row.getString("f_recommend");
-                        items.add(new MyInfoItem(2, postid, null, time, fcontent, null, null, frecommend));
-                    }
-
-                    myInfoRecycler.setLayoutManager(layoutManager);
-                    myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new MyInfoAdapter(items);
-                    myInfoRecycler.setAdapter(adapter);
-
-                } catch (Exception e) {
-                    Log.d("dberror", e.toString());
-                }
-            }
-        };
-
-        Skin pId=new Skin(MyWritingFeedbackActivity.this);
-
-        MyFeedbackRequest wRequest = new MyFeedbackRequest(pId.getPreferenceString("LoginId"), fListener);
+        //목록 불러오기
+        MyFeedbackRequest wRequest = new MyFeedbackRequest(skin.getPreferenceString("LoginId"), fListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(wRequest);
 
@@ -123,7 +122,7 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
                     TextView nTextView = myInfoRecycler.getChildViewHolder(child).itemView.findViewById(R.id.layout_num);
                     cIntent.putExtra("putter", "게시판");
                     cIntent.putExtra("f_postId", nTextView.getText().toString());
-                    Log.d("board put test",nTextView.getText().toString());
+                    Log.d("board put test", nTextView.getText().toString());
                     startActivity(cIntent);
                 }
                 return false;
@@ -145,5 +144,13 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyFeedbackRequest wRequest = new MyFeedbackRequest(skin.getPreferenceString("LoginId"), fListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(wRequest);
     }
 }

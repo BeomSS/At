@@ -1,6 +1,6 @@
 package com.example.user.at;
 
-import android.app.Dialog;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,13 +18,13 @@ import com.example.user.at.request.ValidateRequest;
 
 import org.json.JSONObject;
 
-public class LetterDialog extends Dialog{
+public class LetterDialog extends Activity{
+    Skin skin=new Skin(LetterDialog.this);
     EditText edtReceiverId;
     Button btnCheckReceiverId,btnLetterDlgSend,btnLetterDlgCancel;
     EditText edtMessageTitle,edtMessageContent;
     boolean sendPossible=false;
-    String userId,sentUser=null;
-    private Context cont;
+    String sentUser=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class LetterDialog extends Dialog{
                 Response.Listener vListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("TAG", cont.getResources().getString(R.string.log_json_response) + response);
+                        Log.d("TAG", getResources().getString(R.string.log_json_response) + response);
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
@@ -59,14 +59,14 @@ public class LetterDialog extends Dialog{
                                 //아이디가 없을 경우
                                 sendPossible=false;
                                 btnLetterDlgSend.setEnabled(false);
-                                Toast.makeText(cont,cont.getResources().getString(R.string.str_not_found_id_message),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LetterDialog.this,getResources().getString(R.string.str_not_found_id_message),Toast.LENGTH_SHORT).show();
                             } else {
                                 //아이디가 있을경우
                                 edtReceiverId.setEnabled(false);
-                                btnCheckReceiverId.setText(cont.getResources().getString(R.string.str_edit));
+                                btnCheckReceiverId.setText(getResources().getString(R.string.str_edit));
                                 sendPossible=true;
                                 btnLetterDlgSend.setEnabled(true);
-                                Toast.makeText(cont,cont.getResources().getString(R.string.str_overlap_id_message),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LetterDialog.this,getResources().getString(R.string.str_overlap_id_message),Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             Log.d("check log", e.toString());
@@ -77,18 +77,18 @@ public class LetterDialog extends Dialog{
                 //아이디 조회하기 전에 누르는 경우와 조회한 뒤에 누르는 경우
                 if(!sendPossible) {
                     ValidateRequest validateRequest = new ValidateRequest(edtReceiverId.getText().toString(), vListener);
-                    RequestQueue queue = Volley.newRequestQueue(cont);
+                    RequestQueue queue = Volley.newRequestQueue(LetterDialog.this);
                     queue.add(validateRequest);
                 }else{
                     edtReceiverId.setEnabled(true);
                     sendPossible=false;
-                    btnCheckReceiverId.setText(cont.getResources().getString(R.string.str_check_id));
+                    btnCheckReceiverId.setText(getResources().getString(R.string.str_check_id));
                     btnLetterDlgSend.setEnabled(false);
                 }
 
                 //버튼 클릭시 키보드 내려가게
                 try {
-                    InputMethodManager imm = (InputMethodManager)cont.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -104,28 +104,30 @@ public class LetterDialog extends Dialog{
                 Response.Listener sListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("TAG", cont.getResources().getString(R.string.log_json_response) + response);
+                        Log.d("TAG", getResources().getString(R.string.log_json_response) + response);
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
                                 //성공시
-                                Toast.makeText(cont,cont.getResources().getString(R.string.str_send_success_message),Toast.LENGTH_LONG).show();
-                                dismiss();
+                                Toast.makeText(LetterDialog.this,getResources().getString(R.string.str_send_success_message),Toast.LENGTH_LONG).show();
+                                finish();
                             } else {
                                 //실패시
-                                Toast.makeText(cont,cont.getResources().getString(R.string.str_send_fail_message),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LetterDialog.this,getResources().getString(R.string.str_send_fail_message),Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             Log.d("send log", e.toString());
                         }
                     }
                 };
-                SendMessageRequest validateRequest = new SendMessageRequest(userId,edtReceiverId.getText().toString(),
-                        edtMessageTitle.getText().toString(),edtMessageContent.getText().toString(), sListener);
-                RequestQueue queue = Volley.newRequestQueue(cont);
-                queue.add(validateRequest);
 
+                SendMessageRequest validateRequest = new SendMessageRequest(skin.getPreferenceString("LoginId"),edtReceiverId.getText().toString(),
+                        edtMessageTitle.getText().toString(),edtMessageContent.getText().toString(),sListener);
+                Log.d("1test",skin.getPreferenceString("LoginId"));
+
+                RequestQueue queue = Volley.newRequestQueue(LetterDialog.this);
+                queue.add(validateRequest);
             }
         });
 
@@ -133,24 +135,8 @@ public class LetterDialog extends Dialog{
         btnLetterDlgCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dismiss();
+                finish();
             }
         });
-    }
-
-    //글쓰기 눌렀을 때 생성자
-    public LetterDialog(Context context, String id) {
-        //다이얼로그 형태 설정
-        super(context,android.R.style.Theme_Translucent_NoTitleBar);
-        userId=id;
-        cont=context;
-    }
-    //답장쓰기 눌렀을 때 생성자
-    public LetterDialog(Context context, String id, String sentUser) {
-        //다이얼로그 형태 설정
-        super(context,android.R.style.Theme_Translucent_NoTitleBar);
-        userId=id;
-        cont=context;
-        this.sentUser=sentUser;
     }
 }

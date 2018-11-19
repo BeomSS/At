@@ -81,8 +81,6 @@ public class BoardActivity extends AppCompatActivity {
             }
         });
 
-        printBoardList();
-
         final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
@@ -174,7 +172,13 @@ public class BoardActivity extends AppCompatActivity {
         queue.add(bRequest);
     }
 
-/*
+    @Override
+    protected void onResume() {
+        super.onResume();
+        printBoardList();
+    }
+
+    /*
     public void processResponse(JSONArray response) {
         try {
             for(int i=0;i<response.length();i++){

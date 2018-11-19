@@ -49,6 +49,39 @@ public class MyNoticeActivity extends AppCompatActivity {
     RequestQueue queue;
     NoticeCategoryRequest ncRequest;
 
+    //알림 목록 서버에서 받아오기
+    Response.Listener nListener = new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            Log.d("TAG", "JSONObj response=" + response);
+            try {
+                JSONObject jsonResponse = new JSONObject(response);
+                JSONArray jsonArray = jsonResponse.getJSONArray("sign");
+
+                items = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject row = jsonArray.getJSONObject(i);
+                    noticeId = row.getString("notice_id");
+                    noticeValue = row.getString("notice_value");
+                    noticeUserId = row.getString("notice_user");
+                    noticeMessage = row.getString("notice_message");
+                    noticeTime = row.getString("notice_time");
+                    noticeDirect = row.getString("notice_direct");
+                    items.add(new MyInfoItem(3, noticeId, noticeValue, noticeTime, noticeMessage, noticeUserId, noticeDirect, null));
+                }
+
+                myInfoRecycler.setLayoutManager(layoutManager);
+                myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
+                adapter = new MyInfoAdapter(items);
+                myInfoRecycler.setAdapter(adapter);
+
+            } catch (Exception e) {
+                Log.d("dberror", e.toString());
+            }
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,41 +107,6 @@ public class MyNoticeActivity extends AppCompatActivity {
 
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        //알림 목록 서버에서 받아오기
-        Response.Listener nListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("TAG", "JSONObj response=" + response);
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
-
-                    items = new ArrayList<>();
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject row = jsonArray.getJSONObject(i);
-                        noticeId = row.getString("notice_id");
-                        noticeValue = row.getString("notice_value");
-                        noticeUserId = row.getString("notice_user");
-                        noticeMessage = row.getString("notice_message");
-                        noticeTime = row.getString("notice_time");
-                        noticeDirect = row.getString("notice_direct");
-                        items.add(new MyInfoItem(3, noticeId, noticeValue, noticeTime, noticeMessage, noticeUserId, noticeDirect, null));
-                    }
-
-                    myInfoRecycler.setLayoutManager(layoutManager);
-                    myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new MyInfoAdapter(items);
-                    myInfoRecycler.setAdapter(adapter);
-
-                } catch (Exception e) {
-                    Log.d("dberror", e.toString());
-                }
-            }
-        };
-
-        skin.getPreferenceString("LoginId");
 
         NoticeRequest nRequest = new NoticeRequest(skin.getPreferenceString("LoginId"), nListener);
         queue = Volley.newRequestQueue(this);
@@ -186,6 +184,13 @@ public class MyNoticeActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NoticeRequest nRequest = new NoticeRequest(skin.getPreferenceString("LoginId"), nListener);
+        queue = Volley.newRequestQueue(this);
+        queue.add(nRequest);
+    }
     /*
     @Nullable
     @Override

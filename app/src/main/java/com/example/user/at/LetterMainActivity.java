@@ -2,6 +2,7 @@ package com.example.user.at;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -49,12 +50,17 @@ public class LetterMainActivity extends Activity {
     int where = 0; //전체삭제시 어느 쪽지함인지 분별하는 변수
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        printLetterList();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         skin = new Skin(this);
         color = skin.skinSetting();
         setContentView(R.layout.activity_letter);
-
         loLetterHeader = findViewById(R.id.loLetterHeader);
         btnLetterBack = findViewById(R.id.btnLetterBack);
         rclLetter = findViewById(R.id.rclLetter);
@@ -103,18 +109,20 @@ public class LetterMainActivity extends Activity {
                         }
                     }
                 };
-
                 LetterDeleteRequest dRequest = new LetterDeleteRequest(1, skin.getPreferenceString("LoginId"), where, LetterDeleteListener);
                 RequestQueue queue = Volley.newRequestQueue(LetterMainActivity.this);
                 queue.add(dRequest);
             }
         });
 
+
+        //편지쓰기 버튼 클릭 이벤트
         btnWriteLetter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LetterDialog dlg = new LetterDialog(LetterMainActivity.this, skin.getPreferenceString("LoginId"));
-                dlg.show();
+                Intent writeLetterIntent = new Intent(LetterMainActivity.this,LetterDialog.class);
+                startActivityForResult(writeLetterIntent,0);
+                onStop();
             }
         });
 
