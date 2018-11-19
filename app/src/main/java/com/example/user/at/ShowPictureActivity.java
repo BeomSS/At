@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.AudioManager;
-import android.media.ExifInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -452,8 +451,8 @@ public class ShowPictureActivity extends Activity implements Runnable {
 
                 InputStream iStream = conn.getInputStream();
 
-                ExifInterface ei = new ExifInterface(iStream);
-                int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//                ExifInterface ei = new ExifInterface(iStream);
+//                int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
                 iStream.close();
                 conn.disconnect();
@@ -466,23 +465,23 @@ public class ShowPictureActivity extends Activity implements Runnable {
 
                 bitmap = BitmapFactory.decodeStream(iStream);
 
-                switch (orientation) {
-                    case ExifInterface.ORIENTATION_ROTATE_90:
-                        bitmap = rotate(bitmap, 90);
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_180:
-                        bitmap = rotate(bitmap, 180);
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_270:
-                        bitmap = rotate(bitmap, 270);
-                        break;
-                    case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
-                        bitmap = flip(bitmap, true, false);
-                        break;
-                    case ExifInterface.ORIENTATION_FLIP_VERTICAL:
-                        bitmap = flip(bitmap, false, true);
-                        break;
-                }
+//                switch (orientation) {
+//                    case ExifInterface.ORIENTATION_ROTATE_90:
+//                        bitmap = rotate(bitmap, 90);
+//                        break;
+//                    case ExifInterface.ORIENTATION_ROTATE_180:
+//                        bitmap = rotate(bitmap, 180);
+//                        break;
+//                    case ExifInterface.ORIENTATION_ROTATE_270:
+//                        bitmap = rotate(bitmap, 270);
+//                        break;
+//                    case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+//                        bitmap = flip(bitmap, true, false);
+//                        break;
+//                    case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+//                        bitmap = flip(bitmap, false, true);
+//                        break;
+//                }
                 // 핸들러에게 화면 갱신을 요청한다.
                 handler.sendEmptyMessage(0);
 

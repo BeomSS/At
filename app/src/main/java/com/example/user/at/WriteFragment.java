@@ -39,7 +39,7 @@ public class WriteFragment extends Fragment {
     View view;
     Spinner categorySpinner;
     EditText titleEdit, explainEdit;
-    TextView fileTextView, explainTextView;
+    TextView fileTextView, explainTextView,tvCategory,tvWriteTitleLabel,tvFile;
     Button doneBtn;
     int putCategory;
     String putTitle, putExplain, filePath = null;
@@ -56,6 +56,9 @@ public class WriteFragment extends Fragment {
 
         upLoadServerUri = LoginActivity.ipAddress + ":800/At/upload.php";
 
+        tvFile=view.findViewById(R.id.tvFile);
+        tvCategory=view.findViewById(R.id.tvCategory);
+        tvWriteTitleLabel=view.findViewById(R.id.tvWriteTitleLabel);
         categorySpinner = (Spinner) view.findViewById(R.id.write_spinner);
         titleEdit = (EditText) view.findViewById(R.id.title_edit);
         explainTextView = (TextView) view.findViewById(R.id.explain_textview);
@@ -63,6 +66,10 @@ public class WriteFragment extends Fragment {
         fileTextView = (TextView) view.findViewById(R.id.file_textview);
         doneBtn = (Button) view.findViewById(R.id.done_button);
 
+        tvFile.setBackgroundColor(((MainActivity) MainActivity.context).color);
+        tvCategory.setBackgroundColor(((MainActivity) MainActivity.context).color);
+        tvWriteTitleLabel.setBackgroundColor(((MainActivity) MainActivity.context).color);
+        explainTextView.setBackgroundColor(((MainActivity) MainActivity.context).color);
         doneBtn.setBackgroundColor(((MainActivity) MainActivity.context).color);
 
         //게시판 변경시 발생하는 이벤트
