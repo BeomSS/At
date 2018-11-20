@@ -6,142 +6,47 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/linText"
+    <ImageView
+        android:id="@+id/btnTextBoard"
         android:layout_width="@dimen/size_0dp"
         android:layout_height="@dimen/size_0dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linPicture"
+        android:scaleType="fitXY"
+        android:src="@drawable/write1"
+        app:layout_constraintBottom_toTopOf="@+id/btnPictureBoard"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorBrightMint">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.4" />
-
-        <ImageView
-            android:id="@+id/imgText"
-            android:layout_width="@dimen/size_140dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_padding_10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/write"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline11"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/str_select_write"
-            android:textSize="@dimen/size_60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/guideline11"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/linPicture"
+    <ImageView
+        android:id="@+id/btnPictureBoard"
         android:layout_width="@dimen/size_0dp"
         android:layout_height="@dimen/size_0dp"
-        android:background="@color/colorBlueAlpha"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linMusic"
+        android:scaleType="fitXY"
+        android:src="@drawable/picture1"
+        app:layout_constraintBottom_toTopOf="@+id/btnMusicBoard"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linText">
+        app:layout_constraintTop_toBottomOf="@+id/btnTextBoard" />
 
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.6" />
-
-        <TextView
-            android:id="@+id/tvPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/str_select_picture"
-            android:textSize="@dimen/size_60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline9"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imgPicture"
-            android:layout_width="@dimen/size_140dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_padding_10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/image"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/guideline9"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </android.support.constraint.ConstraintLayout>
-
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/linMusic"
+    <ImageView
+        android:id="@+id/btnMusicBoard"
         android:layout_width="@dimen/size_0dp"
         android:layout_height="@dimen/size_0dp"
-        android:background="@color/colorBrightCloudy"
         android:orientation="horizontal"
+        android:scaleType="fitXY"
+        android:src="@drawable/music1"
         app:layout_constraintBottom_toBottomOf="@+id/gdlBoardH1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linPicture">
-
-        <ImageView
-            android:id="@+id/imgMusic"
-            android:layout_width="@dimen/size_140dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_padding_10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/music"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline8"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvMusic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/str_select_music"
-            android:textSize="@dimen/size_60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/guideline8"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.40625" />
-
-    </android.support.constraint.ConstraintLayout>
-
+        app:layout_constraintTop_toBottomOf="@+id/btnPictureBoard" />
 
     <android.support.constraint.Guideline
         android:id="@+id/gdlBoardH1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.93" />
 
 </android.support.constraint.ConstraintLayout>

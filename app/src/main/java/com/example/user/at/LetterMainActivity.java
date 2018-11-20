@@ -110,6 +110,7 @@ public class LetterMainActivity extends Activity {
                 LetterDeleteRequest dRequest = new LetterDeleteRequest(1, skin.getPreferenceString("LoginId"), where, LetterDeleteListener);
                 RequestQueue queue = Volley.newRequestQueue(LetterMainActivity.this);
                 queue.add(dRequest);
+                printLetterList();
             }
         });
 

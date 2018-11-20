@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,8 @@ public class LikeActivity extends Activity {
     MyInfoAdapter adapter;
     ArrayList<MyInfoItem> items;
     String postid, time, title, feedback, writer,category;
+    SwipeRefreshLayout swpLikeRefresh;
+    Response.Listener likeListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class LikeActivity extends Activity {
         tvLikeTitle = findViewById(R.id.tvMyWriteTitle);
         btnLikeBack = findViewById(R.id.btnMyWriteBack);
         loLikeHeader = findViewById(R.id.loMyWriteHeader);
+        swpLikeRefresh = findViewById(R.id.swpMyWriteRefresh);
 
         tvLikeTitle.setText(getResources().getString(R.string.str_like_work_string));
         loLikeHeader.setBackgroundColor(color);
@@ -64,41 +68,14 @@ public class LikeActivity extends Activity {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        Response.Listener likeListener = new Response.Listener<String>() {
+        printList();
+
+        swpLikeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onResponse(String response) {
-                Log.d("TAG", "JSONObj response=" + response);
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
-
-                    items = new ArrayList<>();
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject row = jsonArray.getJSONObject(i);
-                        postid = row.getString("post_id");
-                        time = row.getString("create_time");
-                        title = row.getString("post_title");
-                        writer = row.getString("member_id");
-                        category = row.getString("category");
-                        feedback = row.getString("feedback_count");
-                        items.add(new MyInfoItem(postid,time, title, writer, feedback, category));
-                    }
-
-                    myInfoRecycler.setLayoutManager(layoutManager);
-                    myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new MyInfoAdapter(items);
-                    myInfoRecycler.setAdapter(adapter);
-
-                } catch (Exception e) {
-                    Log.d("dberror", e.toString());
-                }
+            public void onRefresh() {
+                printList();
             }
-        };
-
-        MyLikeRequest mlRequest = new MyLikeRequest(skin.getPreferenceString("LoginId"), likeListener);
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(mlRequest);
+        });
 
         final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -150,5 +127,53 @@ public class LikeActivity extends Activity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.stop_translate, R.anim.center_to_right_translate);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyLikeRequest mlRequest = new MyLikeRequest(skin.getPreferenceString("LoginId"), likeListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(mlRequest);
+    }
+
+    void printList() {
+
+        likeListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG", "JSONObj response=" + response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
+
+                    items = new ArrayList<>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject row = jsonArray.getJSONObject(i);
+                        postid = row.getString("post_id");
+                        time = row.getString("create_time");
+                        title = row.getString("post_title");
+                        writer = row.getString("member_id");
+                        category = row.getString("category");
+                        feedback = row.getString("feedback_count");
+                        items.add(new MyInfoItem(postid,time, title, writer, feedback, category));
+                    }
+
+                    myInfoRecycler.setLayoutManager(layoutManager);
+                    myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
+                    adapter = new MyInfoAdapter(items);
+                    myInfoRecycler.setAdapter(adapter);
+
+                } catch (Exception e) {
+                    Log.d("dberror", e.toString());
+                }
+            }
+        };
+
+        MyLikeRequest mlRequest = new MyLikeRequest(skin.getPreferenceString("LoginId"), likeListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(mlRequest);
+        swpLikeRefresh.setRefreshing(false);
     }
 }

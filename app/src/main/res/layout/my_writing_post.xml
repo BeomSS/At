@@ -33,29 +33,37 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_padding_10dp"
             android:text="내가 쓴 글"
+            android:textColor="@color/colorWhite"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:textColor="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/btnMyWriteBack"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_info_recycler"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swpMyWriteRefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/loMyWriteHeader"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/loMyWriteHeader">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_info_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <android.support.constraint.Guideline
         android:id="@+id/gdlMyWriteH1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1"/>
+        app:layout_constraintGuide_percent="0.1" />
 
 </android.support.constraint.ConstraintLayout>

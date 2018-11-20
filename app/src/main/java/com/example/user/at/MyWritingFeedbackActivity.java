@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,39 +41,9 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     MyInfoAdapter adapter;
     ArrayList<MyInfoItem> items;
+    SwipeRefreshLayout swpMyFeedbackRefresh;
     String feedbackid, postid, memberid, fcontent, time, frecommend;
-
-    Response.Listener fListener = new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            Log.d("TAG", "JSONObj response=" + response);
-            try {
-                JSONObject jsonResponse = new JSONObject(response);
-                JSONArray jsonArray = jsonResponse.getJSONArray("sign");
-
-                items = new ArrayList<>();
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject row = jsonArray.getJSONObject(i);
-                    feedbackid = row.getString("feedback_id");
-                    postid = row.getString("post_id");
-                    memberid = row.getString("member_id");
-                    fcontent = row.getString("f_content");
-                    time = row.getString("create_time");
-                    frecommend = row.getString("f_recommend");
-                    items.add(new MyInfoItem(2, postid, null, time, fcontent, null, null, frecommend));
-                }
-
-                myInfoRecycler.setLayoutManager(layoutManager);
-                myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
-                adapter = new MyInfoAdapter(items);
-                myInfoRecycler.setAdapter(adapter);
-
-            } catch (Exception e) {
-                Log.d("dberror", e.toString());
-            }
-        }
-    };
+    Response.Listener fListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +56,7 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
         tvMyFeedbackTitle = findViewById(R.id.tvMyWriteTitle);
         btnMyFeedbackBack = findViewById(R.id.btnMyWriteBack);
         loMyFeedbackHeader = findViewById(R.id.loMyWriteHeader);
+        swpMyFeedbackRefresh = findViewById(R.id.swpMyWriteRefresh);
 
         tvMyFeedbackTitle.setText("내가 쓴 피드백");
         loMyFeedbackHeader.setBackgroundColor(color);
@@ -101,9 +73,14 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         //목록 불러오기
-        MyFeedbackRequest wRequest = new MyFeedbackRequest(skin.getPreferenceString("LoginId"), fListener);
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(wRequest);
+        printList();
+
+        swpMyFeedbackRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                printList();
+            }
+        });
 
         //클릭시 이벤트
         final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
@@ -153,4 +130,43 @@ public class MyWritingFeedbackActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(wRequest);
     }
+
+    void printList() {
+        fListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG", "JSONObj response=" + response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
+
+                    items = new ArrayList<>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject row = jsonArray.getJSONObject(i);
+                        feedbackid = row.getString("feedback_id");
+                        postid = row.getString("post_id");
+                        memberid = row.getString("member_id");
+                        fcontent = row.getString("f_content");
+                        time = row.getString("create_time");
+                        frecommend = row.getString("f_recommend");
+                        items.add(new MyInfoItem(2, postid, null, time, fcontent, null, null, frecommend));
+                    }
+
+                    myInfoRecycler.setLayoutManager(layoutManager);
+                    myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
+                    adapter = new MyInfoAdapter(items);
+                    myInfoRecycler.setAdapter(adapter);
+
+                } catch (Exception e) {
+                    Log.d("dberror", e.toString());
+                }
+            }
+        };
+        MyFeedbackRequest wRequest = new MyFeedbackRequest(skin.getPreferenceString("LoginId"), fListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(wRequest);
+        swpMyFeedbackRefresh.setRefreshing(false);
+    }
+
 }

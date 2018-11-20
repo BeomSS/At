@@ -4,17 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.Objects;
 
 public class BoardFragment extends Fragment {
 
-    ConstraintLayout linText, linMusic, linPicture;
+    ImageView btnTextBoard, btnMusicBoard, btnPictureBoard;
     View view;
 
     @Nullable
@@ -22,12 +22,11 @@ public class BoardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_board, container, false);
 
-        linText = view.findViewById(R.id.linText);
-        linPicture =  view.findViewById(R.id.linPicture);
-        linMusic = view.findViewById(R.id.linMusic);
+        btnTextBoard = view.findViewById(R.id.btnTextBoard);
+        btnPictureBoard =  view.findViewById(R.id.btnPictureBoard);
+        btnMusicBoard = view.findViewById(R.id.btnMusicBoard);
 
-
-        linText.setOnClickListener(new View.OnClickListener() {
+        btnTextBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), BoardActivity.class);
@@ -36,7 +35,7 @@ public class BoardFragment extends Fragment {
                 Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
-        linPicture.setOnClickListener(new View.OnClickListener() {
+        btnPictureBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), BoardActivity.class);
@@ -45,7 +44,7 @@ public class BoardFragment extends Fragment {
                 Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
             }
         });
-        linMusic.setOnClickListener(new View.OnClickListener() {
+        btnMusicBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), BoardActivity.class);
