@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class WriteFragment extends Fragment {
     int serverResponseCode = 0;
     String postId;
     Skin pId = new Skin(MainActivity.context);
+    ProgressBar pgbWriteLoading;
 
     @Nullable
     @Override
@@ -65,6 +67,7 @@ public class WriteFragment extends Fragment {
         explainEdit = (EditText) view.findViewById(R.id.explain_edit);
         fileTextView = (TextView) view.findViewById(R.id.file_textview);
         doneBtn = (Button) view.findViewById(R.id.done_button);
+        pgbWriteLoading = view.findViewById(R.id.pgbWriteLoading);
 
         tvFile.setBackgroundColor(((MainActivity) MainActivity.context).color);
         tvCategory.setBackgroundColor(((MainActivity) MainActivity.context).color);
@@ -126,6 +129,8 @@ public class WriteFragment extends Fragment {
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pgbWriteLoading.setVisibility(View.VISIBLE);
+                doneBtn.setVisibility(View.INVISIBLE);
                 putCategory = categorySpinner.getSelectedItemPosition();
                 putTitle = titleEdit.getText().toString();
                 putExplain = explainEdit.getText().toString();
@@ -143,6 +148,8 @@ public class WriteFragment extends Fragment {
                                 postId = new String(String.valueOf(tPostId));
                             } else {
                                 Toast.makeText(getActivity(), "글 등록 실패", Toast.LENGTH_SHORT).show();
+                                doneBtn.setVisibility(View.VISIBLE);
+                                pgbWriteLoading.setVisibility(View.INVISIBLE);
                             }
 
                             //게시물의 id를 받아서 보내야되기 때문에 response에 배치
@@ -171,6 +178,8 @@ public class WriteFragment extends Fragment {
                                                 titleEdit.setText(null);
                                                 explainEdit.setText(null);
                                                 Toast.makeText(getActivity(), "글쓰기가 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                                                doneBtn.setVisibility(View.VISIBLE);
+                                                pgbWriteLoading.setVisibility(View.INVISIBLE);
                                             }
                                         });
                                     }
@@ -194,6 +203,8 @@ public class WriteFragment extends Fragment {
                             queue.add(wRequest);
                         } else {
                             Toast.makeText(getActivity(), "피드백 받을 파일을 첨부해주세요.", Toast.LENGTH_SHORT).show();
+                            doneBtn.setVisibility(View.VISIBLE);
+                            pgbWriteLoading.setVisibility(View.INVISIBLE);
                         }
                     } else { //글게시판에서는 파일첨부가 안되었어도 되므로 빈 부분이 없는지만 체크한다.
                         WritingRequest wRequest = new WritingRequest(pId.getPreferenceString("LoginId"), putCategory, putTitle, putExplain, rListener);
@@ -202,8 +213,9 @@ public class WriteFragment extends Fragment {
                     }
                 } else {
                     Toast.makeText(getActivity(), "제목이나 내용을 채워주셔야 합니다.", Toast.LENGTH_SHORT).show();
+                    doneBtn.setVisibility(View.VISIBLE);
+                    pgbWriteLoading.setVisibility(View.INVISIBLE);
                 }
-
 
             }
         });
@@ -359,6 +371,8 @@ public class WriteFragment extends Fragment {
                         public void run() {
                             String msg = "글 등록 성공!" + fileName;
                             Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                            doneBtn.setVisibility(View.VISIBLE);
+                            pgbWriteLoading.setVisibility(View.INVISIBLE);
                         }
                     });
                 }
@@ -382,16 +396,11 @@ public class WriteFragment extends Fragment {
 
                 Log.d("Test", "exception: " + e.toString());
                 Toast.makeText(getActivity(), "업로드중 에러발생!(" + e.toString() + ")", Toast.LENGTH_SHORT).show();
-
             }
         }
     }
 
     public boolean check(String title, String explain) {
-        if (title.equals("") || title.equals(null) || explain.equals("") || explain.equals(null)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !title.equals("") && !title.equals("") && !explain.equals("") && !explain.equals("");
     }
 }
