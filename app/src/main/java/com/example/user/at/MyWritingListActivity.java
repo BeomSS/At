@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +42,8 @@ public class MyWritingListActivity extends AppCompatActivity {
     MyInfoAdapter adapter;
     ArrayList<MyInfoItem> items;
     String postid, category, time, title, feedback, recommend, writer;
+    SwipeRefreshLayout swpMyWritingRefresh;
+    Response.Listener wListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class MyWritingListActivity extends AppCompatActivity {
         tvMyWriteTitle = findViewById(R.id.tvMyWriteTitle);
         btnMyWriteBack = findViewById(R.id.btnMyWriteBack);
         loMyWriteHeader = findViewById(R.id.loMyWriteHeader);
+        swpMyWritingRefresh = findViewById(R.id.swpMyWriteRefresh);
 
         tvMyWriteTitle.setText("내가 쓴 글");
         loMyWriteHeader.setBackgroundColor(color);
@@ -67,6 +71,15 @@ public class MyWritingListActivity extends AppCompatActivity {
 
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        printList();
+
+        swpMyWritingRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                printList();
+            }
+        });
 
         final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -126,36 +139,44 @@ public class MyWritingListActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(wRequest);
     }
-    Response.Listener wListener = new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            Log.d("TAG", "JSONObj response=" + response);
-            try {
-                JSONObject jsonResponse = new JSONObject(response);
-                JSONArray jsonArray = jsonResponse.getJSONArray("sign");
 
-                items = new ArrayList<>();
+    void printList() {
+        wListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("TAG", "JSONObj response=" + response);
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray jsonArray = jsonResponse.getJSONArray("sign");
 
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject row = jsonArray.getJSONObject(i);
-                    postid = row.getString("post_id");
-                    time = row.getString("create_time");
-                    title = row.getString("post_title");
-                    category = row.getString("category");
-                    writer = row.getString("member_id");
-                    feedback = row.getString("feedback_count");
-                    recommend = String.valueOf(row.getInt("recommend"));
-                    items.add(new MyInfoItem(1, postid, category, time, title, writer, feedback, recommend));
+                    items = new ArrayList<>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject row = jsonArray.getJSONObject(i);
+                        postid = row.getString("post_id");
+                        time = row.getString("create_time");
+                        title = row.getString("post_title");
+                        category = row.getString("category");
+                        writer = row.getString("member_id");
+                        feedback = row.getString("feedback_count");
+                        recommend = String.valueOf(row.getInt("recommend"));
+                        items.add(new MyInfoItem(1, postid, category, time, title, writer, feedback, recommend));
+                    }
+
+                    myInfoRecycler.setLayoutManager(layoutManager);
+                    myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
+                    adapter = new MyInfoAdapter(items);
+                    myInfoRecycler.setAdapter(adapter);
+
+                } catch (Exception e) {
+                    Log.d("dberror", e.toString());
                 }
-
-                myInfoRecycler.setLayoutManager(layoutManager);
-                myInfoRecycler.setItemAnimator(new DefaultItemAnimator());
-                adapter = new MyInfoAdapter(items);
-                myInfoRecycler.setAdapter(adapter);
-
-            } catch (Exception e) {
-                Log.d("dberror", e.toString());
             }
-        }
-    };
+        };
+        MyWritingRequest wRequest = new MyWritingRequest(skin.getPreferenceString("LoginId"), wListener);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(wRequest);
+        swpMyWritingRefresh.setRefreshing(false);
+    }
+
 }
