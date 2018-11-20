@@ -304,7 +304,7 @@ public class MainFragment extends Fragment {
         queue.add(bestRequest);
 
         //글 베스트 게시물 이동 버튼 클릭
-        btnGoBestTextBoard.setOnClickListener(new View.OnClickListener() {
+        loBestTextHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
@@ -318,7 +318,7 @@ public class MainFragment extends Fragment {
             }
         });
         //그림 베스트 게시물 이동 버튼 클릭
-        btnGoBestPictureBoard.setOnClickListener(new View.OnClickListener() {
+        loBestPictureHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
@@ -332,7 +332,7 @@ public class MainFragment extends Fragment {
             }
         });
         //음악 베스트 게시물 이동 버튼 클릭
-        btnGoBestMusicBoard.setOnClickListener(new View.OnClickListener() {
+        loBestMusicHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent cIntent = new Intent(getActivity(), ShowPictureActivity.class);
@@ -342,6 +342,27 @@ public class MainFragment extends Fragment {
                 cIntent.putExtra("postid", tvMusicWriteId.getText().toString());
                 startActivity(cIntent);
                 Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
+            }
+        });
+
+        btnGoBestTextBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loBestTextHeader.callOnClick();
+            }
+        });
+
+        btnGoBestPictureBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loBestPictureHeader.callOnClick();
+            }
+        });
+
+        btnGoBestMusicBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loBestMusicHeader.callOnClick();
             }
         });
 
