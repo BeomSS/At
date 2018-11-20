@@ -77,8 +77,6 @@ public class LetterMainActivity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnLetterTitle.setAdapter(adapter);
 
-        printLetterList();
-
         btnLetterBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
