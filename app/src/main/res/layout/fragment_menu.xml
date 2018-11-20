@@ -69,16 +69,16 @@
             android:text="@string/str_notification"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvMyLike"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMyLike"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="@id/gdlMenuV1"
-            app:layout_constraintTop_toBottomOf="@id/imgNotice" />
+            app:layout_constraintRight_toRightOf="@+id/gdlMenuV1"/>
 
         <ImageView
             android:id="@+id/imgMyLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_thumb_up_white_40dp"
+            android:src="@drawable/ic_like_white_alpha_40dp"
             app:layout_constraintBottom_toTopOf="@id/tvNotice"
             app:layout_constraintLeft_toLeftOf="@id/gdlMenuV1"
             app:layout_constraintRight_toRightOf="@id/gdlMenuV2"
@@ -88,7 +88,7 @@
             android:id="@+id/tvMyLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_like_work"
+            android:text="@string/str_bookmark"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_15dp"
             app:layout_constraintBottom_toBottomOf="parent"

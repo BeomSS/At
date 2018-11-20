@@ -54,7 +54,7 @@ public class LikeActivity extends Activity {
         loLikeHeader = findViewById(R.id.loMyWriteHeader);
         swpLikeRefresh = findViewById(R.id.swpMyWriteRefresh);
 
-        tvLikeTitle.setText(getResources().getString(R.string.str_like_work_string));
+        tvLikeTitle.setText(getResources().getString(R.string.str_bookmark));
         loLikeHeader.setBackgroundColor(color);
 
         btnLikeBack.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +106,7 @@ public class LikeActivity extends Activity {
                     cIntent.putExtra("postid", nTextView.getText().toString());
                     Log.d("board put test", String.valueOf(numCategory) + " || " + nTextView.getText().toString());
                     startActivity(cIntent);
+                    overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
                 }
                 return false;
             }

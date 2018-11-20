@@ -59,6 +59,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
     int category, usingBestFeedback = 0;
     private MediaPlayer mediaPlayer;
     String strUrl;
+    Response.Listener pListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -161,7 +162,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             try {
                                 JSONObject jsonResponse = new JSONObject(response);
                                 if (jsonResponse.getBoolean("success")) {
-                                    Toast.makeText(ShowPictureActivity.this, "관심작품을 해제하였습니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ShowPictureActivity.this, "즐겨찾기를 해제하였습니다.", Toast.LENGTH_SHORT).show();
                                     ivShowPictureBookmark.setImageResource(R.drawable.ic_no_like_40dp);
                                     showPictureBookMarked = false;
                                 } else {
@@ -183,7 +184,7 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             try {
                                 JSONObject jsonResponse = new JSONObject(response);
                                 if (jsonResponse.getBoolean("success")) {
-                                    Toast.makeText(ShowPictureActivity.this, "관심작품으로 등록하였습니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ShowPictureActivity.this, "즐겨찾기에 등록하였습니다.", Toast.LENGTH_SHORT).show();
                                     ivShowPictureBookmark.setImageResource(R.drawable.ic_like_white_40dp);
                                     showPictureBookMarked = true;
                                 } else {
@@ -346,7 +347,22 @@ public class ShowPictureActivity extends Activity implements Runnable {
         });
 
         //게시물 내용 불러오기
-        Response.Listener pListener = new Response.Listener<String>() {
+        printPost();
+
+        btnPictureMoreFeedBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent feedbackIntent = new Intent(ShowPictureActivity.this, MoreFeedback.class);
+                feedbackIntent.putExtra("f_postId", pIntent.getStringExtra("postid"));
+                startActivity(feedbackIntent);
+                overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
+            }
+        });
+
+    }
+
+    void printPost() {
+        pListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("TAG", "JSONObj response=" + response);
@@ -376,6 +392,8 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         if (jsonResponse.getString("best_feedback_liked") == "true") {
                             btnPictureFeedbackLike.setImageResource(R.drawable.ic_thumb_up_color_30dp);
                             pictureFeedbackLiked = true;
+                            btnPictureFeedbackLike.setVisibility(View.VISIBLE);
+                            tvBestFeedbackCount.setVisibility(View.VISIBLE);
                         }
                     }
                     //삭제버튼 활성화/비활성화
@@ -420,17 +438,6 @@ public class ShowPictureActivity extends Activity implements Runnable {
         PostRequest pRequest = new PostRequest(pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"), pListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(pRequest);
-
-        btnPictureMoreFeedBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent feedbackIntent = new Intent(ShowPictureActivity.this, MoreFeedback.class);
-                feedbackIntent.putExtra("f_postId", pIntent.getStringExtra("postid"));
-                startActivity(feedbackIntent);
-                overridePendingTransition(R.anim.left_to_center_translate, R.anim.stop_translate);
-            }
-        });
-
     }
 
     //서버에서 받아온 이미지를 핸들러를 경유해서 이미지뷰에 넣는다
@@ -518,6 +525,12 @@ public class ShowPictureActivity extends Activity implements Runnable {
             }
         }
         super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        printPost();
     }
 
     public static Bitmap rotate(Bitmap bitmap, float degrees) {

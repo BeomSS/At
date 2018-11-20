@@ -77,6 +77,28 @@
         android:layout_marginStart="@dimen/margin_padding_20dp"
         android:entries="@array/color" />
 
+    <View
+        android:id="@+id/vSkinPreviewTop"
+        android:layout_width="@dimen/size_80dp"
+        android:layout_height="@dimen/size_20dp"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
+        android:layout_marginTop="@dimen/margin_padding_10dp"
+        android:background="@color/colorBrightMint"/>
+
+    <View
+        android:id="@+id/vSkinPreviewMid"
+        android:layout_width="@dimen/size_80dp"
+        android:layout_height="@dimen/size_20dp"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
+        android:background="@color/colorMint"/>
+
+    <View
+        android:id="@+id/vSkinPreviewBottom"
+        android:layout_width="@dimen/size_80dp"
+        android:layout_height="@dimen/size_20dp"
+        android:layout_marginStart="@dimen/margin_padding_20dp"
+        android:background="@color/colorMintAlpha"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
