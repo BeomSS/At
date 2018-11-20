@@ -334,6 +334,10 @@ public class ShowPictureActivity extends Activity implements Runnable {
                         }
                     }
                 };
+                if(edtPictureWriteFeedback.getText().toString().trim().equals("")) {
+                    Toast.makeText(ShowPictureActivity.this, "피드백을 작성 해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 AddFeedbackRequest feedbackRequest = new AddFeedbackRequest(pIntent.getStringExtra("postid"), skin.getPreferenceString("LoginId"),
                         edtPictureWriteFeedback.getText().toString(),tvShowPictureWriter.getText().toString(),titleTextView.getText().toString(), feedbackListener);
                 RequestQueue queue = Volley.newRequestQueue(ShowPictureActivity.this);
