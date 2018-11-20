@@ -3,9 +3,11 @@ package com.example.user.at;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -26,11 +28,13 @@ public class MyPreferencesActivity extends AppCompatActivity {
     Spinner spnSkin;
     Button btnSaveMyPreference;
     Skin skin;
-    int skinCode;
+    int skinCode, topColor, midColor, bottomColor;;
     CustomDialog dlg;
     RadioGroup rgChan;
     String userFavorite;
     Boolean changeTF = false;
+    View vSkinPreviewTop, vSkinPreviewMid, vSkinPreviewBottom;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,11 +48,13 @@ public class MyPreferencesActivity extends AppCompatActivity {
         spnSkin = findViewById(R.id.spnSkin);
         spnSkin.setSelection(skinCode - 1);
         rgChan = findViewById(R.id.rgChange);
+        vSkinPreviewTop = findViewById(R.id.vSkinPreviewTop);
+        vSkinPreviewMid = findViewById(R.id.vSkinPreviewMid);
+        vSkinPreviewBottom = findViewById(R.id.vSkinPreviewBottom);
 
         rgChan.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
 
                 if (checkedId == R.id.radioGul){
                     userFavorite = Character.toString('0');
@@ -64,6 +70,43 @@ public class MyPreferencesActivity extends AppCompatActivity {
                 }
             }
         });
+
+        spnSkin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        topColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorMintAlpha);
+                        midColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorMint);
+                        bottomColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorBrightMint);
+                        break;
+                    case 1:
+                        topColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorBlueAlpha);
+                        midColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorBlue);
+                        bottomColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorBrightBlue);
+                        break;
+                    case 2:
+                        topColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorBlackAlpha);
+                        midColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorDark);
+                        bottomColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorGrey);
+                        break;
+                    case 3:
+                        topColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorPinkAlpha);
+                        midColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorPink);
+                        bottomColor = ContextCompat.getColor(MyPreferencesActivity.this, R.color.colorBrightPink);
+                        break;
+                }
+                vSkinPreviewTop.setBackgroundColor(topColor);
+                vSkinPreviewMid.setBackgroundColor(midColor);
+                vSkinPreviewBottom.setBackgroundColor(bottomColor);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         btnSaveMyPreference.setOnClickListener(new View.OnClickListener() {
             @Override
