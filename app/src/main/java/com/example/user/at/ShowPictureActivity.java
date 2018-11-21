@@ -553,9 +553,10 @@ public class ShowPictureActivity extends Activity implements Runnable {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            musicStartBtn.setEnabled(false);
-                            musicStopBtn.setEnabled(false);
-                            musicResetBtn.setEnabled(false);
+                            musicStartBtn.setVisibility(View.INVISIBLE);
+                            musicStopBtn.setVisibility(View.INVISIBLE);
+                            musicResetBtn.setVisibility(View.INVISIBLE);
+                            pgbShowPictureLoading.setVisibility(View.VISIBLE);
                         }
                     });
                     mediaPlayer = new MediaPlayer();
@@ -568,9 +569,10 @@ public class ShowPictureActivity extends Activity implements Runnable {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    musicStartBtn.setEnabled(true);
-                                    musicStopBtn.setEnabled(true);
-                                    musicResetBtn.setEnabled(true);
+                                    musicStartBtn.setVisibility(View.VISIBLE);
+                                    musicStopBtn.setVisibility(View.VISIBLE);
+                                    musicResetBtn.setVisibility(View.VISIBLE);
+                                    pgbShowPictureLoading.setVisibility(View.INVISIBLE);
                                 }
                             });
                             mediaPlayer.start();
